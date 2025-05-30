@@ -8,12 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.jnana.dto.UserDto;
-import com.jnana.repository.LearnerRepository;
-import com.jnana.repository.TutorRepository;
 import com.jnana.service.GeneralService;
-
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
@@ -43,12 +39,58 @@ public class GeneralController {
 	
 	@GetMapping("/otp")
 	public String loadOtp() {
-		return "oto.html";
+		return "otp.html";
 	}
 	
 	@PostMapping("/submit-otp")
 	public String submitOtp(@RequestParam int otp, HttpSession session) {
 		return generalService.submitOtp(otp,session);
+	}
+	
+	@GetMapping("/resend-otp")
+	public String resendOtp(HttpSession session) {
+		return generalService.resendOtp(session);
+				
+	}
+	
+	@GetMapping("/login")
+	public String loadLogin() {
+		return "login.html";
+	}
+	
+	@PostMapping("/login")
+	public String login (@RequestParam String email, @RequestParam String password, HttpSession session) {
+		return generalService.login(email,password,session);
+	}
+	
+	@GetMapping("/learner-home")
+	public String loadLearnerHome() {
+		return "learner-home.html";
+	}
+	
+	@GetMapping("/tutor-home")
+	public String loadTutorHome() {
+		return "learner-home.html";
+	}
+	
+	@GetMapping("/forget-password")
+	public String loadForgetPassword() {
+		return "forget-password.html";
+	}
+	
+	@PostMapping("/forget-password")
+	public String forgetPassword(@RequestParam("email")String email , HttpSession session) {
+		return generalService.forgetPassword(email,session);
+	}
+	
+	@PostMapping("/submit-forget-otp")
+	public String submitForgetOtp(
+	    @RequestParam("otp") int otp,
+	    @RequestParam("newPassword") String newPassword,
+	    @RequestParam("confirmPassword") String confirmPassword,
+	    HttpSession session) {
+	    
+	    return generalService.submitForgetOtp(otp, newPassword, confirmPassword, session);
 	}
 
 }

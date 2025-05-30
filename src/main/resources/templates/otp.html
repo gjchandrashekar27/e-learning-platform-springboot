@@ -2,21 +2,27 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>OTP Page</title>
 </head>
 <body>
 <div align="center">
 
-<form action="/submit-otp" method="post">
+		
+		<h3 style="color: green" th:text="${session.pass}"></h3>
+		<h3 style="color: red" th:text="${session.fail}"></h3>	
+	<span th:text="${@generalService.removeMessage()}"></span>
+		
 
-Enter OTP : <input type="number" name="otp">
+		<form action="/submit-otp" method="post">
+			Enter OTP: <input type="number" name="otp">
+			<button>Submit</button>
+		</form>
 
-<button>Submit</button>
-
-</form>
-
-
-</div>
+		<a href="/resend-otp">
+			<button>Resend OTP</button>
+		</a>
+	</div>
+</body>
 
 </body>
 </html>
