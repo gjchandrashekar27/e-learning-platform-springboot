@@ -173,7 +173,14 @@ public class GeneralService {
 		    return "redirect:/otp";
 	}
 
-	public String login(String email, String password, HttpSession session) {
+	public String login(String email, String password, HttpSession session,String captchaInput) {
+		
+		 String sessionCaptcha = (String) session.getAttribute("captcha");
+
+		    if (sessionCaptcha == null || !captchaInput.equalsIgnoreCase(sessionCaptcha)) {
+		        session.setAttribute("fail", "Invalid CAPTCHA");
+		        return "redirect:/login";
+		    }
 		
 		Learner learner = learnerRepository.findByEmail(email);
 		Tutor tutor = tutorRepository.findByEmail(email);
@@ -186,7 +193,7 @@ public class GeneralService {
 				if (passwordEncoder.matches(password, tutor.getPassword())) {
 					session.setAttribute("pass", "Login Success as Tutor");
 					session.setAttribute("tutor", tutor);
-					return "tutor-home.html";
+					return "redirect:/tutor/home";
 				} else {
 					session.setAttribute("fail", "Invalid Password");
 					return "redirect:/login";
@@ -196,7 +203,7 @@ public class GeneralService {
 				if (passwordEncoder.matches(password, learner.getPassword())) {
 					session.setAttribute("pass", "Login Success as Learner");
 					session.setAttribute("learner", learner);
-					return "learner-home.html";
+					return "redirect:/learner/home";
 				} else {
 					session.setAttribute("fail", "Invalid Password");
 					return "redirect:/login";
@@ -309,5 +316,25 @@ public class GeneralService {
 	    }
 	}
 
+	public String logout(HttpSession session) {
+		session.removeAttribute("learner");
+		session.removeAttribute("tutor");
+		session.setAttribute("fail", "Logout Success");
+		return "redirect:/";
+	}
 	
+	// Captcha Method 
+	public class CaptchaUtil {
+	    public static String generateCaptcha(int length) {
+	        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+	        StringBuilder captcha = new StringBuilder();
+	        Random random = new Random();
+
+	        for (int i = 0; i < length; i++) {
+	            captcha.append(chars.charAt(random.nextInt(chars.length())));
+	        }
+	        return captcha.toString();
+	    }
+
+	}
 }

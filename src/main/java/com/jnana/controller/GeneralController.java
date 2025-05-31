@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.jnana.dto.UserDto;
 import com.jnana.service.GeneralService;
+import com.jnana.service.GeneralService.CaptchaUtil;
+
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
@@ -54,24 +56,19 @@ public class GeneralController {
 	}
 	
 	@GetMapping("/login")
-	public String loadLogin() {
-		return "login.html";
+	public String showLoginPage(HttpSession session, Model model) {
+	    String captcha = CaptchaUtil.generateCaptcha(5);
+	    session.setAttribute("captcha", captcha);
+	    model.addAttribute("captcha", captcha);
+	    return "login";
 	}
 	
 	@PostMapping("/login")
-	public String login (@RequestParam String email, @RequestParam String password, HttpSession session) {
-		return generalService.login(email,password,session);
+	public String login (@RequestParam String email, @RequestParam String password,@RequestParam String captchaInput, HttpSession session) {
+		return generalService.login(email,password,session,captchaInput);
 	}
 	
-	@GetMapping("/learner-home")
-	public String loadLearnerHome() {
-		return "learner-home.html";
-	}
 	
-	@GetMapping("/tutor-home")
-	public String loadTutorHome() {
-		return "learner-home.html";
-	}
 	
 	@GetMapping("/forget-password")
 	public String loadForgetPassword() {
@@ -91,6 +88,11 @@ public class GeneralController {
 	    HttpSession session) {
 	    
 	    return generalService.submitForgetOtp(otp, newPassword, confirmPassword, session);
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		return generalService.logout(session);
 	}
 
 }
