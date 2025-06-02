@@ -1,8 +1,12 @@
 package com.jnana.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.SequenceGenerator;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,5 +24,9 @@ public class Learner {
 	private String email;
 	private String password;
 	private Long mobile;
+	
+	
+	@ManyToMany(fetch = FetchType.EAGER) //Many learners can have many courses.
+	List<Course> courses;
 
 }

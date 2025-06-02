@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.jnana.dto.UserDto;
 import com.jnana.service.GeneralService;
 import com.jnana.service.GeneralService.CaptchaUtil;
-
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
@@ -20,8 +19,6 @@ public class GeneralController {
 	
 	@Autowired
 	GeneralService generalService;
-	
-	
 	
 	@GetMapping("/")
 	public String loadHome() {
