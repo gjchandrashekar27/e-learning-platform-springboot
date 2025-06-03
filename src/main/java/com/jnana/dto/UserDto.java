@@ -21,17 +21,24 @@ public class UserDto {
 	@Email(message = "* Enter Proper Email")
 	private String email;
 	
-	@Pattern(regexp = "^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$", message = "* Password should contain atleast one uppercase,lowercase,special charecter and number and minimum 8 charecters")
+	@Pattern(regexp = "^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$", 
+	         message = "* Password should contain at least one uppercase, lowercase, special character, and number and be minimum 8 characters")
 	private String password;
 	
-	@Pattern(regexp = "^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$", message = "* Password should contain atleast one uppercase,lowercase,special charecter and number and minimum 8 charecters")
+	@Pattern(regexp = "^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$", 
+	         message = "* Password should contain at least one uppercase, lowercase, special character, and number and be minimum 8 characters")
 	private String confirmPassword;
 	
 	@DecimalMin(value = "6000000000", message = "* Enter Proper Number")
-	@DecimalMax(value = "10000000000", message = "* Enter Proper Number")
+	@DecimalMax(value = "9999999999", message = "* Enter Proper Number")
 	private Long mobile;
 	
 	@NotNull(message = "* It is required")
-	private AccountType type;
+	private AccountType paid;
+
+	@NotEmpty(message = "* CAPTCHA is required")
+	private String captchaInput;
 
 }
+
+

@@ -59,12 +59,15 @@ public class GeneralController {
 	    model.addAttribute("captcha", captcha);
 	    return "login";
 	}
-	
 	@PostMapping("/login")
-	public String login (@RequestParam String email, @RequestParam String password,@RequestParam String captchaInput, HttpSession session) {
-		return generalService.login(email,password,session,captchaInput);
+	public String login(@RequestParam String email,
+	                    @RequestParam String password,
+	                    @RequestParam String captchaInput,
+	                    HttpSession session,
+	                    Model model) {
+	    return generalService.login(email, password, session, captchaInput, model);
 	}
-	
+
 	
 	
 	@GetMapping("/forget-password")

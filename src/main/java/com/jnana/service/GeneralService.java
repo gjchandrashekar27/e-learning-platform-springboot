@@ -97,7 +97,7 @@ public class GeneralService {
 				Context context = new Context();
 				context.setVariable("otp", otp);
 				context.setVariable("name", userDto.getName());
-				context.setVariable("role", userDto.getType().name());
+				context.setVariable("role", userDto.getPaid().name());
 
 				String body = templateEngine.process("email-template.html", context);
 
@@ -124,7 +124,7 @@ public class GeneralService {
 			int sessionOtp = (int) session.getAttribute("otp");
 			UserDto userDto = (UserDto) session.getAttribute("userDto");
 			if (sessionOtp == otp) {
-				if (userDto.getType() == AccountType.TUTOR) {
+				if (userDto.getPaid() == AccountType.TUTOR) {
 					Tutor tutor = new Tutor();
 					tutor.setEmail(userDto.getEmail());
 					tutor.setMobile(userDto.getMobile());
@@ -185,45 +185,45 @@ public class GeneralService {
 		    return "redirect:/otp";
 	}
 
-	public String login(String email, String password, HttpSession session,String captchaInput) {
-		
-		 String sessionCaptcha = (String) session.getAttribute("captcha");
+	public String login(String email, String password, HttpSession session, String captchaInput, Model model) {
+	    
+	    String sessionCaptcha = (String) session.getAttribute("captcha");
 
-		    if (sessionCaptcha == null || !captchaInput.equalsIgnoreCase(sessionCaptcha)) {
-		        session.setAttribute("fail", "Invalid CAPTCHA");
-		        return "redirect:/login";
-		    }
-		
-		Learner learner = learnerRepository.findByEmail(email);
-		Tutor tutor = tutorRepository.findByEmail(email);
+	    // Case-sensitive comparison
+	    if (sessionCaptcha == null || !captchaInput.equals(sessionCaptcha)) {
+	        session.setAttribute("fail", "Invalid CAPTCHA");
+	        return "redirect:/login";
+	    }
 
-		if (learner == null && tutor == null) {
-			session.setAttribute("fail", "Invalid Email");
-			return "redirect:/login";
-		} else {
-			if (tutor != null) {
-				if (passwordEncoder.matches(password, tutor.getPassword())) {
-					session.setAttribute("pass", "Login Success as Tutor");
-					session.setAttribute("tutor", tutor);
-					return "redirect:/tutor/home";
-				} else {
-					session.setAttribute("fail", "Invalid Password");
-					return "redirect:/login";
-				}
-			} else {
-				
-				if (passwordEncoder.matches(password, learner.getPassword())) {
-					session.setAttribute("pass", "Login Success as Learner");
-					session.setAttribute("learner", learner);
-					return "redirect:/learner/home";
-				} else {
-					session.setAttribute("fail", "Invalid Password");
-					return "redirect:/login";
-				}
-			}
-		}
-	
+	    Learner learner = learnerRepository.findByEmail(email);
+	    Tutor tutor = tutorRepository.findByEmail(email);
+
+	    if (learner == null && tutor == null) {
+	        session.setAttribute("fail", "Invalid Email");
+	        return "redirect:/login";
+	    } else {
+	        if (tutor != null) {
+	            if (passwordEncoder.matches(password, tutor.getPassword())) {
+	                session.setAttribute("pass", "Login Success as Tutor");
+	                session.setAttribute("tutor", tutor);
+	                return "redirect:/tutor/home";
+	            } else {
+	                session.setAttribute("fail", "Invalid Password");
+	                return "redirect:/login";
+	            }
+	        } else {
+	            if (passwordEncoder.matches(password, learner.getPassword())) {
+	                session.setAttribute("pass", "Login Success as Learner");
+	                session.setAttribute("learner", learner);
+	                return "redirect:/learner/home";
+	            } else {
+	                session.setAttribute("fail", "Invalid Password");
+	                return "redirect:/login";
+	            }
+	        }
+	    }
 	}
+
 
 	
 
@@ -335,10 +335,10 @@ public class GeneralService {
 		return "redirect:/";
 	}
 	
-	// Captcha Method 
 	public class CaptchaUtil {
+
 	    public static String generateCaptcha(int length) {
-	        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+	        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
 	        StringBuilder captcha = new StringBuilder();
 	        Random random = new Random();
 
@@ -348,5 +348,10 @@ public class GeneralService {
 	        return captcha.toString();
 	    }
 
+	    public static boolean validateCaptcha(String generatedCaptcha, String userInput) {
+	        // Case-sensitive comparison
+	        return generatedCaptcha != null && generatedCaptcha.equals(userInput);
+	    }
 	}
+
 }
