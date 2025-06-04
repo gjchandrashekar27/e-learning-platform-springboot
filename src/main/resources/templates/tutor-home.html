@@ -1,26 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>Tutor Home</title>
 </head>
-
-
-
 <body>
 
 <div align="center">
-	<h3 style="color: green" th:text="${session.pass}"></h3>
-	<h3 style="color: red" th:text="${session.fail}"></h3>
-	<span th:text="${@generalService.removeMessage()}"></span>
-	<h1>Tutor Home</h1>
-	
-	<a href="/tutor/courses"><button>Manage Courses</button></a>
-	<a href="/tutor/sections"><button>Manage Sections</button></a>
-	<a href="/tutor/questions"><button>Manage questions</button></a>
-	<a href="/tutor/learners"><button>View Learners</button></a>
-	
-<a href="/logout"><button>Logout</button> </a>
+    <h3 style="color: green" th:text="${session.pass}"></h3>
+    <h3 style="color: red" th:text="${session.fail}"></h3>
+    <span th:text="${@generalService.removeMessage()}"></span>
+
+    <h1>Tutor Home</h1>
+
+    <a th:href="@{/tutor/courses}"><button>Manage Courses</button></a>
+    <a th:href="@{/tutor/sections}"><button>Manage Sections</button></a>
+    <a th:href="@{/tutor/questions}"><button>Manage Questions</button></a>
+    <a th:href="@{/tutor/learners}"><button>View Learners</button></a>
+    <a th:href="@{/logout}"><button>Logout</button></a>
 </div>
 
 </body>

@@ -1,0 +1,26 @@
+package com.jnana.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+
+@Data
+public class SectionDto {
+	
+	    @NotBlank(message = "* Title is required")
+	    @Size(min = 5, max = 50, message = "* Title should be between 5 and 50 characters")
+	    private String title;
+
+	    @NotBlank(message = "* Video URL is required")
+	    @Size(max = 255, message = "* Video URL must not exceed 255 characters")
+	    private String videoUrl;
+
+	    @NotBlank(message = "* Notes URL is required")
+	    @Size(max = 255, message = "* Notes URL must not exceed 255 characters")
+	    private String notesUrl;
+
+	    @NotNull(message = "* Course ID is required")
+	    private Long courseId;
+
+}

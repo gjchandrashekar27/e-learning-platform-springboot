@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Section - Tutor Panel</title>
+</head>
+<body>
+
+    <h3 style="color: green;" th:text="${session.pass}"></h3>
+    <h3 style="color: red;" th:text="${session.fail}"></h3>
+    <span th:text="${@generalService.removeMessage()}"></span>
+
+    <div align="center">
+        <h1>Add Section</h1>
+
+        <form action="/tutor/add-section" method="post" th:object="${sectionDto}">
+            <label for="videoUrl">Video URL:</label>
+            <input type="text" id="videoUrl" th:field="*{videoUrl}" placeholder="Enter Video URL" required>
+            <br><br>
+
+            <label for="notesUrl">Notes URL:</label>
+            <input type="text" id="notesUrl" th:field="*{notesUrl}" placeholder="Enter Notes URL" required>
+            <br><br>
+
+            <label for="courseId">Course:</label>
+            <select id="courseId" th:field="*{courseId}" required>
+                <option value="" disabled selected>Select Course</option>
+                <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.title}"></option>
+            </select>
+            <br><br>
+
+            <button type="submit">Save Section</button>
+        </form>
+
+        <br>
+        <a href="/tutor/section"><button type="button">Back to Sections</button></a>
+    </div>
+
+</body>
+</html>

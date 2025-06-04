@@ -97,7 +97,7 @@ public class GeneralService {
 				Context context = new Context();
 				context.setVariable("otp", otp);
 				context.setVariable("name", userDto.getName());
-				context.setVariable("role", userDto.getPaid().name());
+				context.setVariable("role", userDto.getType().name());
 
 				String body = templateEngine.process("email-template.html", context);
 
@@ -124,7 +124,7 @@ public class GeneralService {
 			int sessionOtp = (int) session.getAttribute("otp");
 			UserDto userDto = (UserDto) session.getAttribute("userDto");
 			if (sessionOtp == otp) {
-				if (userDto.getPaid() == AccountType.TUTOR) {
+				if (userDto.getType() == AccountType.TUTOR) {
 					Tutor tutor = new Tutor();
 					tutor.setEmail(userDto.getEmail());
 					tutor.setMobile(userDto.getMobile());
