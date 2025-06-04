@@ -1,40 +1,31 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>Add commentMore actions
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Add Section - Tutor Panel</title>
+<meta charset="UTF-8">
+<title>Add Section</title>
 </head>
 <body>
+	<div align="center">
+		<h1>Add Section</h1>
 
-    <h3 style="color: green;" th:text="${session.pass}"></h3>
-    <h3 style="color: red;" th:text="${session.fail}"></h3>
-    <span th:text="${@generalService.removeMessage()}"></span>
+		<form action="/tutor/add-section" method="post"
+			th:object="${sectionDto}" enctype="multipart/form-data">
+			Title: <input type="text" th:field="*{title}"> <span
+				th:errors="*{title}"></span> <br> <br> Upload Video: <input
+				type="file" th:field="*{video}" accept="video/*"> <span
+				th:errors="*{video}"></span> <br> <br> Upload Notes: <input
+				type="file" th:field="*{notes}" accept="application/pdf"> <span
+				th:errors="*{notes}"></span> <br> <br> Select Course: <select
+				name="courseId">
+				<option th:each="course:${courses}" th:value="${course.id}">
+					<th:block th:text="${course.title}"></th:block>
+				</option>
 
-    <div align="center">
-        <h1>Add Section</h1>
+			</select> <br> <br>
+			<button>Add</button>
+		</form>
 
-        <form action="/tutor/add-section" method="post" th:object="${sectionDto}">
-            <label for="videoUrl">Video URL:</label>
-            <input type="text" id="videoUrl" th:field="*{videoUrl}" placeholder="Enter Video URL" required>
-            <br><br>
-
-            <label for="notesUrl">Notes URL:</label>
-            <input type="text" id="notesUrl" th:field="*{notesUrl}" placeholder="Enter Notes URL" required>
-            <br><br>
-
-            <label for="courseId">Course:</label>
-            <select id="courseId" th:field="*{courseId}" required>
-                <option value="" disabled selected>Select Course</option>
-                <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.title}"></option>
-            </select>
-            <br><br>
-
-            <button type="submit">Save Section</button>
-        </form>
-
-        <br>
-        <a href="/tutor/section"><button type="button">Back to Sections</button></a>
-    </div>
-
+		<br> <a href="/tutor/sections"><button>Back</button></a>
+	</div>
 </body>
 </html>

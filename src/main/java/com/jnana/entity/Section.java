@@ -3,6 +3,7 @@ package com.jnana.entity;
 import java.util.List;
 
 import org.hibernate.annotations.ManyToAny;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;

@@ -1,36 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>View Courses</title>
+  <meta charset="UTF-8">
+  <title>View Courses</title>
 </head>
 <body>
-	<div align="center">
-		<h1>View Courses</h1>
+  <div align="center">
+    <h1>View Courses</h1>
 
-		<table border="1">
-			<tr>
-				<th>Title</th>
-				<th>Description</th>
-				<th>Type</th>
-				<th>Action</th>
-			</tr>
+    <table border="1">
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Action</th>
+      </tr>
 
-			<tr th:each="course:${courses}">
-				<td th:text="${course.title}"></td>
-				<td th:text="${course.description}"></td>
-				<td><span th:if="${course.paid}">Paid</span> <span
-					th:if="${!course.paid}">Free</span></td>
-				<td>
-					<button>Publish</button>
-				</td>
-			</tr>
+      <tr th:each="course : ${courses}">
+        <td th:text="${course.title}"></td>
+        <td th:text="${course.description}"></td>
+        <td>
+          <span th:if="${course.paid}">Paid</span>
+          <span th:if="${!course.paid}">Free</span>
+        </td>
+    
+    <td>
+  <a th:if="${course.published == false}" th:href="@{'/tutor/publish/' + ${course.id}}">
+    <button>Publish</button>
+  </a>
+  <span th:if="${course.published == true}">Published</span>
+</td>
+    
+     
+       
+      </tr>
 
-		</table>
+    </table>
 
-		<br> <a href="/tutor/courses">
-			<button>Back</button>
-		</a>
-	</div>
+    <br>
+    <a href="/tutor/courses"><button>Back</button></a>
+  </div>
 </body>
 </html>

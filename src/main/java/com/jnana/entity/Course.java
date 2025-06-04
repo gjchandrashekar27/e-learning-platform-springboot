@@ -27,6 +27,8 @@ public class Course {
 	
 	private Boolean paid;
 	
+	private Boolean published;
+	
 	@ManyToOne //Many Tutor Can take Many Courses.
 	Tutor tutor;
 	

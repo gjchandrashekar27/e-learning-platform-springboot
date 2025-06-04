@@ -15,6 +15,8 @@ public class CourseDto {
 	
 	@NotNull(message = "* Select Any One")
 	private Boolean paid;
+	
+	private boolean published;
 
 
 }

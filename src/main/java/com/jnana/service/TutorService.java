@@ -1,17 +1,25 @@
 package com.jnana.service;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.jnana.dto.CourseDto;
+import com.jnana.dto.SectionDto;
 import com.jnana.entity.Course;
+import com.jnana.entity.Section;
 import com.jnana.entity.Tutor;
 import com.jnana.repository.CourseRepository;
+import com.jnana.repository.SectionRepository;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -21,6 +29,13 @@ public class TutorService {
 	
 	@Autowired
 	CourseRepository courseRepository;
+	
+	@Autowired
+	SectionRepository sectionRepository;
+	
+	private Cloudinary cloudinary;
+	
+
 
 	public String loadHome(HttpSession session) {
 		if (session.getAttribute("tutor") != null) {
@@ -120,7 +135,103 @@ public class TutorService {
 			return "redirect:/login";
 		}
 	}
+
+	public String publishCourse(Long id, HttpSession session) {
+		if(session.getAttribute("tutor") != null) {
+			Course course = courseRepository.findById(id).orElseThrow();
+			
+			List<Section> sections = sectionRepository.findByCourse(course);
+			
+			if(course.getQuizQuestions().isEmpty() || sections.isEmpty()) {
+				session.setAttribute("fail", "There Should be atleast one section and Quiz To Publish");
+				return "redirect:/tutor/view-courses";
+			}else {
+				course.setPublished(true);
+				session.setAttribute("success", "Course Published Success");
+				return "redirect:/tutor/courses";
+			}		
+			
+		}else {
+			session.setAttribute("fail", "Invalid session, Login again");
+			return "redirect:/login";
+		}
 	}
+
+	public String loadAddSection(HttpSession session, Model model, SectionDto sectionDto) {
+		if (session.getAttribute("tutor") != null) {
+			
+			List<Course> courses = courseRepository.findByTutor((Tutor) session.getAttribute("tutor"));
+			if (courses.isEmpty()) {
+				session.setAttribute("fail", "First Add Course to add Section");
+				return "redirect:/tutor/courses";
+			} else {
+				model.addAttribute("courses", courses);
+				model.addAttribute("sectionDto", sectionDto);
+				return "add-section.html";
+			}
+		
+		}else {
+			session.setAttribute("fail", "Invalid Session, Login First");
+			return "redirect:/login";
+		}
+		
+		
+	}
+
+	public String addSection(@Valid SectionDto sectionDto, BindingResult result, HttpSession session) {
+		if (session.getAttribute("tutor") != null) {
+			if (result.hasErrors())
+				return "add-section.html";
+			else {
+				
+				Course course = courseRepository.findById(sectionDto.getCourseId()).orElseThrow();
+				Section section = new Section();
+				section.setCourse(course);
+				section.setTitle(sectionDto.getTitle());
+				section.setNotesUrl(saveNotes(sectionDto.getNotes()));
+				section.setVideoUrl(saveVideo(sectionDto.getVideo()));
+				sectionRepository.save(section);
+				
+				session.setAttribute("pass", "Section Added Success");
+				return "redirect:/tutor/sections";
+			}
+	}else {
+		session.setAttribute("fail", "Invalid Session, Login First");
+		return "redirect:/login";
+	}
+			
+		
+	}
+
+	private String saveVideo(MultipartFile video) {
+		 try {
+	            Map uploadResult = cloudinary.uploader().uploadLarge(
+	                video.getBytes(),
+	                ObjectUtils.asMap("resource_type", "video")
+	            );
+	            return (String) uploadResult.get("secure_url");
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            
+	            return null;
+	        }
+		
+	}
+
+	private String saveNotes(MultipartFile notes) {
+		 try {
+		        Map uploadResult = cloudinary.uploader().upload(
+		            notes.getBytes(),
+		            ObjectUtils.asMap("resource_type", "auto")  // auto detects file type
+		        );
+		        return (String) uploadResult.get("secure_url");
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		        // You can throw a custom exception or return null here
+		        return null;
+		    }
+	}
+}
 
 	
 
