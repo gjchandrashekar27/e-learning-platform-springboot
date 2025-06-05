@@ -2,17 +2,295 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Manage Sections | Tutor | Jnana</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+    body {
+        background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+        font-family: 'Segoe UI', Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+    }
+    .ad-banner {
+        width: 100%;
+        max-width: 700px;
+        margin: 32px auto 0 auto;
+        background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
+        color: #fff;
+        border-radius: 12px;
+        padding: 14px 20px;
+        font-size: 1.08rem;
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        justify-content: center;
+    }
+    .ad-banner i {
+        font-size: 1.4rem;
+    }
+    .container {
+        max-width: 600px;
+        margin: 36px auto 0 auto;
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
+        padding: 36px 32px 32px 32px;
+        text-align: center;
+        position: relative;
+    }
+    h1 {
+        color: #2563eb;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+    .instructions {
+        background: #e0eafc;
+        color: #2563eb;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 1.05rem;
+        margin-bottom: 22px;
+        text-align: left;
+    }
+    .actions-section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 28px;
+        justify-content: center;
+        margin: 32px 0 18px 0;
+    }
+    .action-card {
+        background: #f5f8ff;
+        border-radius: 14px;
+        box-shadow: 0 2px 8px rgba(31,38,135,0.09);
+        padding: 24px 18px 18px 18px;
+        min-width: 180px;
+        max-width: 220px;
+        text-align: center;
+        transition: box-shadow 0.2s, transform 0.2s;
+        cursor: pointer;
+        border: 2px solid transparent;
+        position: relative;
+    }
+    .action-card:hover {
+        box-shadow: 0 6px 20px rgba(79, 140, 255, 0.18);
+        border: 2px solid #4f8cff;
+        transform: translateY(-4px) scale(1.03);
+    }
+    .action-logo {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        object-fit: cover;
+        margin-bottom: 10px;
+        border: 2px solid #e0eafc;
+        background: #fff;
+    }
+    .action-title {
+        font-size: 1.08rem;
+        font-weight: 600;
+        color: #2563eb;
+        margin-bottom: 6px;
+    }
+    .action-desc {
+        font-size: 0.97rem;
+        color: #444;
+        margin-bottom: 10px;
+    }
+    .action-btn {
+        background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 8px 22px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+        box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
+    }
+    .action-btn:hover {
+        background: linear-gradient(90deg, #2563eb 60%, #4f8cff 100%);
+        transform: translateY(-2px) scale(1.04);
+    }
+    .reviews-section {
+        margin: 32px auto 0 auto;
+        max-width: 600px;
+        text-align: center;
+    }
+    .reviews-title {
+        font-size: 1.08rem;
+        font-weight: 600;
+        color: #2d3a4b;
+        margin-bottom: 10px;
+    }
+    .carousel {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+    }
+    .review-card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(31,38,135,0.09);
+        padding: 14px 12px 10px 12px;
+        min-width: 220px;
+        max-width: 260px;
+        text-align: left;
+        position: relative;
+        font-size: 0.97rem;
+        color: #444;
+        transition: box-shadow 0.2s, background 0.3s;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .review-card .fa-quote-left {
+        color: #4f8cff;
+        font-size: 1rem;
+        margin-right: 6px;
+    }
+    .review-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 6px;
+        border: 2px solid #2563eb;
+        background: #fff;
+        align-self: center;
+    }
+    .review-author {
+        margin-top: 8px;
+        font-weight: 600;
+        color: #2563eb;
+        font-size: 0.95rem;
+        align-self: flex-end;
+    }
+    .carousel-btn {
+        background: #e0eafc;
+        border: none;
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        font-size: 1rem;
+        color: #4f8cff;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+    }
+    .carousel-btn:hover {
+        background: #4f8cff;
+        color: #fff;
+    }
+    footer {
+        width: 100%;
+        text-align: center;
+        padding: 18px 0 8px 0;
+        color: #2563eb;
+        font-size: 0.98rem;
+        opacity: 0.85;
+        margin-top: 32px;
+    }
+    @media (max-width: 800px) {
+        .container, .ad-banner, .reviews-section { max-width: 98vw; padding: 18px 4vw 18px 4vw; }
+        .actions-section { flex-direction: column; }
+        .action-card, .review-card { min-width: 0; width: 100%; }
+    }
+</style>
 </head>
 <body>
-<div align="center">
-		<h1>Manage Sections</h1>
+<div class="ad-banner">
+    <i class="fa-solid fa-lightbulb"></i>
+    <span>✨ Pro Tip: Add videos and notes to make your sections more engaging for learners!</span>
+</div>
+<div class="container">
+    <h1><i class="fa fa-layer-group"></i> Manage Sections</h1>
+    <div class="instructions">
+        <strong>Instructions:</strong>
+        <ul style="margin:6px 0 0 18px;padding:0;font-size:0.98rem;">
+            <li>Click <b>Add Section</b> to create a new section for your course. You can add a <b>Title</b>, <b>Video</b> (YouTube or upload), and <b>Notes</b> (PDF or text).</li>
+            <li>Use <b>View All Sections</b> to see, edit, or remove your existing sections.</li>
+            <li>Organize your sections to provide a smooth learning experience for your students.</li>
+        </ul>
+    </div>
+    <div class="actions-section">
+        <div class="action-card" onclick="location.href='/tutor/add-section'">
+            <img class="action-logo" src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=80&q=80" alt="Add Section">
+            <div class="action-title">Add Section</div>
+            <div class="action-desc">Create a new section with title, video, and notes.</div>
+            <a href="/tutor/add-section"><button class="action-btn"><i class="fa fa-plus"></i> Add Section</button></a>
+        </div>
+        <div class="action-card" onclick="location.href='/tutor/view-sections'">
+            <img class="action-logo" src="https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&w=80&h=80&fit=crop" alt="View Sections">
+            <div class="action-title">View All Sections</div>
+            <div class="action-desc">See, edit, or remove your course sections.</div>
+            <a href="/tutor/view-sections"><button class="action-btn"><i class="fa fa-list"></i> View Sections</button></a>
+        </div>
+        <div class="action-card" onclick="location.href='/tutor/home'">
+            <img class="action-logo" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Back">
+            <div class="action-title">Back to Dashboard</div>
+            <div class="action-desc">Return to your main tutor dashboard.</div>
+            <a href="/tutor/home"><button class="action-btn"><i class="fa fa-arrow-left"></i> Back</button></a>
+        </div>
+    </div>
+</div>
 
-		<a href="/tutor/add-section"><button>Add Section</button></a>
-		<button>View All Sections</button>
-		<a href="/tutor/home">
-			<button>Back</button>
-		</a>
-	</div>
+<div class="reviews-section">
+    <div class="reviews-title">How Tutors Use Sections</div>
+    <div class="carousel" id="review-carousel">
+        <button class="carousel-btn" onclick="prevReview()"><i class="fa fa-chevron-left"></i></button>
+        <div class="review-card" id="review-card">
+            <img class="review-avatar" id="review-avatar" src="https://randomuser.me/api/portraits/men/65.jpg" alt="Tutor">
+            <i class="fa fa-quote-left"></i>
+            <span id="review-text">"Adding videos and notes to each section helped my students understand concepts much better!"</span>
+            <div class="review-author" id="review-author">- Ravi K.</div>
+        </div>
+        <button class="carousel-btn" onclick="nextReview()"><i class="fa fa-chevron-right"></i></button>
+    </div>
+</div>
+
+<script>
+    // Simple reviews carousel
+    const reviews = [
+        {
+            text: '"Adding videos and notes to each section helped my students understand concepts much better!"',
+            author: '- Ravi K.',
+            avatar: 'https://randomuser.me/api/portraits/men/65.jpg'
+        },
+        {
+            text: '"Sections with clear titles and resources make my course look professional and easy to follow."',
+            author: '- Priya S.',
+            avatar: 'https://randomuser.me/api/portraits/women/43.jpg'
+        },
+        {
+            text: '"I love how easy it is to organize my course into sections and keep everything updated."',
+            author: '- Ananya D.',
+            avatar: 'https://randomuser.me/api/portraits/women/68.jpg'
+        }
+    ];
+    let currentReview = 0;
+    function showReview(idx) {
+        document.getElementById('review-text').innerText = reviews[idx].text;
+        document.getElementById('review-author').innerText = reviews[idx].author;
+        document.getElementById('review-avatar').src = reviews[idx].avatar;
+    }
+    function prevReview() {
+        currentReview = (currentReview - 1 + reviews.length) % reviews.length;
+        showReview(currentReview);
+    }
+    function nextReview() {
+        currentReview = (currentReview + 1) % reviews.length;
+        showReview(currentReview);
+    }
+    window.onload = function() { showReview(0); };
+</script>
+<footer>
+    &copy; 2025 Jnana E-Learning Platform. All rights reserved.
+</footer>
 </body>
 </html>

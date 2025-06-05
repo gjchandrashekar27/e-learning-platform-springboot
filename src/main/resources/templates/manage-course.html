@@ -2,46 +2,226 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Manage Courses</title>
+<title>Manage Courses | Tutor | Jnana</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
     body {
-        font-family: Arial, sans-serif;
-        margin-top: 50px;
+        background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+        font-family: 'Segoe UI', Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
     }
-    div {
+    .container {
+        max-width: 700px;
+        margin: 48px auto 0 auto;
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
+        padding: 36px 32px 32px 32px;
         text-align: center;
+        position: relative;
     }
-    button {
-        margin: 10px;
-        padding: 10px 20px;
-        font-size: 16px;
+    .ad-banner {
+        width: 100%;
+        max-width: 700px;
+        margin: 0 auto 24px auto;
+        background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
+        color: #fff;
+        border-radius: 12px;
+        padding: 14px 20px;
+        font-size: 1.08rem;
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        justify-content: center;
+    }
+    .ad-banner i {
+        font-size: 1.4rem;
+    }
+    h1 {
+        color: #2563eb;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+    .instructions {
+        background: #e0eafc;
+        color: #2563eb;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 1.05rem;
+        margin-bottom: 22px;
+        text-align: left;
+    }
+    .actions-section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 28px;
+        justify-content: center;
+        margin: 32px 0 18px 0;
+    }
+    .action-card {
+        background: #f5f8ff;
+        border-radius: 14px;
+        box-shadow: 0 2px 8px rgba(31,38,135,0.09);
+        padding: 24px 18px 18px 18px;
+        min-width: 180px;
+        max-width: 220px;
+        text-align: center;
+        transition: box-shadow 0.2s, transform 0.2s;
         cursor: pointer;
+        border: 2px solid transparent;
+        position: relative;
     }
-    a {
+    .action-card:hover {
+        box-shadow: 0 6px 20px rgba(79, 140, 255, 0.18);
+        border: 2px solid #4f8cff;
+        transform: translateY(-4px) scale(1.03);
+    }
+    .action-logo {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        object-fit: cover;
+        margin-bottom: 10px;
+        border: 2px solid #e0eafc;
+        background: #fff;
+    }
+    .action-title {
+        font-size: 1.08rem;
+        font-weight: 600;
+        color: #2563eb;
+        margin-bottom: 6px;
+    }
+    .action-desc {
+        font-size: 0.97rem;
+        color: #444;
+        margin-bottom: 10px;
+    }
+    .action-btn {
+        background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 8px 22px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+        box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
+    }
+    .action-btn:hover {
+        background: linear-gradient(90deg, #2563eb 60%, #4f8cff 100%);
+        transform: translateY(-2px) scale(1.04);
+    }
+    .about-section {
+        margin: 32px auto 0 auto;
+        background: #f5f8ff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(31,38,135,0.07);
+        padding: 20px 24px;
+        text-align: left;
+        font-size: 1rem;
+        color: #2d3a4b;
+        max-width: 700px;
+    }
+    .about-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #2563eb;
+        margin-bottom: 8px;
+    }
+    .about-logo {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 10px;
+        vertical-align: middle;
+        border: 2px solid #4f8cff;
+    }
+    .about-company {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+    .about-links a {
+        color: #2563eb;
         text-decoration: none;
+        margin-right: 12px;
+        font-weight: 500;
+        transition: color 0.2s;
+    }
+    .about-links a:hover {
+        color: #4f8cff;
+        text-decoration: underline;
+    }
+    @media (max-width: 800px) {
+        .container, .ad-banner, .about-section { max-width: 98vw; }
+        .actions-section { flex-direction: column; }
+        .action-card { min-width: 0; width: 100%; }
     }
 </style>
 </head>
 <body>
-<div align="center">
-    <h1>Manage Courses</h1>
-	
+<div class="ad-banner">
+    <i class="fa-solid fa-bullhorn"></i>
+    <span>🚀 Boost your courses! Add new content and engage more learners today.</span>
+</div>
+<div class="container">
+    <h1><i class="fa fa-book"></i> Manage Courses</h1>
+    <h3 style="color:green" th:text="${session.pass}"></h3>
+    <h3 style="color:red" th:text="${session.fail}"></h3>
+    <span th:text="${@generalService.removeMessage()}"></span>
 
-	<h3 style="color:green" th:text="${session.pass}"></h3>
-		<h3 style="color:red" th:text="${session.fail}"></h3>
-		<span th:text="${@generalService.removeMessage()}"></span>
+    <div class="instructions">
+        <strong>Instructions:</strong>
+        <ul style="margin:6px 0 0 18px;padding:0;font-size:0.98rem;">
+            <li>Click <b>Add Course</b> to create a new course for your learners.</li>
+            <li>Use <b>View All Courses</b> to see, edit, or remove your existing courses.</li>
+            <li>Keep your course content updated and engaging for better learner outcomes.</li>
+        </ul>
+    </div>
 
-    <a href="/tutor/add-course">
-        <button>Add Course</button>
-    </a>
+    <div class="actions-section">
+        <div class="action-card" onclick="location.href='/tutor/add-course'">
+            <img class="action-logo" src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=80&q=80" alt="Add Course">
+            <div class="action-title">Add Course</div>
+            <div class="action-desc">Create a new course and share your expertise with learners.</div>
+            <a href="/tutor/add-course"><button class="action-btn"><i class="fa fa-plus"></i> Add Course</button></a>
+        </div>
+        <div class="action-card" onclick="location.href='/tutor/view-courses'">
+            <img class="action-logo" src="https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&w=80&h=80&fit=crop" alt="View Courses">
+            <div class="action-title">View All Courses</div>
+            <div class="action-desc">See all your courses, edit details, or remove outdated ones.</div>
+            <a href="/tutor/view-courses"><button class="action-btn"><i class="fa fa-list"></i> View Courses</button></a>
+        </div>
+        <div class="action-card" onclick="location.href='/tutor/home'">
+            <img class="action-logo" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Back">
+            <div class="action-title">Back to Dashboard</div>
+            <div class="action-desc">Return to your main tutor dashboard and explore more features.</div>
+            <a href="/tutor/home"><button class="action-btn"><i class="fa fa-arrow-left"></i> Back</button></a>
+        </div>
+    </div>
+</div>
 
-    <a href="/tutor/view-courses">
-        <button>View All Courses</button>
-    </a>
-
-    <a href="/tutor/home">
-        <button>Back</button>
-    </a>
+<div class="about-section">
+    <div class="about-title">About Courses on Jnana</div>
+    <div class="about-company">
+        <img class="about-logo" src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=80&q=80" alt="Jnana Logo">
+        <span><strong>Jnana E-Learning Platform</strong> <span style="color:#2563eb;">| Empowering Tutors</span></span>
+    </div>
+    <div>
+        Courses are the heart of Jnana. As a tutor, you can create, update, and manage your courses to provide the best learning experience. Keep your content fresh, use multimedia, and track learner progress for maximum impact.
+    </div>
+    <div class="about-links" style="margin-top:10px;">
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Help</a>
+    </div>
 </div>
 </body>
 </html>

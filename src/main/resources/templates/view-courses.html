@@ -2,43 +2,237 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>View Courses</title>
+  <title>View Courses | Tutor | Jnana</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    .ad-banner {
+      width: 100%;
+      max-width: 900px;
+      margin: 32px auto 0 auto;
+      background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 14px 20px;
+      font-size: 1.08rem;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      justify-content: center;
+    }
+    .ad-banner i {
+      font-size: 1.4rem;
+    }
+    .container {
+      max-width: 900px;
+      margin: 32px auto 0 auto;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
+      padding: 36px 32px 32px 32px;
+      text-align: center;
+      position: relative;
+    }
+    h1 {
+      color: #2563eb;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .instructions {
+      background: #e0eafc;
+      color: #2563eb;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 1.05rem;
+      margin-bottom: 22px;
+      text-align: left;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0 0 0;
+      background: #f5f8ff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(31,38,135,0.07);
+    }
+    th, td {
+      padding: 16px 12px;
+      text-align: left;
+      font-size: 1rem;
+    }
+    th {
+      background: #2563eb;
+      color: #fff;
+      font-weight: 600;
+      border-bottom: 2px solid #4f8cff;
+    }
+    tr {
+      transition: background 0.2s;
+    }
+    tr:hover {
+      background: #e0eafc;
+    }
+    td {
+      color: #2d3a4b;
+      vertical-align: middle;
+    }
+    .course-title {
+      font-weight: 600;
+      color: #2563eb;
+      font-size: 1.08rem;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 0.97rem;
+      font-weight: 600;
+      color: #fff;
+    }
+    .badge-paid {
+      background: #eab308;
+      color: #2d3a4b;
+    }
+    .badge-free {
+      background: #22c55e;
+    }
+    .badge-published {
+      background: #2563eb;
+    }
+    .badge-unpublished {
+      background: #e74c3c;
+    }
+    .action-btn, .publish-btn {
+      background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
+      margin-right: 8px;
+    }
+    .action-btn:hover, .publish-btn:hover {
+      background: linear-gradient(90deg, #2563eb 60%, #4f8cff 100%);
+      transform: translateY(-2px) scale(1.04);
+    }
+    .published-label {
+      font-weight: 600;
+      color: #22c55e;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .published-label i {
+      color: #22c55e;
+    }
+    .back-btn {
+      margin-top: 24px;
+      background: #e0eafc;
+      color: #2563eb;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 32px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .back-btn:hover {
+      background: #2563eb;
+      color: #fff;
+    }
+    @media (max-width: 1000px) {
+      .container, .ad-banner { max-width: 98vw; padding: 18px 4vw 18px 4vw; }
+      table, th, td { font-size: 0.97rem; }
+    }
+    @media (max-width: 700px) {
+      table, thead, tbody, th, td, tr { display: block; }
+      thead tr { display: none; }
+      tr { margin-bottom: 18px; }
+      td {
+        padding: 10px 8px;
+        border-bottom: 1px solid #e0eafc;
+        position: relative;
+      }
+      td:before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #2563eb;
+        display: block;
+        margin-bottom: 4px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div align="center">
-    <h1>View Courses</h1>
-
-    <table border="1">
-      <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Type</th>
-        <th>Action</th>
-      </tr>
-
-      <tr th:each="course : ${courses}">
-        <td th:text="${course.title}"></td>
-        <td th:text="${course.description}"></td>
-        <td>
-          <span th:if="${course.paid}">Paid</span>
-          <span th:if="${!course.paid}">Free</span>
-        </td>
-    
-    <td>
-  <a th:if="${course.published == false}" th:href="@{'/tutor/publish/' + ${course.id}}">
-    <button>Publish</button>
-  </a>
-  <span th:if="${course.published == true}">Published</span>
-</td>
-    
-     
-       
-      </tr>
-
+  <div class="ad-banner">
+    <i class="fa-solid fa-bullhorn"></i>
+    <span>🚀 Keep your courses up to date! Publish new content and engage more learners.</span>
+  </div>
+  <div class="container">
+    <h1><i class="fa fa-book"></i> All Your Courses</h1>
+    <div class="instructions">
+      <strong>Instructions:</strong>
+      <ul style="margin:6px 0 0 18px;padding:0;font-size:0.98rem;">
+        <li>Review your courses below. Use <b>Publish</b> to make a course live for learners.</li>
+        <li>Edit or remove courses as needed to keep your content fresh and relevant.</li>
+        <li>Published courses are visible to all learners on the platform.</li>
+      </ul>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="course : ${courses}">
+          <td data-label="Title">
+            <span class="course-title" th:text="${course.title}"></span>
+          </td>
+          <td data-label="Description" th:text="${course.description}"></td>
+          <td data-label="Type">
+            <span th:if="${course.paid == true}" class="badge badge-paid"><i class="fa fa-rupee-sign"></i> Paid</span>
+            <span th:if="${course.paid == false}" class="badge badge-free"><i class="fa fa-gift"></i> Free</span>
+          </td>
+          <td data-label="Status">
+            <span th:if="${course.published == true}" class="badge badge-published"><i class="fa fa-check-circle"></i> Published</span>
+            <span th:if="${course.published == false}" class="badge badge-unpublished"><i class="fa fa-clock"></i> Unpublished</span>
+          </td>
+          <td data-label="Action">
+            <a th:if="${course.published == false}" th:href="@{'/tutor/publish/' + ${course.id}}">
+              <button class="publish-btn"><i class="fa fa-upload"></i> Publish</button>
+            </a>
+            <span th:if="${course.published == true}" class="published-label"><i class="fa fa-check"></i> Published</span>
+            <a th:href="@{'/tutor/edit-course/' + ${course.id}}">
+              <button class="action-btn"><i class="fa fa-edit"></i> Edit</button>
+            </a>
+            <a th:href="@{'/tutor/delete-course/' + ${course.id}}" onclick="return confirm('Are you sure you want to delete this course?');">
+              <button class="action-btn" style="background: #e74c3c; color: #fff;"><i class="fa fa-trash"></i> Delete</button>
+            </a>
+          </td>
+        </tr>
+      </tbody>
     </table>
-
-    <br>
-    <a href="/tutor/courses"><button>Back</button></a>
+    <a href="/tutor/courses"><button class="back-btn"><i class="fa fa-arrow-left"></i> Back</button></a>
   </div>
 </body>
 </html>

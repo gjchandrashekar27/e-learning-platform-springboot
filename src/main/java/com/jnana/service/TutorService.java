@@ -1,6 +1,7 @@
 package com.jnana.service;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -213,10 +214,37 @@ public class TutorService {
 	    return cloudinaryService.uploadNotes(notes); // correct method for notes
 	}
 
+	public String loadViewSections(HttpSession session, Model model) {
+	    if (session.getAttribute("tutor") != null) {
+	        Tutor tutor = (Tutor) session.getAttribute("tutor");
+	        List<Course> courses = courseRepository.findByTutor(tutor);
+	        if (courses.isEmpty()) {
+	            session.setAttribute("fail", "No courses found! Please add a course first.");
+	            return "redirect:/tutor/courses";
+	        }
+
+	        Map<Long, List<Section>> courseSectionsMap = new HashMap<>();
+	        for (Course course : courses) {
+	            List<Section> sections = sectionRepository.findByCourseId(course.getId());
+	            courseSectionsMap.put(course.getId(), sections);
+	        }
+
+	        model.addAttribute("courses", courses);
+	        model.addAttribute("courseSectionsMap", courseSectionsMap);
+
+	        return "view-sections.html";
+	    }
+	    session.setAttribute("fail", "Invalid Session, Login First");
+	    return "redirect:/login";
+	}
+	}
+
 	
 
 	
-}
+
+	
+
 
 	
 

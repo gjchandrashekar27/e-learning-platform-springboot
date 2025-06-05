@@ -10,5 +10,9 @@ import com.jnana.entity.Section;
 public interface SectionRepository  extends JpaRepository<Section, Long>{
 
 	List<Section> findByCourse(Course course);
+	
+	
+
+	List<Section> findByCourseId(Long id);
 
 }

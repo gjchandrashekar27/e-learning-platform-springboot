@@ -3,29 +3,299 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .ad-banner {
+            width: 100%;
+            max-width: 420px;
+            margin: 32px auto 0 auto;
+            background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
+            color: #fff;
+            border-radius: 12px;
+            padding: 16px 20px;
+            font-size: 1.08rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            justify-content: center;
+        }
+        .ad-banner i {
+            font-size: 1.4rem;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255,255,255,0.98);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
+            padding: 40px 32px 32px 32px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.7s;
+            margin: 32px auto 0 auto;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .container::before {
+            content: "";
+            position: absolute;
+            top: -60px; left: -60px;
+            width: 160px; height: 160px;
+            background: linear-gradient(135deg, #4f8cff 0%, #e0eafc 100%);
+            opacity: 0.12;
+            border-radius: 50%;
+            z-index: 0;
+        }
+        .app-icon {
+            font-size: 2.5rem;
+            color: #4f8cff;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+        h1 {
+            color: #2d3a4b;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            font-size: 2rem;
+            font-weight: 700;
+            z-index: 1;
+            position: relative;
+        }
+        h3 {
+            margin: 10px 0;
+            font-weight: 500;
+            z-index: 1;
+            position: relative;
+        }
+        .message {
+            min-height: 24px;
+            z-index: 1;
+            position: relative;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 12px;
+            margin-top: 10px;
+            z-index: 1;
+            position: relative;
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+            background: #f5f8ff;
+            border-radius: 8px;
+            border: 1px solid #b6c6e0;
+            padding: 0 10px;
+            margin-bottom: 2px;
+            transition: border 0.2s;
+        }
+        .input-group:focus-within {
+            border: 1.5px solid #4f8cff;
+            background: #e0eafc;
+        }
+        .input-group i {
+            color: #4f8cff;
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+        .input-group input {
+            border: none;
+            background: transparent;
+            outline: none;
+            padding: 12px 0;
+            font-size: 1rem;
+            width: 100%;
+        }
+        .captcha-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 2px;
+        }
+        .captcha-text {
+            font-size: 18px;
+            color: #2563eb;
+            font-weight: bold;
+            letter-spacing: 2px;
+            background: #e0eafc;
+            padding: 4px 12px;
+            border-radius: 6px;
+            user-select: none;
+        }
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        button {
+            background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 32px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
+        }
+        button:hover {
+            background: linear-gradient(90deg, #2563eb 60%, #4f8cff 100%);
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 4px 16px rgba(79, 140, 255, 0.18);
+        }
+        .btn-link {
+            background: none;
+            color: #4f8cff;
+            border: none;
+            padding: 0;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: underline;
+            transition: color 0.2s;
+        }
+        .btn-link:hover {
+            color: #2563eb;
+        }
+        /* About Section */
+        .about-section {
+            max-width: 420px;
+            margin: 32px auto 0 auto;
+            background: #f5f8ff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(31,38,135,0.07);
+            padding: 20px 24px;
+            text-align: left;
+            font-size: 1rem;
+            color: #2d3a4b;
+        }
+        .about-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 8px;
+        }
+        .about-logo {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+            vertical-align: middle;
+            border: 2px solid #4f8cff;
+        }
+        .about-company {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .about-links a {
+            color: #2563eb;
+            text-decoration: none;
+            margin-right: 12px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .about-links a:hover {
+            color: #4f8cff;
+            text-decoration: underline;
+        }
+        @media (max-width: 500px) {
+            .container, .ad-banner, .about-section {
+                padding: 18px 4vw 18px 4vw;
+            }
+            h1 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<div align="center">
-    <h1>Login</h1>
+<div class="ad-banner">
+    <i class="fa-solid fa-gift"></i>
+    <span>🎉 Limited Time: Get 30% OFF on your first course! <a href="/register" style="color:#fff;text-decoration:underline;">Register Now</a></span>
+</div>
+
+<div class="container">
+    <div class="app-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+    <h1>Login to Jnana</h1>
 
     <h3 style="color: green;" th:text="${session.pass}"></h3>
     <h3 style="color: red;" th:text="${session.fail}"></h3>
-    <span th:text="${@generalService.removeMessage()}"></span>
+    <span class="message" th:text="${@generalService.removeMessage()}"></span>
 
-    <form action="/login" method="post">
-        Email: <input type="email" name="email" required> <br><br>
+    <form action="/login" method="post" autocomplete="off">
+        <div class="input-group">
+            <i class="fa fa-envelope"></i>
+            <input type="email" id="email" name="email" placeholder="Email" required>
+        </div>
 
-        Password: <input type="password" name="password" required> <br><br>
+        <div class="input-group">
+            <i class="fa fa-lock"></i>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+        </div>
 
-        <!-- CAPTCHA Section -->
-        Enter CAPTCHA: <input type="text" name="captchaInput" required />
-        <b th:text="${captcha}" style="font-size: 18px; color: blue;"></b> <br><br>
+        <label for="captchaInput" style="text-align:left; color:#333; font-weight:500; margin-bottom:2px;">Enter CAPTCHA</label>
+        <div class="captcha-row">
+            <input type="text" id="captchaInput" name="captchaInput" required style="flex:1; border-radius:8px; border:1px solid #b6c6e0; padding:8px;">
+            <b class="captcha-text" th:text="${captcha}"></b>
+        </div>
 
-        <button type="submit">Login</button> <br><br>
+        <div class="btn-group">
+            <button type="submit"><i class="fa fa-sign-in-alt"></i> Login</button>
+            <a href="/forget-password"><button type="button" class="btn-link"><i class="fa fa-question-circle"></i> Forgot Password?</button></a>
+        </div>
     </form>
+</div>
 
-    <a href="/forget-password"><button>Forget Password</button></a>
+<div class="about-section">
+    <div class="about-title">About Jnana</div>
+    <div class="about-company">
+        <img class="about-logo" src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=80&q=80" alt="Jnana Logo">
+        <span><strong>Jnana E-Learning Platform</strong> <span style="color:#2563eb;">| Est. 2020</span></span>
+    </div>
+    <div>
+        Jnana is a leading e-learning platform dedicated to empowering learners and educators worldwide. We offer interactive courses, live classes, expert tutors, and a vibrant learning community.
+    </div>
+    <div style="margin:10px 0 0 0;">
+        <span style="font-weight:600;color:#2563eb;">Why Jnana?</span>
+        <ul style="margin:8px 0 0 18px;padding:0;font-size:0.98rem;">
+            <li>Live & recorded classes</li>
+            <li>Achievements & badges</li>
+            <li>Mobile-friendly learning</li>
+            <li>24/7 support</li>
+        </ul>
+    </div>
+    <div class="about-links" style="margin-top:10px;">
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy Policy</a>
+    </div>
+    <div style="margin-top:8px;font-size:0.95rem;color:#888;">
+        &copy; 2020-2025 Jnana E-Learning Platform. All rights reserved.
+    </div>
 </div>
 
 </body>

@@ -3,21 +3,513 @@
 <head>
 <meta charset="UTF-8">
 <title>Home</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+    body {
+        background: linear-gradient(135deg, #e0eafc, #cfdef3);
+        font-family: 'Segoe UI', Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 520px;
+        margin: 80px auto 32px auto;
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
+        padding: 0 0 30px 0;
+        text-align: center;
+        position: relative;
+        z-index: 2;
+        overflow: hidden;
+    }
+    .hero-img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 18px 18px 0 0;
+        margin-bottom: 0;
+    }
+    .hero-icon {
+        font-size: 3rem;
+        color: #4f8cff;
+        margin-bottom: 10px;
+        animation: bounce 1.5s infinite alternate;
+        margin-top: -40px;
+        background: #fff;
+        border-radius: 50%;
+        width: 70px;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 0 2px 8px rgba(31,38,135,0.07);
+        position: relative;
+        z-index: 2;
+    }
+    @keyframes bounce {
+        to { transform: translateY(-10px);}
+    }
+    h1 {
+        color: #2d3a4b;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+        font-size: 2.1rem;
+        font-weight: 700;
+    }
+    .welcome {
+        font-size: 1.15rem;
+        color: #555;
+        margin-bottom: 24px;
+    }
+    .cta {
+        background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
+        color: #fff;
+        border-radius: 10px;
+        padding: 16px 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 24px;
+        box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
+        animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(79,140,255,0.15);}
+        70% { box-shadow: 0 0 0 10px rgba(79,140,255,0);}
+        100% { box-shadow: 0 0 0 0 rgba(79,140,255,0);}
+    }
+    .btn-group {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+    .btn-group a {
+        text-decoration: none;
+    }
+    button {
+        background: #4f8cff;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 32px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+        box-shadow: 0 2px 8px rgba(79, 140, 255, 0.1);
+    }
+    button:hover {
+        background: #2563eb;
+        transform: translateY(-2px) scale(1.05);
+    }
+    /* Achievements */
+    .achievements {
+        margin: 36px auto 0 auto;
+        max-width: 900px;
+        display: flex;
+        justify-content: space-around;
+        gap: 18px;
+        flex-wrap: wrap;
+    }
+    .achievement-card {
+        background: #f5f8ff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(31,38,135,0.07);
+        padding: 18px 24px 10px 24px;
+        min-width: 160px;
+        flex: 1 1 160px;
+        text-align: center;
+        margin: 8px 0;
+        position: relative;
+    }
+    .achievement-img {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 6px;
+        border: 2px solid #4f8cff;
+        background: #fff;
+    }
+    .achievement-card i {
+        color: #4f8cff;
+        font-size: 1.7rem;
+        margin-bottom: 6px;
+    }
+    .achievement-title {
+        font-weight: 600;
+        color: #2d3a4b;
+        margin-top: 6px;
+        font-size: 1.05rem;
+    }
+    .achievement-value {
+        font-size: 1.3rem;
+        color: #2563eb;
+        font-weight: 700;
+        margin-top: 2px;
+    }
+    /* Reviews Carousel */
+    .reviews-section {
+        margin: 48px auto 0 auto;
+        max-width: 900px;
+        text-align: center;
+    }
+    .reviews-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #2d3a4b;
+        margin-bottom: 12px;
+    }
+    .carousel {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+    }
+    .review-card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(31,38,135,0.09);
+        padding: 18px 22px 12px 22px;
+        min-width: 220px;
+        max-width: 260px;
+        text-align: left;
+        position: relative;
+        font-size: 1rem;
+        color: #444;
+        transition: box-shadow 0.2s, background 0.3s;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .review-card .fa-quote-left {
+        color: #4f8cff;
+        font-size: 1.1rem;
+        margin-right: 6px;
+    }
+    .review-avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 8px;
+        border: 2px solid #2563eb;
+        background: #fff;
+        align-self: center;
+    }
+    .review-author {
+        margin-top: 10px;
+        font-weight: 600;
+        color: #2563eb;
+        font-size: 0.98rem;
+        align-self: flex-end;
+    }
+    .carousel-btn {
+        background: #e0eafc;
+        border: none;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        font-size: 1.2rem;
+        color: #4f8cff;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+    }
+    .carousel-btn:hover {
+        background: #4f8cff;
+        color: #fff;
+    }
+    /* Advertisement */
+    .ad-section {
+        margin: 32px auto 0 auto;
+        max-width: 900px;
+        text-align: center;
+    }
+    .ad-banner {
+        background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
+        color: #fff;
+        border-radius: 12px;
+        padding: 18px 24px;
+        font-size: 1.15rem;
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+    }
+    .ad-banner i {
+        font-size: 1.5rem;
+        margin-right: 8px;
+    }
+    /* Features Section */
+    .features-section {
+        max-width:900px;
+        margin:48px auto 0 auto;
+        padding:0 12px;
+    }
+    .features-title {
+        color:#2563eb;
+        font-size:1.3rem;
+        margin-bottom:18px;
+        text-align:center;
+    }
+    .features-list {
+        display:flex;
+        flex-wrap:wrap;
+        gap:24px;
+        justify-content:center;
+    }
+    .feature-card {
+        flex:1 1 220px;
+        min-width:220px;
+        max-width:300px;
+        background:#f5f8ff;
+        border-radius:12px;
+        padding:18px 20px;
+        box-shadow:0 2px 8px rgba(31,38,135,0.07);
+        margin-bottom:12px;
+        text-align:center;
+    }
+    .feature-card:nth-child(2) { background: #e0ffe7; }
+    .feature-card:nth-child(3) { background: #fffbe0; }
+    .feature-card:nth-child(4) { background: #e0eaff; }
+    .feature-card i {
+        font-size:1.5rem;
+        margin-bottom:8px;
+        display:block;
+    }
+    .feature-title {
+        font-weight:600;
+        margin-bottom:6px;
+    }
+    .feature-desc {
+        font-size:0.98rem;
+        color:#444;
+    }
+    /* Footer */
+    footer {
+        margin-top: 48px;
+        background: #f5f8ff;
+        color: #444;
+        text-align: center;
+        padding: 18px 0 8px 0;
+        font-size: 0.98rem;
+        border-top: 1px solid #e0eafc;
+    }
+    .footer-links {
+        margin-bottom: 8px;
+    }
+    .footer-links a {
+        color: #2563eb;
+        text-decoration: none;
+        margin: 0 8px;
+        font-weight: 500;
+        transition: color 0.2s;
+    }
+    .footer-links a:hover {
+        color: #4f8cff;
+        text-decoration: underline;
+    }
+    @media (max-width: 700px) {
+        .achievements, .reviews-section, .ad-section, .features-section {
+            flex-direction: column;
+            max-width: 98vw;
+        }
+        .achievement-card, .review-card, .ad-banner, .feature-card {
+            min-width: 0;
+            width: 100%;
+        }
+        .carousel {
+            flex-direction: column;
+        }
+        .hero-img {
+            height: 120px;
+        }
+    }
+</style>
 </head>
 <body>
 
-<div align="center">
-<h1> Jnana E-Learning Platform</h1>
+<div class="container">
+    <img class="hero-img" src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=800&q=80" alt="Learning Banner">
+    <div class="hero-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+    <h1>Jnana E-Learning Platform</h1>
+    <div class="welcome">Empowering your learning journey. Join us today!</div>
+    <div class="cta">
+        <i class="fa-solid fa-bolt"></i> Start learning with top tutors and interactive courses!
+    </div>
 
-<h3 style="color:green" th:text="${session.pass}"></h3>
-	<h3 style="color:red" th:text="${session.fail}"></h3>
-	<span th:text="${@generalService.removeMessage()}"></span>
-	
-<a href="/login"><button>Login</button> </a>  
-        
-<a href="/register"><button>Register</button></a>
+    <h3 style="color:green" th:text="${session.pass}"></h3>
+    <h3 style="color:red" th:text="${session.fail}"></h3>
+    <span th:text="${@generalService.removeMessage()}"></span>
 
+    <div class="btn-group">
+        <a href="/login"><button><i class="fa fa-sign-in-alt"></i> Login</button></a>
+        <a href="/register"><button><i class="fa fa-user-plus"></i> Register</button></a>
+    </div>
 </div>
+
+<!-- Achievements Section -->
+<div class="achievements">
+    <div class="achievement-card">
+        <img class="achievement-img" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Learners">
+        <div class="achievement-value">10,000+</div>
+        <div class="achievement-title">Active Learners</div>
+    </div>
+    <div class="achievement-card">
+        <img class="achievement-img" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Tutors">
+        <div class="achievement-value">500+</div>
+        <div class="achievement-title">Expert Tutors</div>
+    </div>
+    <div class="achievement-card">
+        <img class="achievement-img" src="https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&w=80&h=80&fit=crop" alt="Courses">
+        <div class="achievement-value">1,200+</div>
+        <div class="achievement-title">Courses Completed</div>
+    </div>
+    <div class="achievement-card">
+        <img class="achievement-img" src="https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&w=80&h=80&fit=crop" alt="Rating">
+        <div class="achievement-value">4.8/5</div>
+        <div class="achievement-title">Average Rating</div>
+    </div>
+</div>
+
+<!-- Advertisement Section -->
+<div class="ad-section">
+    <div class="ad-banner">
+        <i class="fa-solid fa-gift"></i>
+        <span>🎉 Summer Offer: Get 30% OFF on all premium courses! <a href="/register" style="color:#fff;text-decoration:underline;">Join Now</a></span>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="features-section">
+    <h2 class="features-title">Platform Features</h2>
+    <div class="features-list">
+        <div class="feature-card">
+            <i class="fa-solid fa-video" style="color:#4f8cff;"></i>
+            <div class="feature-title">Live & Recorded Classes</div>
+            <div class="feature-desc">Attend interactive live sessions or learn at your own pace with recorded content.</div>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-user-group" style="color:#2563eb;"></i>
+            <div class="feature-title">Expert Tutors</div>
+            <div class="feature-desc">Learn from certified and experienced educators from across the globe.</div>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-trophy" style="color:#eab308;"></i>
+            <div class="feature-title">Achievements & Badges</div>
+            <div class="feature-desc">Earn badges and certificates as you progress and complete courses.</div>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-mobile-screen" style="color:#4f8cff;"></i>
+            <div class="feature-title">Mobile Friendly</div>
+            <div class="feature-desc">Access your courses anytime, anywhere, on any device.</div>
+        </div>
+    </div>
+</div>
+
+<!-- Reviews Section -->
+<div class="reviews-section">
+    <div class="reviews-title">What Our Students Say</div>
+    <div class="carousel" id="review-carousel">
+        <button class="carousel-btn" onclick="prevReview()"><i class="fa fa-chevron-left"></i></button>
+        <div class="review-card" id="review-card">
+            <img class="review-avatar" id="review-avatar" src="https://randomuser.me/api/portraits/women/65.jpg" alt="Student">
+            <i class="fa fa-quote-left"></i>
+            <span id="review-text">"Jnana helped me ace my exams! The tutors are amazing and the platform is super easy to use."</span>
+            <div class="review-author" id="review-author">- Priya S.</div>
+        </div>
+        <button class="carousel-btn" onclick="nextReview()"><i class="fa fa-chevron-right"></i></button>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-links">
+        <a href="#">About</a> | 
+        <a href="#">Contact</a> | 
+        <a href="#">Privacy Policy</a>
+    </div>
+    <div>
+        &copy; 2020-2025 Jnana E-Learning Platform. All rights reserved.<br>
+        Established 2020. Powered by <span style="color:#2563eb;font-weight:600;">Jnana</span>.
+    </div>
+</footer>
+
+<script>
+    // Colorful reviews carousel with movie-inspired sentences and avatars
+    const reviews = [
+        {
+            text: '"Jnana helped me ace my exams! The tutors are amazing and the platform is super easy to use."',
+            author: '- Priya S.',
+            color: '#f5f8ff',
+            avatar: 'https://randomuser.me/api/portraits/women/65.jpg'
+        },
+        {
+            text: '"The interactive courses and quizzes made learning fun and effective. Highly recommend!"',
+            author: '- Rahul M.',
+            color: '#ffe4e1',
+            avatar: 'https://randomuser.me/api/portraits/men/43.jpg'
+        },
+        {
+            text: '"I love the flexibility and the quality of content. The achievements system keeps me motivated!"',
+            author: '- Ananya D.',
+            color: '#e0ffe7',
+            avatar: 'https://randomuser.me/api/portraits/women/68.jpg'
+        },
+        {
+            text: '"Great support and a wonderful community of learners and teachers."',
+            author: '- Suresh K.',
+            color: '#fffbe0',
+            avatar: 'https://randomuser.me/api/portraits/men/77.jpg'
+        },
+        {
+            text: '"May the course be with you. Jnana is my Yoda!"',
+            author: '- Star Learner',
+            color: '#e0eaff',
+            avatar: 'https://randomuser.me/api/portraits/men/23.jpg'
+        },
+        {
+            text: '"I\'m going to make my future an offer it can\'t refuse—with Jnana!"',
+            author: '- Movie Buff',
+            color: '#f0e0ff',
+            avatar: 'https://randomuser.me/api/portraits/men/12.jpg'
+        },
+        {
+            text: '"Just keep learning, just keep learning!"',
+            author: '- Dory',
+            color: '#e0fff6',
+            avatar: 'https://randomuser.me/api/portraits/women/12.jpg'
+        },
+        {
+            text: '"To infinity and beyond—my knowledge grows every day!"',
+            author: '- Buzz',
+            color: '#fff0e0',
+            avatar: 'https://randomuser.me/api/portraits/men/55.jpg'
+        }
+    ];
+    let currentReview = 0;
+    function showReview(idx) {
+        document.getElementById('review-text').innerText = reviews[idx].text;
+        document.getElementById('review-author').innerText = reviews[idx].author;
+        document.getElementById('review-card').style.background = reviews[idx].color;
+        document.getElementById('review-avatar').src = reviews[idx].avatar;
+    }
+    function prevReview() {
+        currentReview = (currentReview - 1 + reviews.length) % reviews.length;
+        showReview(currentReview);
+    }
+    function nextReview() {
+        currentReview = (currentReview + 1) % reviews.length;
+        showReview(currentReview);
+    }
+    // Show initial review with color and avatar
+    window.onload = function() { showReview(0); };
+</script>
 
 </body>
 </html>

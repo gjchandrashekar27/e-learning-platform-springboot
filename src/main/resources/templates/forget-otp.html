@@ -2,33 +2,171 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Reset Password | Jnana</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+    body {
+        background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+        font-family: 'Segoe UI', Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+    }
+    .container {
+        width: 100%;
+        max-width: 400px;
+        background: rgba(255,255,255,0.98);
+        border-radius: 18px;
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
+        padding: 36px 32px 32px 32px;
+        text-align: center;
+        margin: 60px auto 0 auto;
+        animation: fadeIn 0.7s;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(30px);}
+        to { opacity: 1; transform: translateY(0);}
+    }
+    .icon {
+        font-size: 2.2rem;
+        color: #4f8cff;
+        margin-bottom: 10px;
+    }
+    h2 {
+        color: #2d3a4b;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
+    .instructions {
+        background: #e0eafc;
+        color: #2563eb;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 1rem;
+        margin-bottom: 18px;
+        text-align: left;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        margin-top: 10px;
+    }
+    .input-group {
+        display: flex;
+        align-items: center;
+        background: #f5f8ff;
+        border-radius: 8px;
+        border: 1px solid #b6c6e0;
+        padding: 0 10px;
+        margin-bottom: 2px;
+        transition: border 0.2s;
+    }
+    .input-group:focus-within {
+        border: 1.5px solid #4f8cff;
+        background: #e0eafc;
+    }
+    .input-group i {
+        color: #4f8cff;
+        margin-right: 8px;
+        font-size: 1.1rem;
+    }
+    .input-group input {
+        border: none;
+        background: transparent;
+        outline: none;
+        padding: 12px 0;
+        font-size: 1rem;
+        width: 100%;
+    }
+    button[type="submit"] {
+        background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 32px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
+        margin-top: 8px;
+    }
+    button[type="submit"]:hover {
+        background: linear-gradient(90deg, #2563eb 60%, #4f8cff 100%);
+        transform: translateY(-2px) scale(1.04);
+        box-shadow: 0 4px 16px rgba(79, 140, 255, 0.18);
+    }
+    .success-message {
+        color: #27ae60;
+        margin-top: 8px;
+        font-weight: 500;
+    }
+    .error-message {
+        color: #e74c3c;
+        margin-top: 8px;
+        font-weight: 500;
+    }
+    .back-link {
+        display: inline-block;
+        margin-top: 18px;
+        color: #2563eb;
+        text-decoration: underline;
+        font-weight: 500;
+        transition: color 0.2s;
+    }
+    .back-link:hover {
+        color: #4f8cff;
+    }
+    @media (max-width: 500px) {
+        .container {
+            padding: 18px 4vw 18px 4vw;
+        }
+        h2 {
+            font-size: 1.1rem;
+        }
+    }
+</style>
 </head>
 <body>
+<div class="container">
+    <div class="icon"><i class="fa-solid fa-lock-open"></i></div>
+    <h2>Reset Your Password</h2>
+    <div class="instructions">
+        Enter the OTP sent to your email and set a new password.<br>
+        <ul style="margin:8px 0 0 18px;padding:0;font-size:0.97rem;">
+            <li>OTP is valid for a limited time.</li>
+            <li>Password must be at least 6 characters.</li>
+            <li>Both passwords must match.</li>
+        </ul>
+    </div>
+    <h3 style="color:green" th:text="${session.pass}"></h3>
+    <h3 style="color:red" th:text="${session.fail}"></h3>
+    <span th:text="${@generalService.removeMessage()}"></span>
 
-<div align="center">
-
-
-<h3 style="color:green" th:text="${session.pass}"></h3>
-	<h3 style="color:red" th:text="${session.fail}"></h3>
-	<span th:text="${@generalService.removeMessage()}"></span>
-
- <form action="/submit-forget-otp" method="post">
-        <label>OTP:</label>
-        <input type="number" name="otp" required><br><br>
-
-        <label>New Password:</label>
-        <input type="password" name="newPassword" required><br><br>
-
-        <label>Confirm Password:</label>
-        <input type="password" name="confirmPassword" required><br><br>
-
-        <button type="submit">Reset Password</button>
+    <form action="/submit-forget-otp" method="post">
+        <div class="input-group">
+            <i class="fa fa-key"></i>
+            <input type="number" name="otp" placeholder="Enter OTP" required>
+        </div>
+        <div class="input-group">
+            <i class="fa fa-lock"></i>
+            <input type="password" name="newPassword" placeholder="New Password" required>
+        </div>
+        <div class="input-group">
+            <i class="fa fa-lock"></i>
+            <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
+        </div>
+        <button type="submit"><i class="fa fa-sync"></i> Reset Password</button>
     </form>
 
-    <a href="/forgot-password">Back to Email Entry</a>
-    
-  </div>
-
+    <a class="back-link" href="/forget-password"><i class="fa fa-arrow-left"></i> Back to Email Entry</a>
+</div>
 </body>
 </html>

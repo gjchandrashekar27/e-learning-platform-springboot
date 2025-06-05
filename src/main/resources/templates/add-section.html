@@ -1,31 +1,162 @@
-<!DOCTYPE html>Add commentMore actions
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Add Section</title>
+<title>Add Section | Tutor | Jnana</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+    body {
+        background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+        font-family: 'Segoe UI', Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+    }
+    .container {
+        max-width: 480px;
+        margin: 48px auto 0 auto;
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
+        padding: 36px 32px 32px 32px;
+        text-align: center;
+        position: relative;
+    }
+    h1 {
+        color: #2563eb;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+    .instructions {
+        background: #e0eafc;
+        color: #2563eb;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 1.05rem;
+        margin-bottom: 22px;
+        text-align: left;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        margin-top: 10px;
+    }
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 4px;
+    }
+    label {
+        font-weight: 600;
+        color: #2d3a4b;
+        margin-bottom: 4px;
+    }
+    input[type="text"], select, input[type="file"] {
+        width: 100%;
+        border-radius: 8px;
+        border: 1px solid #b6c6e0;
+        padding: 10px;
+        font-size: 1rem;
+        background: #f5f8ff;
+        transition: border 0.2s;
+    }
+    input[type="text"]:focus, select:focus, input[type="file"]:focus {
+        border: 1.5px solid #4f8cff;
+        background: #e0eafc;
+        outline: none;
+    }
+    .error-message {
+        color: #e74c3c;
+        font-size: 0.97em;
+        margin-top: 2px;
+        min-height: 18px;
+    }
+    button[type="submit"], .back-btn {
+        background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 32px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
+        margin-top: 8px;
+    }
+    button[type="submit"]:hover, .back-btn:hover {
+        background: linear-gradient(90deg, #2563eb 60%, #4f8cff 100%);
+        transform: translateY(-2px) scale(1.04);
+        box-shadow: 0 4px 16px rgba(79, 140, 255, 0.18);
+    }
+    .back-btn {
+        background: #e0eafc;
+        color: #2563eb;
+        margin-top: 18px;
+    }
+    .back-btn:hover {
+        background: #2563eb;
+        color: #fff;
+    }
+    @media (max-width: 600px) {
+        .container { max-width: 98vw; padding: 18px 4vw 18px 4vw; }
+        h1 { font-size: 1.3rem; }
+    }
+    footer {
+        width: 100%;
+        text-align: center;
+        padding: 18px 0 8px 0;
+        color: #2563eb;
+        font-size: 0.98rem;
+        opacity: 0.85;
+        margin-top: 32px;
+    }
+</style>
 </head>
 <body>
-	<div align="center">
-		<h1>Add Section</h1>
-
-		<form action="/tutor/add-section" method="post"
-			th:object="${sectionDto}" enctype="multipart/form-data">
-			Title: <input type="text" th:field="*{title}"> <span
-				th:errors="*{title}"></span> <br> <br> Upload Video: <input
-				type="file" th:field="*{video}" accept="video/*"> <span
-				th:errors="*{video}"></span> <br> <br> Upload Notes: <input
-				type="file" th:field="*{notes}" accept="application/pdf"> <span
-				th:errors="*{notes}"></span> <br> <br> Select Course: <select
-				name="courseId">
-				<option th:each="course:${courses}" th:value="${course.id}">
-					<th:block th:text="${course.title}"></th:block>
-				</option>
-
-			</select> <br> <br>
-			<button>Add</button>
-		</form>
-
-		<br> <a href="/tutor/sections"><button>Back</button></a>
-	</div>
+    <div class="container">
+        <h1><i class="fa fa-plus-square"></i> Add Section</h1>
+        <div class="instructions">
+            <strong>Instructions:</strong>
+            <ul style="margin:6px 0 0 18px;padding:0;font-size:0.98rem;">
+                <li>Enter a clear <b>Title</b> for your section.</li>
+                <li>Upload a <b>Video</b> (MP4, AVI, etc.) to make your section interactive.</li>
+                <li>Upload <b>Notes</b> (PDF) to provide additional resources for learners.</li>
+                <li>Select the <b>Course</b> this section belongs to.</li>
+            </ul>
+        </div>
+        <form action="/tutor/add-section" method="post" th:object="${sectionDto}" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title"><i class="fa fa-heading"></i> Title</label>
+                <input type="text" th:field="*{title}" id="title" placeholder="Enter section title">
+                <span class="error-message" th:errors="*{title}"></span>
+            </div>
+            <div class="form-group">
+                <label for="video"><i class="fa fa-video"></i> Upload Video</label>
+                <input type="file" th:field="*{video}" id="video" accept="video/*">
+                <span class="error-message" th:errors="*{video}"></span>
+            </div>
+            <div class="form-group">
+                <label for="notes"><i class="fa fa-file-pdf"></i> Upload Notes (PDF)</label>
+                <input type="file" th:field="*{notes}" id="notes" accept="application/pdf">
+                <span class="error-message" th:errors="*{notes}"></span>
+            </div>
+            <div class="form-group">
+                <label for="courseId"><i class="fa fa-book"></i> Select Course</label>
+                <select name="courseId" id="courseId">
+                    <option th:each="course:${courses}" th:value="${course.id}" th:text="${course.title}"></option>
+                </select>
+            </div>
+            <button type="submit"><i class="fa fa-plus"></i> Add Section</button>
+        </form>
+        <a href="/tutor/sections"><button class="back-btn"><i class="fa fa-arrow-left"></i> Back</button></a>
+    </div>
+    <footer>
+        &copy; 2025 Jnana E-Learning Platform. All rights reserved.
+    </footer>
 </body>
 </html>

@@ -3,32 +3,539 @@
 <head>
 <meta charset="UTF-8">
 <title>Register</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+    body {
+        background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+        font-family: 'Segoe UI', Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+    }
+    .ad-banner {
+        width: 100%;
+        max-width: 420px;
+        margin: 32px auto 0 auto;
+        background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
+        color: #fff;
+        border-radius: 12px;
+        padding: 16px 20px;
+        font-size: 1.08rem;
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        justify-content: center;
+    }
+    .ad-banner i {
+        font-size: 1.4rem;
+    }
+    .container {
+        width: 100%;
+        max-width: 420px;
+        background: rgba(255,255,255,0.98);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
+        padding: 40px 32px 32px 32px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        animation: fadeIn 0.7s;
+        margin: 32px auto 0 auto;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(30px);}
+        to { opacity: 1; transform: translateY(0);}
+    }
+    .container::before {
+        content: "";
+        position: absolute;
+        top: -60px; left: -60px;
+        width: 160px; height: 160px;
+        background: linear-gradient(135deg, #4f8cff 0%, #e0eafc 100%);
+        opacity: 0.12;
+        border-radius: 50%;
+        z-index: 0;
+    }
+    .app-icon {
+        font-size: 2.5rem;
+        color: #4f8cff;
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+    h1 {
+        color: #2d3a4b;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+        font-size: 2rem;
+        font-weight: 700;
+        z-index: 1;
+        position: relative;
+    }
+    .instructions {
+        background: #e0eafc;
+        color: #2563eb;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 1rem;
+        margin-bottom: 18px;
+        text-align: left;
+        z-index: 1;
+        position: relative;
+    }
+    h3 {
+        margin: 10px 0;
+        font-weight: 500;
+        z-index: 1;
+        position: relative;
+    }
+    .message {
+        min-height: 24px;
+        z-index: 1;
+        position: relative;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        margin-top: 10px;
+        z-index: 1;
+        position: relative;
+    }
+    .input-group {
+        display: flex;
+        align-items: center;
+        background: #f5f8ff;
+        border-radius: 8px;
+        border: 1px solid #b6c6e0;
+        padding: 0 10px;
+        margin-bottom: 2px;
+        transition: border 0.2s;
+    }
+    .input-group:focus-within {
+        border: 1.5px solid #4f8cff;
+        background: #e0eafc;
+    }
+    .input-group i {
+        color: #4f8cff;
+        margin-right: 8px;
+        font-size: 1.1rem;
+    }
+    .input-group input {
+        border: none;
+        background: transparent;
+        outline: none;
+        padding: 12px 0;
+        font-size: 1rem;
+        width: 100%;
+    }
+    .radio-group {
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+        margin: 10px 0 0 0;
+        z-index: 1;
+        position: relative;
+    }
+    .radio-group label {
+        font-weight: 500;
+        color: #2d3a4b;
+        margin-left: 4px;
+        margin-right: 12px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: color 0.2s;
+    }
+    .radio-group input[type="radio"] {
+        accent-color: #4f8cff;
+        margin-right: 4px;
+    }
+    .error-message {
+        color: #e74c3c;
+        font-size: 0.95em;
+        margin-bottom: 2px;
+        display: block;
+        min-height: 18px;
+        text-align: left;
+        padding-left: 4px;
+    }
+    button {
+        background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 13px 0;
+        font-size: 1.08rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
+        margin-top: 14px;
+        letter-spacing: 0.5px;
+    }
+    button:hover {
+        background: linear-gradient(90deg, #2563eb 60%, #4f8cff 100%);
+        transform: translateY(-2px) scale(1.04);
+        box-shadow: 0 4px 16px rgba(79, 140, 255, 0.18);
+    }
+    /* About Section */
+    .about-section {
+        max-width: 420px;
+        margin: 32px auto 0 auto;
+        background: #f5f8ff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(31,38,135,0.07);
+        padding: 20px 24px;
+        text-align: left;
+        font-size: 1rem;
+        color: #2d3a4b;
+    }
+    .about-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #2563eb;
+        margin-bottom: 8px;
+    }
+    .about-logo {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 10px;
+        vertical-align: middle;
+        border: 2px solid #4f8cff;
+    }
+    .about-company {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+    .about-links a {
+        color: #2563eb;
+        text-decoration: none;
+        margin-right: 12px;
+        font-weight: 500;
+        transition: color 0.2s;
+    }
+    .about-links a:hover {
+        color: #4f8cff;
+        text-decoration: underline;
+    }
+    /* Features Section */
+    .features-section {
+        max-width:420px;
+        margin:32px auto 0 auto;
+        padding:0 12px;
+    }
+    .features-title {
+        color:#2563eb;
+        font-size:1.15rem;
+        margin-bottom:12px;
+        text-align:center;
+        font-weight:700;
+    }
+    .features-list {
+        display:flex;
+        flex-wrap:wrap;
+        gap:18px;
+        justify-content:center;
+    }
+    .feature-card {
+        flex:1 1 160px;
+        min-width:160px;
+        max-width:220px;
+        background:#f5f8ff;
+        border-radius:12px;
+        padding:14px 12px;
+        box-shadow:0 2px 8px rgba(31,38,135,0.07);
+        margin-bottom:8px;
+        text-align:center;
+    }
+    .feature-card:nth-child(2) { background: #e0ffe7; }
+    .feature-card:nth-child(3) { background: #fffbe0; }
+    .feature-card:nth-child(4) { background: #e0eaff; }
+    .feature-card i {
+        font-size:1.3rem;
+        margin-bottom:6px;
+        display:block;
+    }
+    .feature-title {
+        font-weight:600;
+        margin-bottom:4px;
+    }
+    .feature-desc {
+        font-size:0.97rem;
+        color:#444;
+    }
+    /* Reviews Section */
+    .reviews-section {
+        margin: 32px auto 0 auto;
+        max-width: 420px;
+        text-align: center;
+    }
+    .reviews-title {
+        font-size: 1.08rem;
+        font-weight: 600;
+        color: #2d3a4b;
+        margin-bottom: 10px;
+    }
+    .carousel {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+    }
+    .review-card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(31,38,135,0.09);
+        padding: 14px 12px 10px 12px;
+        min-width: 180px;
+        max-width: 220px;
+        text-align: left;
+        position: relative;
+        font-size: 0.97rem;
+        color: #444;
+        transition: box-shadow 0.2s, background 0.3s;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .review-card .fa-quote-left {
+        color: #4f8cff;
+        font-size: 1rem;
+        margin-right: 6px;
+    }
+    .review-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 6px;
+        border: 2px solid #2563eb;
+        background: #fff;
+        align-self: center;
+    }
+    .review-author {
+        margin-top: 8px;
+        font-weight: 600;
+        color: #2563eb;
+        font-size: 0.95rem;
+        align-self: flex-end;
+    }
+    .carousel-btn {
+        background: #e0eafc;
+        border: none;
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        font-size: 1rem;
+        color: #4f8cff;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+    }
+    .carousel-btn:hover {
+        background: #4f8cff;
+        color: #fff;
+    }
+    @media (max-width: 500px) {
+        .container, .ad-banner, .about-section, .features-section, .reviews-section {
+            padding: 18px 4vw 18px 4vw;
+        }
+        h1 {
+            font-size: 1.3rem;
+        }
+    }
+</style>
 </head>
 <body>
-	<div align="center">
-		<h1>Account Registration</h1>
-		
-		<h3 style="color: green" th:text="${session.pass}"></h3>
-		<h3 style="color: red" th:text="${session.fail}"></h3>	
-	<span th:text="${@generalService.removeMessage()}"></span>
-	
-		<form action="/register" method="post" th:object="${userDto}">
-			<input type="text" th:field="*{name}" placeholder="Enter Name">
-			<span th:errors="*{name}"></span> <br> <br> <input
-				type="text" th:field="*{email}" placeholder="Enter Email"> <span
-				th:errors="*{email}"></span> <br> <br> <input type="text"
-				th:field="*{mobile}" placeholder="Enter Mobile"> <span
-				th:errors="*{mobile}"></span> <br> <br> <input type="text"
-				th:field="*{password}" placeholder="Enter Password"> <span
-				th:errors="*{password}"></span> <br> <br> <input
-				type="text" th:field="*{confirmPassword}"
-				placeholder="Enter Confirm Password"> <span
-				th:errors="*{confirmPassword}"></span> <br> <br> <input
-				type="radio" th:field="*{type}" value="TUTOR">Tutor <input
-				type="radio" th:field="*{type}" value="LEARNER">Learner <span
-				th:errors="*{type}"></span> <br> <br>
-			<button>Register</button>
-		</form>
-	</div>
+
+<div class="ad-banner">
+    <i class="fa-solid fa-gift"></i>
+    <span>🎉 New User Offer: Get 30% OFF your first course! <a href="/login" style="color:#fff;text-decoration:underline;">Login Now</a></span>
+</div>
+
+<div class="container">
+    <div class="app-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+    <h1>Account Registration</h1>
+    <div class="instructions">
+        <strong>Instructions:</strong>
+        <ul style="margin:6px 0 0 18px;padding:0;font-size:0.98rem;">
+            <li>Fill in all fields with accurate information.</li>
+            <li>Use a valid email address and mobile number.</li>
+            <li>Password must be at least 6 characters.</li>
+            <li>Select your role as Tutor or Learner.</li>
+        </ul>
+    </div>
+    <h3 style="color: green" th:text="${session.pass}"></h3>
+    <h3 style="color: red" th:text="${session.fail}"></h3>	
+    <span class="message" th:text="${@generalService.removeMessage()}"></span>
+
+    <form action="/register" method="post" th:object="${userDto}">
+        <div class="input-group">
+            <i class="fa fa-user"></i>
+            <input type="text" th:field="*{name}" placeholder="Enter Name">
+        </div>
+        <span class="error-message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        
+        <div class="input-group">
+            <i class="fa fa-envelope"></i>
+            <input type="text" th:field="*{email}" placeholder="Enter Email">
+        </div>
+        <span class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        
+        <div class="input-group">
+            <i class="fa fa-phone"></i>
+            <input type="text" th:field="*{mobile}" placeholder="Enter Mobile">
+        </div>
+        <span class="error-message" th:if="${#fields.hasErrors('mobile')}" th:errors="*{mobile}"></span>
+        
+        <div class="input-group">
+            <i class="fa fa-lock"></i>
+            <input type="password" th:field="*{password}" placeholder="Enter Password">
+        </div>
+        <span class="error-message" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+        
+        <div class="input-group">
+            <i class="fa fa-lock"></i>
+            <input type="password" th:field="*{confirmPassword}" placeholder="Enter Confirm Password">
+        </div>
+        <span class="error-message" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></span>
+        
+        <div class="radio-group">
+            <input type="radio" th:field="*{type}" value="TUTOR" id="tutor">
+            <label for="tutor"><i class="fa fa-chalkboard-teacher"></i> Tutor</label>
+            <input type="radio" th:field="*{type}" value="LEARNER" id="learner">
+            <label for="learner"><i class="fa fa-user-graduate"></i> Learner</label>
+        </div>
+        <span class="error-message" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>
+        
+        <button type="submit">Register</button>
+    </form>
+</div>
+
+<div class="features-section">
+    <h2 class="features-title">Why Join Jnana?</h2>
+    <div class="features-list">
+        <div class="feature-card">
+            <i class="fa-solid fa-video" style="color:#4f8cff;"></i>
+            <div class="feature-title">Live & Recorded Classes</div>
+            <div class="feature-desc">Interactive live sessions and on-demand content for flexible learning.</div>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-user-group" style="color:#2563eb;"></i>
+            <div class="feature-title">Expert Tutors</div>
+            <div class="feature-desc">Learn from certified and experienced educators worldwide.</div>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-trophy" style="color:#eab308;"></i>
+            <div class="feature-title">Achievements & Badges</div>
+            <div class="feature-desc">Earn badges and certificates as you progress and complete courses.</div>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-mobile-screen" style="color:#4f8cff;"></i>
+            <div class="feature-title">Mobile Friendly</div>
+            <div class="feature-desc">Access your courses anytime, anywhere, on any device.</div>
+        </div>
+    </div>
+</div>
+
+<div class="reviews-section">
+    <div class="reviews-title">What Our Students Say</div>
+    <div class="carousel" id="review-carousel">
+        <button class="carousel-btn" onclick="prevReview()"><i class="fa fa-chevron-left"></i></button>
+        <div class="review-card" id="review-card">
+            <img class="review-avatar" id="review-avatar" src="https://randomuser.me/api/portraits/women/65.jpg" alt="Student">
+            <i class="fa fa-quote-left"></i>
+            <span id="review-text">"Jnana helped me ace my exams! The tutors are amazing and the platform is super easy to use."</span>
+            <div class="review-author" id="review-author">- Priya S.</div>
+        </div>
+        <button class="carousel-btn" onclick="nextReview()"><i class="fa fa-chevron-right"></i></button>
+    </div>
+</div>
+
+<div class="about-section">
+    <div class="about-title">About Jnana</div>
+    <div class="about-company">
+        <img class="about-logo" src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=80&q=80" alt="Jnana Logo">
+        <span><strong>Jnana E-Learning Platform</strong> <span style="color:#2563eb;">| Est. 2020</span></span>
+    </div>
+    <div>
+        Jnana is a leading e-learning platform dedicated to empowering learners and educators worldwide. We offer interactive courses, live classes, expert tutors, and a vibrant learning community.
+    </div>
+    <div class="about-links" style="margin-top:10px;">
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy Policy</a>
+    </div>
+    <div style="margin-top:8px;font-size:0.95rem;color:#888;">
+        &copy; 2020-2025 Jnana E-Learning Platform. All rights reserved.
+    </div>
+</div>
+
+<script>
+    // Colorful reviews carousel with avatars
+    const reviews = [
+        {
+            text: '"Jnana helped me ace my exams! The tutors are amazing and the platform is super easy to use."',
+            author: '- Priya S.',
+            color: '#f5f8ff',
+            avatar: 'https://randomuser.me/api/portraits/women/65.jpg'
+        },
+        {
+            text: '"The interactive courses and quizzes made learning fun and effective. Highly recommend!"',
+            author: '- Rahul M.',
+            color: '#ffe4e1',
+            avatar: 'https://randomuser.me/api/portraits/men/43.jpg'
+        },
+        {
+            text: '"I love the flexibility and the quality of content. The achievements system keeps me motivated!"',
+            author: '- Ananya D.',
+            color: '#e0ffe7',
+            avatar: 'https://randomuser.me/api/portraits/women/68.jpg'
+        },
+        {
+            text: '"Great support and a wonderful community of learners and teachers."',
+            author: '- Suresh K.',
+            color: '#fffbe0',
+            avatar: 'https://randomuser.me/api/portraits/men/77.jpg'
+        },
+        {
+            text: '"May the course be with you. Jnana is my Yoda!"',
+            author: '- Star Learner',
+            color: '#e0eaff',
+            avatar: 'https://randomuser.me/api/portraits/men/23.jpg'
+        },
+        {
+            text: '"Just keep learning, just keep learning!"',
+            author: '- Dory',
+            color: '#e0fff6',
+            avatar: 'https://randomuser.me/api/portraits/women/12.jpg'
+        }
+    ];
+    let currentReview = 0;
+    function showReview(idx) {
+        document.getElementById('review-text').innerText = reviews[idx].text;
+        document.getElementById('review-author').innerText = reviews[idx].author;
+        document.getElementById('review-card').style.background = reviews[idx].color;
+        document.getElementById('review-avatar').src = reviews[idx].avatar;
+    }
+    function prevReview() {
+        currentReview = (currentReview - 1 + reviews.length) % reviews.length;
+        showReview(currentReview);
+    }
+    function nextReview() {
+        currentReview = (currentReview + 1) % reviews.length;
+        showReview(currentReview);
+    }
+    window.onload = function() { showReview(0); };
+</script>
+
 </body>
 </html>

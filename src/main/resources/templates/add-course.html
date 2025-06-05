@@ -2,39 +2,180 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add Course</title>
+    <title>Add Course | Tutor | Jnana</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 520px;
+            margin: 48px auto 0 auto;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
+            padding: 36px 32px 32px 32px;
+            text-align: center;
+            position: relative;
+        }
+        h1 {
+            color: #2563eb;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .instructions {
+            background: #e0eafc;
+            color: #2563eb;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 1.05rem;
+            margin-bottom: 22px;
+            text-align: left;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 16px;
+            margin-top: 10px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 4px;
+        }
+        label {
+            font-weight: 600;
+            color: #2d3a4b;
+            margin-bottom: 4px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #b6c6e0;
+            padding: 10px;
+            font-size: 1rem;
+            background: #f5f8ff;
+            transition: border 0.2s;
+        }
+        input[type="text"]:focus, textarea:focus {
+            border: 1.5px solid #4f8cff;
+            background: #e0eafc;
+            outline: none;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.97em;
+            margin-top: 2px;
+            min-height: 18px;
+        }
+        .radio-group {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-top: 4px;
+        }
+        .radio-group label {
+            font-weight: 500;
+            color: #2563eb;
+            margin-left: 4px;
+            margin-right: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .radio-group input[type="radio"] {
+            accent-color: #4f8cff;
+            margin-right: 4px;
+        }
+        button[type="submit"] {
+            background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 32px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
+            margin-top: 8px;
+        }
+        button[type="submit"]:hover {
+            background: linear-gradient(90deg, #2563eb 60%, #4f8cff 100%);
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 4px 16px rgba(79, 140, 255, 0.18);
+        }
+        .back-btn {
+            margin-top: 18px;
+            background: #e0eafc;
+            color: #2563eb;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 32px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .back-btn:hover {
+            background: #2563eb;
+            color: #fff;
+        }
+        @media (max-width: 600px) {
+            .container { max-width: 98vw; padding: 18px 4vw 18px 4vw; }
+            h1 { font-size: 1.3rem; }
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1><i class="fa fa-plus-circle"></i> Add New Course</h1>
+        <div class="instructions">
+            <strong>Instructions:</strong>
+            <ul style="margin:6px 0 0 18px;padding:0;font-size:0.98rem;">
+                <li>Fill in the <b>Title</b> and <b>Description</b> with clear, concise information.</li>
+                <li>Select whether your course is <b>Paid</b> or <b>Free</b>.</li>
+                <li>Make your description engaging and highlight what learners will achieve.</li>
+                <li>After adding, you can manage sections and content for this course.</li>
+            </ul>
+        </div>
+        <h3 style="color: green" th:text="${session.pass}"></h3>
+        <h3 style="color: red" th:text="${session.fail}"></h3>
+        <span th:text="${@generalService.removeMessage()}"></span>
 
-    <h3 style="color: green" th:text="${session.pass}"></h3>
-    <h3 style="color: red" th:text="${session.fail}"></h3>
-    <span th:text="${@generalService.removeMessage()}"></span>
-
-    <div align="center">
-        <h1>Add Course</h1>
         <form action="/tutor/add-course" method="post" th:object="${courseDto}">
-
-            Title: 
-            <input type="text" th:field="*{title}"> 
-            <span th:errors="*{title}" style="color: red;"></span>
-            <br><br>
-
-            Description:
-            <textarea rows="5" cols="30" th:field="*{description}"></textarea> 
-            <span th:errors="*{description}" style="color: red;"></span>
-            <br><br>
-
-            Type: 
-            <input type="radio" th:field="*{paid}" value="true"> Paid 
-            <input type="radio" th:field="*{paid}" value="false"> Free
-            <br><br>
-
-            <button type="submit">Add</button>
+            <div class="form-group">
+                <label for="title"><i class="fa fa-heading"></i> Title</label>
+                <input type="text" th:field="*{title}" id="title" placeholder="Enter course title">
+                <span class="error-message" th:errors="*{title}"></span>
+            </div>
+            <div class="form-group">
+                <label for="description"><i class="fa fa-align-left"></i> Description</label>
+                <textarea th:field="*{description}" id="description" placeholder="Describe your course"></textarea>
+                <span class="error-message" th:errors="*{description}"></span>
+            </div>
+            <div class="form-group">
+                <label><i class="fa fa-tag"></i> Type</label>
+                <div class="radio-group">
+                    <input type="radio" th:field="*{paid}" value="true" id="paid">
+                    <label for="paid"><i class="fa fa-rupee-sign"></i> Paid</label>
+                    <input type="radio" th:field="*{paid}" value="false" id="free">
+                    <label for="free"><i class="fa fa-gift"></i> Free</label>
+                </div>
+            </div>
+            <button type="submit"><i class="fa fa-plus"></i> Add Course</button>
         </form>
-
-        <br>
-        <a href="/tutor/courses"><button>Back</button></a>
+        <a href="/tutor/courses"><button class="back-btn"><i class="fa fa-arrow-left"></i> Back to Courses</button></a>
     </div>
-
 </body>
 </html>
