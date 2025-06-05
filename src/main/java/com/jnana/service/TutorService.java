@@ -18,6 +18,7 @@ import com.jnana.dto.SectionDto;
 import com.jnana.entity.Course;
 import com.jnana.entity.Section;
 import com.jnana.entity.Tutor;
+import com.jnana.helper.CloudinaryService;
 import com.jnana.repository.CourseRepository;
 import com.jnana.repository.SectionRepository;
 
@@ -33,9 +34,12 @@ public class TutorService {
 	@Autowired
 	SectionRepository sectionRepository;
 	
-	private Cloudinary cloudinary;
-	
-
+	 private CloudinaryService cloudinaryService = null;
+	 
+	 @Autowired
+	    public TutorService(CloudinaryService cloudinaryService) {
+	        this.cloudinaryService = cloudinaryService;
+	    }
 
 	public String loadHome(HttpSession session) {
 		if (session.getAttribute("tutor") != null) {
@@ -199,38 +203,19 @@ public class TutorService {
 		session.setAttribute("fail", "Invalid Session, Login First");
 		return "redirect:/login";
 	}
-			
-		
+				
 	}
-
 	private String saveVideo(MultipartFile video) {
-		 try {
-	            Map uploadResult = cloudinary.uploader().uploadLarge(
-	                video.getBytes(),
-	                ObjectUtils.asMap("resource_type", "video")
-	            );
-	            return (String) uploadResult.get("secure_url");
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	            
-	            return null;
-	        }
-		
+	    return cloudinaryService.uploadVideo(video); // correct method for video
 	}
 
 	private String saveNotes(MultipartFile notes) {
-		 try {
-		        Map uploadResult = cloudinary.uploader().upload(
-		            notes.getBytes(),
-		            ObjectUtils.asMap("resource_type", "auto")  // auto detects file type
-		        );
-		        return (String) uploadResult.get("secure_url");
-		    } catch (IOException e) {
-		        e.printStackTrace();
-		        // You can throw a custom exception or return null here
-		        return null;
-		    }
+	    return cloudinaryService.uploadNotes(notes); // correct method for notes
 	}
+
+	
+
+	
 }
 
 	
