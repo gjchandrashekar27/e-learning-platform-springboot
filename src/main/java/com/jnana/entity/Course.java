@@ -39,6 +39,10 @@ public class Course {
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	List<QuizQuestion> quizQuestions = new ArrayList<QuizQuestion>();
 	
+	// NEW: Sections of this course
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Section> sections = new ArrayList<>();
+	
 	public List<QuizQuestion> getQuestions() {
 	    return this.quizQuestions;
 	}

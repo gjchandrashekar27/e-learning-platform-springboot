@@ -2,20 +2,386 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Learner-Home</title>
+<title>Learner Dashboard - Jnana</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+    --primary-color: #4CAF50;
+    --secondary-color: #2196F3;
+    --text-color: #2c3e50;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --error-color: #f44336;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+.ad-banner {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto 24px auto;
+    background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
+    color: #fff;
+    border-radius: 14px;
+    padding: 18px 28px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    box-shadow: 0 8px 32px rgba(79, 140, 255, 0.18);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    justify-content: center;
+    letter-spacing: 0.02em;
+    border: 2px solid #ffe066;
+    position: relative;
+    overflow: hidden;
+    min-height: 56px;
+}
+.ad-banner i {
+    font-size: 1.7rem;
+    color: #ffe066;
+    margin-right: 12px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));
+}
+.ad-banner .ad-text-move {
+    display: inline-block;
+    white-space: nowrap;
+    animation: marquee 12s linear infinite;
+    padding-left: 100%;
+}
+@keyframes marquee {
+    0% { transform: translateX(0);}
+    100% { transform: translateX(-100%);}
+}
+.container {
+    background: white;
+    padding: 2.5rem 2rem 2rem 2rem;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px var(--shadow-color);
+    width: 95%;
+    max-width: 1100px;
+    margin: 32px auto 20px auto;
+    animation: fadeIn 0.5s ease-out;
+    text-align: center;
+}
+@keyframes fadeIn {
+    from { opacity:0; transform: translateY(-20px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+h1 {
+    color: var(--text-color);
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    text-align: center;
+}
+.instructions {
+    background: #e0eafc;
+    color: #2563eb;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 1.08rem;
+    margin: 0 auto 22px auto;
+    max-width: 650px;
+    text-align: left;
+}
+.actions-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    justify-content: center;
+    margin: 32px 0 18px 0;
+}
+.action-card {
+    background: #f5f8ff;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(31,38,135,0.09);
+    padding: 24px 18px 18px 18px;
+    min-width: 200px;
+    max-width: 250px;
+    text-align: center;
+    transition: box-shadow 0.2s, transform 0.2s;
+    cursor: pointer;
+    border: 2px solid transparent;
+    position: relative;
+}
+.action-card:hover {
+    box-shadow: 0 6px 20px rgba(79, 140, 255, 0.18);
+    border: 2px solid #4f8cff;
+    transform: translateY(-4px) scale(1.03);
+}
+.action-logo {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border: 2px solid #e0eafc;
+    background: #fff;
+}
+.action-title {
+    font-size: 1.08rem;
+    font-weight: 600;
+    color: #2563eb;
+    margin-bottom: 6px;
+}
+.action-btn {
+    background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
+    margin-top: 8px;
+}
+.action-btn:hover {
+    background: linear-gradient(90deg, #2563eb 60%, #4f8cff 100%);
+    transform: translateY(-2px) scale(1.04);
+}
+.logout-btn {
+    margin-top: 24px;
+    background: #e0eafc;
+    color: #2563eb;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 32px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.logout-btn:hover {
+    background: #2563eb;
+    color: #fff;
+}
+.offer-section {
+    background: #fef9c3;
+    color: #b45309;
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 1.05rem;
+    margin: 22px 0 18px 0;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+.reviews-section {
+    margin: 32px auto 0 auto;
+    max-width: 600px;
+    text-align: center;
+}
+.reviews-title {
+    font-size: 1.08rem;
+    font-weight: 600;
+    color: #2d3a4b;
+    margin-bottom: 10px;
+}
+.carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+.review-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(31,38,135,0.09);
+    padding: 14px 12px 10px 12px;
+    min-width: 220px;
+    max-width: 260px;
+    text-align: left;
+    position: relative;
+    font-size: 0.97rem;
+    color: #444;
+    transition: box-shadow 0.2s, background 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.review-card .fa-quote-left {
+    color: #4f8cff;
+    font-size: 1rem;
+    margin-right: 6px;
+}
+.review-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 6px;
+    border: 2px solid #2563eb;
+    background: #fff;
+    align-self: center;
+}
+.review-author {
+    margin-top: 8px;
+    font-weight: 600;
+    color: #2563eb;
+    font-size: 0.95rem;
+    align-self: flex-end;
+}
+.carousel-btn {
+    background: #e0eafc;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+    color: #4f8cff;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.carousel-btn:hover {
+    background: #4f8cff;
+    color: #fff;
+}
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    color: white;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(100%);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+.toast.success { background: var(--primary-color);}
+.toast.error { background: var(--error-color);}
+.toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+@media (max-width: 900px) {
+    .container, .ad-banner, .reviews-section { max-width: 98vw; padding: 18px 4vw 18px 4vw; }
+    .actions-section { flex-direction: column; }
+    .action-card, .review-card { min-width: 0; width: 100%; }
+}
+</style>
 </head>
 <body>
+    <div class="ad-banner">
+        <i class="fa-solid fa-bullhorn"></i>
+        <span class="ad-text-move">🔥 Summer Offer: Get up to 40% off on premium courses! Limited time only.</span>
+    </div>
+    <div class="container">
+        <h1>Learner Dashboard</h1>
+        <div id="successToast" class="toast success" th:if="${session.pass}" th:text="${session.pass}"></div>
+        <div id="errorToast" class="toast error" th:if="${session.fail}" th:text="${session.fail}"></div>
+        <th:block th:text="${@generalService.removeMessage()}"></th:block>
 
-<div align="center">
+        <div class="instructions">
+            <strong>How to get the most out of Jnana:</strong>
+            <ul style="margin:6px 0 0 18px;padding:0;font-size:0.98rem;">
+                <li>Browse available courses and enroll in topics that interest you.</li>
+                <li>Access your enrolled courses anytime and track your progress.</li>
+                <li>Complete courses to earn certificates and unlock new opportunities.</li>
+                <li>Download notes and watch videos for a better learning experience.</li>
+            </ul>
+        </div>
+        <div class="offer-section">
+            <i class="fa fa-tag"></i>
+            <span>Special Offer: Enroll in any 2 premium courses and get 1 free! <a href="/learner/view-courses" style="color:#2563eb;text-decoration:underline;">See Courses</a></span>
+        </div>
+        <div class="actions-section">
+            <div class="action-card" onclick="location.href='/learner/view-courses'">
+                <img class="action-logo" src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=80&q=80" alt="Available Courses">
+                <div class="action-title">See Available Courses</div>
+                <a href="/learner/view-courses"><button class="action-btn"><i class="fa fa-search"></i> Browse Courses</button></a>
+            </div>
+            <div class="action-card" onclick="location.href='/learner/enrolled'">
+                <img class="action-logo" src="https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&w=80&h=80&fit=crop" alt="Enrolled Courses">
+                <div class="action-title">View Enrolled Courses</div>
+                <a href="/learner/enrolled"><button class="action-btn"><i class="fa fa-book-reader"></i> My Courses</button></a>
+            </div>
+            <div class="action-card" onclick="location.href='/learner/completed'">
+                <img class="action-logo" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Completed Courses">
+                <div class="action-title">View Completed Courses</div>
+                <a href="/learner/completed"><button class="action-btn"><i class="fa fa-check-circle"></i> Completed</button></a>
+            </div>
+        </div>
+        <button class="logout-btn" onclick="location.href='/logout'"><i class="fa fa-sign-out-alt"></i> Logout</button>
+        <div class="reviews-section">
+            <div class="reviews-title">What Learners Say</div>
+            <div class="carousel" id="review-carousel">
+                <button class="carousel-btn" onclick="prevReview()"><i class="fa fa-chevron-left"></i></button>
+                <div class="review-card" id="review-card">
+                    <img class="review-avatar" id="review-avatar" src="https://randomuser.me/api/portraits/men/65.jpg" alt="Learner">
+                    <i class="fa fa-quote-left"></i>
+                    <span id="review-text">"The courses are easy to follow and the videos are very helpful!"</span>
+                    <div class="review-author" id="review-author">- Rahul M.</div>
+                </div>
+                <button class="carousel-btn" onclick="nextReview()"><i class="fa fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function showToast() {
+            const successToast = document.getElementById('successToast');
+            const errorToast = document.getElementById('errorToast');
+            [successToast, errorToast].forEach(toast => {
+                if (toast && toast.textContent.trim() !== '') {
+                    toast.classList.add('show');
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 2000);
+                }
+            });
+        }
+        document.addEventListener('DOMContentLoaded', showToast);
 
-<h3 style="color: green" th:text="${session.pass}"></h3>
-		<h3 style="color: red" th:text="${session.fail}"></h3>
-		<span th:text="${@generalService.removeMessage()}"></span>
-<h1>Learner Home</h1>
-
-<a href="/logout"><button>Logout</button> </a>
-
-</div>
-
+        // Reviews carousel
+        const reviews = [
+            {
+                text: '"The courses are easy to follow and the videos are very helpful!"',
+                author: '- Rahul M.',
+                avatar: 'https://randomuser.me/api/portraits/men/65.jpg'
+            },
+            {
+                text: '"I love the notes and the interactive sections. Highly recommended!"',
+                author: '- Sneha P.',
+                avatar: 'https://randomuser.me/api/portraits/women/43.jpg'
+            },
+            {
+                text: '"I completed my first course and got a certificate. Thank you Jnana!"',
+                author: '- Arjun S.',
+                avatar: 'https://randomuser.me/api/portraits/men/68.jpg'
+            }
+        ];
+        let currentReview = 0;
+        function showReview(idx) {
+            document.getElementById('review-text').innerText = reviews[idx].text;
+            document.getElementById('review-author').innerText = reviews[idx].author;
+            document.getElementById('review-avatar').src = reviews[idx].avatar;
+        }
+        function prevReview() {
+            currentReview = (currentReview - 1 + reviews.length) % reviews.length;
+            showReview(currentReview);
+        }
+        function nextReview() {
+            currentReview = (currentReview + 1) % reviews.length;
+            showReview(currentReview);
+        }
+        window.onload = function() { showReview(0); };
+    </script>
+    <footer>
+        &copy; 2025 Jnana E-Learning Platform. All rights reserved.
+    </footer>
 </body>
 </html>

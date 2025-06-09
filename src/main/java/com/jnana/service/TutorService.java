@@ -123,7 +123,7 @@ public class TutorService {
 				course.setTutor((Tutor) session.getAttribute("tutor"));
 				
 				List<QuizQuestion> questions = Arrays.stream(courseDto.getQuestions().split("\\?"))
-						.map(x -> new QuizQuestion(x)).collect(Collectors.toList());
+						.map(x -> new QuizQuestion()).collect(Collectors.toList());
 				course.setQuizQuestions(questions);
 				courseRepository.save(course);
 				session.setAttribute("pass", "Course Added Success");
@@ -211,7 +211,7 @@ public class TutorService {
 				section.setVideoUrl(saveVideo(sectionDto.getVideo()));
 				
 				List<QuizQuestion> questions = Arrays.stream(sectionDto.getQuestions().split("\\?"))
-						.map(x -> new QuizQuestion(x)).collect(Collectors.toList());
+						.map(x -> new QuizQuestion()).collect(Collectors.toList());
 				section.setQuizQuestions(questions);
 				sectionRepository.save(section);
 				
