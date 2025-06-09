@@ -155,6 +155,45 @@
       background: #2563eb;
       color: #fff;
     }
+    /* Questions Toggle */
+    .questions-toggle {
+      background: none;
+      border: none;
+      color: #2563eb;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: 600;
+      margin-left: 8px;
+      transition: color 0.2s;
+      padding: 0;
+    }
+    .questions-toggle:hover {
+      text-decoration: underline;
+      color: #4f8cff;
+    }
+    .questions-list {
+      background: #e0eafc;
+      border-radius: 8px;
+      margin: 8px 0 0 0;
+      padding: 10px 16px;
+      font-size: 0.98rem;
+      color: #2563eb;
+      text-align: left;
+      display: none;
+      animation: fadeIn 0.3s;
+    }
+    .questions-list ul {
+      margin: 0 0 0 18px;
+      padding: 0;
+    }
+    .questions-list li {
+      margin-bottom: 4px;
+      list-style: disc;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-8px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
     @media (max-width: 1000px) {
       .container, .ad-banner { max-width: 98vw; padding: 18px 4vw 18px 4vw; }
       table, th, td { font-size: 0.97rem; }
@@ -175,6 +214,7 @@
         display: block;
         margin-bottom: 4px;
       }
+      .questions-list { padding: 10px 8px; }
     }
   </style>
 </head>
@@ -200,11 +240,12 @@
           <th>Description</th>
           <th>Type</th>
           <th>Status</th>
+          <th>Questions</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        <tr th:each="course : ${courses}">
+        <tr th:each="course,iter : ${courses}">
           <td data-label="Title">
             <span class="course-title" th:text="${course.title}"></span>
           </td>
@@ -216,6 +257,19 @@
           <td data-label="Status">
             <span th:if="${course.published == true}" class="badge badge-published"><i class="fa fa-check-circle"></i> Published</span>
             <span th:if="${course.published == false}" class="badge badge-unpublished"><i class="fa fa-clock"></i> Unpublished</span>
+          </td>
+          <td data-label="Questions">
+            <button type="button" class="questions-toggle"
+              th:if="${course.questions != null and #lists.size(course.questions) > 0}"
+              th:attr="onclick='toggleQuestions(' + ${iter.index} + ')'">
+              <i class="fa fa-question-circle"></i> View (<span th:text="${#lists.size(course.questions)}"></span>)
+            </button>
+            <span th:if="${course.questions == null or #lists.size(course.questions) == 0}" style="color:#aaa;">No Questions</span>
+            <div class="questions-list" th:id="'questions-list-' + ${iter.index}">
+              <ul>
+                <li th:each="q : ${course.questions}" th:text="${q}"></li>
+              </ul>
+            </div>
           </td>
           <td data-label="Action">
             <a th:if="${course.published == false}" th:href="@{'/tutor/publish/' + ${course.id}}">
@@ -234,5 +288,15 @@
     </table>
     <a href="/tutor/courses"><button class="back-btn"><i class="fa fa-arrow-left"></i> Back</button></a>
   </div>
+  <script>
+    function toggleQuestions(idx) {
+      var el = document.getElementById('questions-list-' + idx);
+      if (el.style.display === 'block') {
+        el.style.display = 'none';
+      } else {
+        el.style.display = 'block';
+      }
+    }
+  </script>
 </body>
 </html>

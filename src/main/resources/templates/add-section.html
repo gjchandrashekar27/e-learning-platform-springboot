@@ -75,6 +75,58 @@
         margin-top: 2px;
         min-height: 18px;
     }
+    /* Questions Section */
+    .questions-section {
+        margin-top: 18px;
+        background: #f5f8ff;
+        border-radius: 8px;
+        padding: 14px 12px 10px 12px;
+        border: 1px solid #b6c6e0;
+        width: 100%;
+    }
+    .questions-section label {
+        color: #2563eb;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+    .question-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+        width: 100%;
+    }
+    .question-item input[type="text"] {
+        flex: 1;
+    }
+    .remove-question-btn {
+        background: #e74c3c;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 4px 10px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background 0.2s;
+    }
+    .remove-question-btn:hover {
+        background: #c0392b;
+    }
+    .add-question-btn {
+        margin-top: 8px;
+        background: #2563eb;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 7px 18px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .add-question-btn:hover {
+        background: #4f8cff;
+    }
     button[type="submit"], .back-btn {
         background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
         color: #fff;
@@ -127,6 +179,7 @@
                 <li>Upload a <b>Video</b> (MP4, AVI, etc.) to make your section interactive.</li>
                 <li>Upload <b>Notes</b> (PDF) to provide additional resources for learners.</li>
                 <li>Select the <b>Course</b> this section belongs to.</li>
+                <li>Add questions for this section if needed.</li>
             </ul>
         </div>
         <form action="/tutor/add-section" method="post" th:object="${sectionDto}" enctype="multipart/form-data">
@@ -151,6 +204,18 @@
                     <option th:each="course:${courses}" th:value="${course.id}" th:text="${course.title}"></option>
                 </select>
             </div>
+            <!-- Questions Section Start -->
+            <div class="form-group questions-section">
+                <label><i class="fa fa-question-circle"></i> Questions</label>
+                <div id="questions-list">
+                    <div class="question-item">
+                        <input type="text" name="questions" placeholder="Enter a question" />
+                        <button type="button" class="remove-question-btn" onclick="removeQuestion(this)" title="Remove this question">&times;</button>
+                    </div>
+                </div>
+                <button type="button" class="add-question-btn" onclick="addQuestion()">+ Add Question</button>
+            </div>
+            <!-- Questions Section End -->
             <button type="submit"><i class="fa fa-plus"></i> Add Section</button>
         </form>
         <a href="/tutor/sections"><button class="back-btn"><i class="fa fa-arrow-left"></i> Back</button></a>
@@ -158,5 +223,26 @@
     <footer>
         &copy; 2025 Jnana E-Learning Platform. All rights reserved.
     </footer>
+    <script>
+        function addQuestion() {
+            const questionsList = document.getElementById('questions-list');
+            const div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `
+                <input type="text" name="questions" placeholder="Enter a question" />
+                <button type="button" class="remove-question-btn" onclick="removeQuestion(this)" title="Remove this question">&times;</button>
+            `;
+            questionsList.appendChild(div);
+        }
+        function removeQuestion(btn) {
+            const item = btn.parentNode;
+            const list = document.getElementById('questions-list');
+            if (list.children.length > 1) {
+                list.removeChild(item);
+            } else {
+                item.querySelector('input').value = '';
+            }
+        }
+    </script>
 </body>
 </html>

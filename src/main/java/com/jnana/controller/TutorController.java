@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jnana.dto.CourseDto;
+import com.jnana.dto.QuizQuestionDTO;
 import com.jnana.dto.SectionDto;
 import com.jnana.entity.Course;
+import com.jnana.entity.QuizQuestion;
 import com.jnana.service.TutorService;
 
 import jakarta.servlet.http.HttpSession;
@@ -42,11 +44,7 @@ public class TutorController {
 		return tutorService.loadSections(session);
 	}
 
-	@GetMapping("/questions")
-	public String loadQuestions(HttpSession session) {
-		return tutorService.loadQuestions(session);
-	}
-
+	
 	@GetMapping("/learners")
 	public String loadLearners(HttpSession session) {
 		return tutorService.loadLearners(session);
@@ -86,7 +84,10 @@ public class TutorController {
 	public String loadViewSections(HttpSession session, Model model) {
 	    return tutorService.loadViewSections(session, model);
 	}
-
 	
-
+	
+	
+	
+	
+	
 }

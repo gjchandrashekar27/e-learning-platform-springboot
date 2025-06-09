@@ -12,9 +12,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Data
+@Getter
+@Setter
 public class Course {
 	
 	@Id
@@ -34,5 +38,14 @@ public class Course {
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	List<QuizQuestion> quizQuestions = new ArrayList<QuizQuestion>();
+	
+	public List<QuizQuestion> getQuestions() {
+	    return this.quizQuestions;
+	}
+
+
+	public void setQuestions(List<QuizQuestion> questions) {
+	    this.quizQuestions = questions;
+	}
 
 }

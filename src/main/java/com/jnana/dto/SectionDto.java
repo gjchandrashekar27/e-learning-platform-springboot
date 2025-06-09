@@ -6,8 +6,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
+@Getter
+@Setter
 public class SectionDto {
 
     @NotBlank(message = "* Title is required")
@@ -20,4 +24,7 @@ public class SectionDto {
 
     @NotNull(message = "* Course ID is required")
     private Long courseId;
+    
+    @Size(min = 5, max = 500, message = "* Questions Should be 5~500 charecters")
+	private String questions;
 }

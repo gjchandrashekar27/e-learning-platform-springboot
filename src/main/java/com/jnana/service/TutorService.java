@@ -1,10 +1,14 @@
 package com.jnana.service;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -15,12 +19,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.jnana.dto.CourseDto;
+import com.jnana.dto.QuizQuestionDTO;
 import com.jnana.dto.SectionDto;
 import com.jnana.entity.Course;
+import com.jnana.entity.QuizQuestion;
 import com.jnana.entity.Section;
 import com.jnana.entity.Tutor;
 import com.jnana.helper.CloudinaryService;
 import com.jnana.repository.CourseRepository;
+import com.jnana.repository.QuizQuestionRepository;
 import com.jnana.repository.SectionRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -34,6 +41,9 @@ public class TutorService {
 	
 	@Autowired
 	SectionRepository sectionRepository;
+	
+	@Autowired
+	QuizQuestionRepository quizQuestionRepository;
 	
 	 private CloudinaryService cloudinaryService = null;
 	 
@@ -111,6 +121,10 @@ public class TutorService {
 				course.setDescription(courseDto.getDescription());
 				course.setPaid(courseDto.getPaid());
 				course.setTutor((Tutor) session.getAttribute("tutor"));
+				
+				List<QuizQuestion> questions = Arrays.stream(courseDto.getQuestions().split("\\?"))
+						.map(x -> new QuizQuestion(x)).collect(Collectors.toList());
+				course.setQuizQuestions(questions);
 				courseRepository.save(course);
 				session.setAttribute("pass", "Course Added Success");
 				return "redirect:/tutor/courses";
@@ -195,6 +209,10 @@ public class TutorService {
 				section.setTitle(sectionDto.getTitle());
 				section.setNotesUrl(saveNotes(sectionDto.getNotes()));
 				section.setVideoUrl(saveVideo(sectionDto.getVideo()));
+				
+				List<QuizQuestion> questions = Arrays.stream(sectionDto.getQuestions().split("\\?"))
+						.map(x -> new QuizQuestion(x)).collect(Collectors.toList());
+				section.setQuizQuestions(questions);
 				sectionRepository.save(section);
 				
 				session.setAttribute("pass", "Section Added Success");
@@ -237,7 +255,10 @@ public class TutorService {
 	    session.setAttribute("fail", "Invalid Session, Login First");
 	    return "redirect:/login";
 	}
-	}
+
+
+
+}
 
 	
 
