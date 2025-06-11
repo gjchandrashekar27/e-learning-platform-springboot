@@ -1,4 +1,4 @@
-<!DOCTYPE html>Add commentMore actions
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -22,16 +22,18 @@
 				<td th:text="${course.title}"></td>
 				<td th:text="${course.description}"></td>
 				<td th:text="${@sectionRepository.findByCourse(course).size()}"></td>
-				<td>
-				<th:block th:each="section:${@sectionRepository.findByCourse(course)}" 
-				
-				th:text="${section.title}"></th:block>
-				</td>
+				<td><th:block
+						th:each="section:${@sectionRepository.findByCourse(course)}"
+						th:text="${section.title}">
+					</th:block></td>
 				<td th:if="${!course.paid}">Free</td>
 				<td th:if="${course.paid}">199 &#8377</td>
-				<td>
-					<a th:href="'/learner/enroll/'+${course.id}"> <button>Enroll</button></a>
-				</td>
+				<td th:if="${!session.learner.checkCourse(course.id)}"><a
+					th:href="'/learner/enroll/'+${course.id}">
+						<button>Enroll</button>
+				</a></td>
+				<td th:if="${session.learner.checkCourse(course.id)}">Already
+					Enrolled</td>
 			</tr>
 
 

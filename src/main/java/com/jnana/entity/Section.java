@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,9 +34,17 @@ public class Section {
     private String notesUrl;
 
     @ManyToOne
-    @JoinColumn(name = "course_id") // Explicit join column
+    @JoinColumn(name = "course_id") // Foreign key to Course
     private Course course;
 
     @OneToMany(mappedBy = "section", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<QuizQuestion> quizQuestions = new ArrayList<>();
+
+    public List<QuizQuestion> getQuestions() {
+        return quizQuestions;
+    }
+
+    public void setQuestions(List<QuizQuestion> questions) {
+        this.quizQuestions = questions;
+    }
 }

@@ -1,94 +1,178 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>View Sections | Tutor | Jnana</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         body {
+            font-family: 'Poppins', sans-serif;
             background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
-            font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0;
             padding: 0;
             min-height: 100vh;
         }
-        .container {
+        .main-container {
             max-width: 900px;
-            margin: 36px auto 0 auto;
+            margin: 48px auto 0 auto;
             background: #fff;
             border-radius: 18px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.13);
             padding: 36px 32px 32px 32px;
-        }
-        h1 {
-            color: #2563eb;
             text-align: center;
-            margin-bottom: 10px;
+            position: relative;
+        }
+        h2 {
+            color: #2563eb;
+            margin-top: 0;
+            margin-bottom: 18px;
             font-size: 2rem;
             font-weight: 700;
+            letter-spacing: 1px;
         }
         .instructions {
             background: #e0eafc;
             color: #2563eb;
             border-radius: 8px;
-            padding: 10px 14px;
-            font-size: 1.05rem;
-            margin-bottom: 22px;
-            text-align: left;
-        }
-        h2 {
-            margin: 40px 0 10px 0;
-            text-align: left;
-            color: #2563eb;
-            font-size: 1.2rem;
-        }
-        .course-desc {
-            color: #444;
-            margin-bottom: 8px;
+            padding: 1rem 1.5rem;
+            margin: 0 auto 1.5rem auto;
+            max-width: 700px;
             font-size: 1rem;
+            box-shadow: 0 2px 8px rgba(31,38,135,0.07);
+            text-align: left;
         }
         table {
             border-collapse: collapse;
             width: 100%;
-            margin: 20px 0 32px 0;
-            background: #f5f8ff;
+            margin: 40px auto 0 auto;
+            background-color: #f5f8ff;
+            box-shadow: 0 2px 8px rgba(31,38,135,0.07);
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(31,38,135,0.07);
         }
         th, td {
-            border: 1px solid #b6c6e0;
-            padding: 12px 14px;
-            text-align: left;
+            padding: 1rem 0.7rem;
+            text-align: center;
+            border-bottom: 1px solid #e0eafc;
             font-size: 1rem;
         }
         th {
             background-color: #2563eb;
-            color: #fff;
+            color: white;
             font-weight: 600;
         }
-        tr:hover {
-            background: #e0eafc;
+        tr:last-child td {
+            border-bottom: none;
         }
-        .video-link, .notes-link {
+        .enlarge-link {
             color: #2563eb;
             text-decoration: underline;
+            cursor: pointer;
             font-weight: 500;
             transition: color 0.2s;
         }
-        .video-link:hover, .notes-link:hover {
+        .enlarge-link:hover {
             color: #4f8cff;
         }
-        .no-sections {
-            color: #e74c3c;
-            text-align: center;
-            font-style: italic;
+        .modal-bg {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0; top: 0; right: 0; bottom: 0;
+            background: rgba(30,40,80,0.55);
+            align-items: center;
+            justify-content: center;
         }
-        .icon {
+        .modal-bg.active {
+            display: flex;
+        }
+        .modal-content {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(31,38,135,0.18);
+            padding: 24px 24px 16px 24px;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        .modal-title {
             color: #2563eb;
-            margin-right: 6px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+        .modal-iframe {
+            width: 70vw;
+            max-width: 900px;
+            height: 60vh;
+            border-radius: 10px;
+            background: #f5f8ff;
+            border: 2px solid #2563eb;
+            margin-bottom: 10px;
+        }
+        .close-modal-btn {
+            background: #e0eafc;
+            color: #2563eb;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            margin-top: 8px;
+        }
+        .close-modal-btn:hover {
+            background: #2563eb;
+            color: #fff;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            text-align: left;
+            margin: 0.5rem 0 0 0;
+        }
+        .questions-label {
+            font-weight: 600;
+            color: #2563eb;
+            margin-bottom: 4px;
+            display: block;
+        }
+        .no-questions {
+            color: #aaa;
+        }
+        .back-btn {
+            display: inline-block;
+            margin: 28px auto 0 auto;
+            padding: 10px 32px;
+            background: #e0eafc;
+            color: #2563eb;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            text-decoration: none;
+        }
+        .back-btn:hover {
+            background: #2563eb;
+            color: #fff;
+        }
+        .copyright {
+            width: 100%;
+            text-align: center;
+            color: #888;
+            font-size: 0.98rem;
+            margin: 2rem 0 1rem 0;
+            letter-spacing: 0.5px;
         }
         @media (max-width: 1000px) {
-            .container { max-width: 98vw; padding: 18px 4vw 18px 4vw; }
+            .main-container, .instructions { max-width: 98vw; padding: 18px 4vw 18px 4vw; }
             table, th, td { font-size: 0.97rem; }
         }
         @media (max-width: 700px) {
@@ -107,76 +191,97 @@
                 display: block;
                 margin-bottom: 4px;
             }
-        }
-        footer {
-            width: 100%;
-            text-align: center;
-            padding: 18px 0 8px 0;
-            color: #2563eb;
-            font-size: 0.98rem;
-            opacity: 0.85;
-            margin-top: 32px;
+            .modal-iframe {
+                width: 95vw;
+                height: 35vh;
+            }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1><i class="fa fa-layer-group"></i> Courses and Sections</h1>
-    <div class="instructions">
-        <strong>Instructions:</strong>
-        <ul style="margin:6px 0 0 18px;padding:0;font-size:0.98rem;">
-            <li>Below you can see all your courses and their sections.</li>
-            <li>Click the <b>Video</b> link to watch the section video in a new tab.</li>
-            <li>Click the <b>Notes</b> link to download or view the PDF notes.</li>
-            <li>Keep your sections updated for the best learning experience!</li>
-        </ul>
-    </div>
-
-    <!-- Iterate over courses -->
-    <div th:each="course : ${courses}">
-        <h2><i class="fa fa-book icon"></i><span th:text="${course.title}">Course Title</span></h2>
-        <div class="course-desc" th:text="${course.description}">Course Description</div>
-
+    <div class="main-container">
+        <h2><i class="fa fa-layer-group"></i> View Sections</h2>
+        <div class="instructions">
+            <strong>Instructions:</strong>
+            <ul style="margin:6px 0 0 18px;padding:0;font-size:0.98rem;">
+                <li>All your course sections are listed below.</li>
+                <li>Click <b>Enlarge Video</b> or <b>Enlarge Notes</b> to view them in a larger window.</li>
+                <li>Click the close button to hide the enlarged view.</li>
+                <li>Quiz questions for each section are shown in the Questions column.</li>
+                <li>If there are no questions, "No Questions" will be shown.</li>
+            </ul>
+        </div>
         <table>
             <thead>
                 <tr>
-                    <th>Section Title</th>
+                    <th>Title</th>
+                    <th>Course</th>
                     <th>Video</th>
-                    <th>Notes (PDF)</th>
+                    <th>Notes</th>
+                    <th>Questions</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Use the courseSectionsMap to get list of sections by courseId -->
-                <tr th:each="section : ${courseSectionsMap[course.id]}">
-                    <td data-label="Section Title" th:text="${section.title}">Section Title</td>
-                    <td data-label="Video">
-                        <a class="video-link" th:href="${section.videoUrl}" target="_blank">
-                            <i class="fa fa-play-circle"></i> Watch Video
-                        </a>
+                <tr th:each="section, secStat : ${sections}">
+                    <td th:text="${section.title}"></td>
+                    <td th:text="${section.course.title}"></td>
+                    <td>
+                        <iframe th:src="${section.videoUrl}" frameborder="0" allowfullscreen style="width:220px;height:140px;border-radius:8px;"></iframe>
+                        <br>
+                        <span class="enlarge-link"
+                              data-url="[[${section.videoUrl}]]"
+                              onclick="showModalIframe(this, 'video')">
+                            <i class="fa fa-expand"></i> Enlarge Video
+                        </span>
                     </td>
-                    <td data-label="Notes">
-                        <a class="notes-link" th:href="${section.notesUrl}" target="_blank">
-                            <i class="fa fa-file-pdf"></i> Get PDF
-                        </a>
+                    <td>
+                        <iframe th:src="${section.notesUrl}" frameborder="0" style="width:220px;height:140px;border-radius:8px;"></iframe>
+                        <br>
+                        <span class="enlarge-link"
+                              data-url="[[${section.notesUrl}]]"
+                              onclick="showModalIframe(this, 'notes')">
+                            <i class="fa fa-expand"></i> Enlarge Notes
+                        </span>
                     </td>
-                </tr>
-                <!-- Show message if no sections -->
-                <tr th:if="${#lists.isEmpty(courseSectionsMap[course.id])}">
-                    <td colspan="3" class="no-sections">No sections added for this course yet.</td>
+                    <td>
+                        <span class="questions-label" th:if="${section.quizQuestions != null and #lists.size(section.quizQuestions) > 0}">Quiz Questions:</span>
+                        <ul th:if="${section.quizQuestions != null and #lists.size(section.quizQuestions) > 0}">
+                            <li th:each="q : ${section.quizQuestions}" th:text="${q.question}"></li>
+                        </ul>
+                        <span th:if="${section.quizQuestions == null or #lists.size(section.quizQuestions) == 0}" class="no-questions">No Questions</span>
+                    </td>
                 </tr>
             </tbody>
         </table>
+        <a href="/tutor/sections" class="back-btn"><i class="fa fa-arrow-left"></i> Back</a>
+        <div class="copyright">
+            &copy; 2025 Jnana E-Learning Platform. All rights reserved.
+        </div>
     </div>
-</div>
-<div style="text-align:center;">
-    <a href="/tutor/sections">
-        <button style="background:#e0eafc;color:#2563eb;border:none;border-radius:8px;padding:10px 32px;font-size:1rem;font-weight:600;cursor:pointer;transition:background 0.2s, color 0.2s;margin-top:10px;">
-            <i class="fa fa-arrow-left"></i> Back to Manage Sections
-        </button>
-    </a>
-</div>
-<footer>
-    &copy; 2025 Jnana E-Learning Platform. All rights reserved.
-</footer>
+    <!-- Modal for Enlarged Iframe -->
+    <div id="modal-bg" class="modal-bg" onclick="closeModal(event)">
+        <div class="modal-content" id="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-title" id="modal-title"></div>
+            <iframe id="modal-iframe" class="modal-iframe" frameborder="0" allowfullscreen></iframe>
+            <button class="close-modal-btn" onclick="closeModal(event)">Close</button>
+        </div>
+    </div>
+    <script>
+        function showModalIframe(el, type) {
+            document.getElementById('modal-bg').classList.add('active');
+            var iframe = document.getElementById('modal-iframe');
+            var url = el.getAttribute('data-url');
+            iframe.src = url;
+            if(type === 'video') {
+                document.getElementById('modal-title').innerHTML = '<i class="fa fa-play-circle"></i> Video Preview';
+            } else {
+                document.getElementById('modal-title').innerHTML = '<i class="fa fa-file-pdf"></i> Notes Preview';
+            }
+        }
+        function closeModal(e) {
+            document.getElementById('modal-bg').classList.remove('active');
+            document.getElementById('modal-iframe').src = '';
+        }
+    </script>
 </body>
 </html>

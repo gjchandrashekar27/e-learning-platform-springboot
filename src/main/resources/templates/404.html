@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View Sections | Tutor | Jnana</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 36px auto 0 auto;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
+            padding: 36px 32px 32px 32px;
+        }
+        h1 {
+            color: #2563eb;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .instructions {
+            background: #e0eafc;
+            color: #2563eb;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 1.05rem;
+            margin-bottom: 22px;
+            text-align: left;
+        }
+        h2 {
+            margin: 40px 0 10px 0;
+            text-align: left;
+            color: #2563eb;
+            font-size: 1.2rem;
+        }
+        .course-desc {
+            color: #444;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0 32px 0;
+            background: #f5f8ff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(31,38,135,0.07);
+        }
+        th, td {
+            border: 1px solid #b6c6e0;
+            padding: 12px 14px;
+            text-align: left;
+            font-size: 1rem;
+        }
+        th {
+            background-color: #2563eb;
+            color: #fff;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: #e0eafc;
+        }
+        .video-link, .notes-link {
+            color: #2563eb;
+            text-decoration: underline;
+            font-weight: 500;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+        .video-link:hover, .notes-link:hover {
+            color: #4f8cff;
+        }
+        .no-sections {
+            color: #e74c3c;
+            text-align: center;
+            font-style: italic;
+        }
+        .icon {
+            color: #2563eb;
+            margin-right: 6px;
+        }
+        .iframe-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0; top: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(44,62,80,0.25);
+            justify-content: center;
+            align-items: center;
+        }
+        .iframe-content {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(31,38,135,0.18);
+            padding: 16px 16px 8px 16px;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        .iframe-content iframe {
+            width: 70vw;
+            height: 70vh;
+            border: none;
+            border-radius: 8px;
+            background: #000;
+            margin-bottom: 8px;
+        }
+        .close-iframe-btn {
+            background: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 16px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 8px;
+            align-self: flex-end;
+            transition: background 0.2s;
+        }
+        .close-iframe-btn:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 1000px) {
+            .container { max-width: 98vw; padding: 18px 4vw 18px 4vw; }
+            table, th, td { font-size: 0.97rem; }
+            .iframe-content iframe { width: 94vw; height: 50vw; }
+        }
+        @media (max-width: 700px) {
+            table, thead, tbody, th, td, tr { display: block; }
+            thead tr { display: none; }
+            tr { margin-bottom: 18px; }
+            td {
+                padding: 10px 8px;
+                border-bottom: 1px solid #e0eafc;
+                position: relative;
+            }
+            td:before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: #2563eb;
+                display: block;
+                margin-bottom: 4px;
+            }
+            .iframe-content iframe { width: 94vw; height: 50vw; }
+        }
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 18px 0 8px 0;
+            color: #2563eb;
+            font-size: 0.98rem;
+            opacity: 0.85;
+            margin-top: 32px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1><i class="fa fa-layer-group"></i> Courses and Sections</h1>
+    <div class="instructions">
+        <strong>Instructions:</strong>
+        <ul style="margin:6px 0 0 18px;padding:0;font-size:0.98rem;">
+            <li>Below you can see all your courses and their sections.</li>
+            <li>Click the <b>Video</b> or <b>Notes</b> link to view them directly on this page.</li>
+            <li>Keep your sections updated for the best learning experience!</li>
+        </ul>
+    </div>
+
+    <!-- Iterate over courses -->
+    <div th:each="course : ${courses}">
+        <h2><i class="fa fa-book icon"></i><span th:text="${course.title}">Course Title</span></h2>
+        <div class="course-desc" th:text="${course.description}">Course Description</div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Section Title</th>
+                    <th>Video</th>
+                    <th>Notes (PDF)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Use the courseSectionsMap to get list of sections by courseId -->
+                <tr th:each="section : ${courseSectionsMap[course.id]}">
+                    <td data-label="Section Title" th:text="${section.title}">Section Title</td>
+                    <td data-label="Video">
+                        <a class="video-link" href="javascript:void(0);"
+                           th:attr="onclick=|showIframe('${section.videoUrl}','video')|">
+                            <i class="fa fa-play-circle"></i> Watch Video
+                        </a>
+                    </td>
+                    <td data-label="Notes">
+                        <a class="notes-link" href="javascript:void(0);"
+                           th:attr="onclick=|showIframe('${section.notesUrl}','pdf')|">
+                            <i class="fa fa-file-pdf"></i> Get PDF
+                        </a>
+                    </td>
+                </tr>
+                <!-- Show message if no sections -->
+                <tr th:if="${#lists.isEmpty(courseSectionsMap[course.id])}">
+                    <td colspan="3" class="no-sections">No sections added for this course yet.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="iframeModal" class="iframe-modal" onclick="closeIframe(event)">
+    <div class="iframe-content" onclick="event.stopPropagation();">
+        <button class="close-iframe-btn" onclick="closeIframe(event)"><i class="fa fa-times"></i> Close</button>
+        <iframe id="sectionIframe" src="" allowfullscreen></iframe>
+    </div>
+</div>
+<div style="text-align:center;">
+    <a href="/tutor/sections">
+        <button style="background:#e0eafc;color:#2563eb;border:none;border-radius:8px;padding:10px 32px;font-size:1rem;font-weight:600;cursor:pointer;transition:background 0.2s, color 0.2s;margin-top:10px;">
+            <i class="fa fa-arrow-left"></i> Back to Manage Sections
+        </button>
+    </a>
+</div>
+<footer>
+    &copy; 2025 Jnana E-Learning Platform. All rights reserved.
+</footer>
+<script>
+    function showIframe(url, type) {
+        var iframe = document.getElementById('sectionIframe');
+        if(type === 'pdf') {
+            // For PDF, use Google Docs viewer for better browser compatibility
+            iframe.src = 'https://docs.google.com/gview?url=' + encodeURIComponent(url) + '&embedded=true';
+        } else {
+            iframe.src = url;
+        }
+        document.getElementById('iframeModal').style.display = 'flex';
+    }
+    function closeIframe(event) {
+        document.getElementById('iframeModal').style.display = 'none';
+        document.getElementById('sectionIframe').src = '';
+    }
+</script>
+</body>
+</html>

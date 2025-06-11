@@ -13,18 +13,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SectionDto {
-
-    @NotBlank(message = "* Title is required")
-    @Size(min = 5, max = 50, message = "* Title should be between 5 and 50 characters")
-    private String title;
-
-    private MultipartFile video;
-
-    private MultipartFile notes;
-
-    @NotNull(message = "* Course ID is required")
-    private Long courseId;
-    
-    @Size(min = 5, max = 500, message = "* Questions Should be 5~500 charecters")
+	@Size(min = 5, max = 100, message = "* Title Should be 5~100 charecters")
+	private String title;
+	@NotNull(message = "* It is Required")
+	private MultipartFile video;
+	@NotNull(message = "* It is Required")
+	private MultipartFile notes;
+	@NotNull(message = "* It is Required")
+	private Long courseId;
+	@Size(min = 5, max = 500, message = "* Questions Should be 5~500 charecters")
 	private String questions;
 }

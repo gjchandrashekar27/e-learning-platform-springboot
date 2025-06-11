@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jnana.dto.CourseDto;
-import com.jnana.dto.QuizQuestionDTO;
+
 import com.jnana.dto.SectionDto;
 import com.jnana.entity.Course;
 import com.jnana.entity.QuizQuestion;
@@ -56,19 +56,20 @@ public class TutorController {
 	}
 	
 	@PostMapping("/add-course")
-	public String addCourse(HttpSession session, @Valid CourseDto courseDto, BindingResult result) {
-		return tutorService.addCourse(session,result,courseDto);
+	public String addCourse(@ModelAttribute @Valid CourseDto courseDto, BindingResult result, HttpSession session) {
+		return tutorService.addCourse(session, courseDto, result);
+	}
+	
+	@GetMapping("/publish/{id}")
+	public String publishCourse(@PathVariable("id") Long courseId, HttpSession session, RedirectAttributes redirectAttributes) {
+	    return tutorService.publishCourse(courseId, session,redirectAttributes);
 	}
 	
 	@GetMapping("/view-courses")
 	public String viewCourses(HttpSession session, Model model) {
 		return tutorService.viewCourses(session, model);
 	}
-	
-	@GetMapping("/publish/{id}")
-	public String publishCourse(@PathVariable Long id, HttpSession session) {
-	    return tutorService.publishCourse(id, session);
-	}
+
 	
 	@GetMapping("/add-section")
 	public String loadAddSection(HttpSession session, Model model, SectionDto sectionDto) {
@@ -76,15 +77,17 @@ public class TutorController {
 	}
 	
 	@PostMapping("/add-section")
-	public String addSection(@ModelAttribute @Valid SectionDto sectionDto, BindingResult result, HttpSession session) {
-		return tutorService.addSection(sectionDto, result, session);
+	public String addSection(@ModelAttribute @Valid SectionDto sectionDto, BindingResult result, Model model,
+			HttpSession session) {
+		return tutorService.addSection(sectionDto, result, model, session);
 	}
-	
 	@GetMapping("/view-sections")
 	public String loadViewSections(HttpSession session, Model model) {
-	    return tutorService.loadViewSections(session, model);
+	    return tutorService.viewSections(session, model);
 	}
 	
+	
+
 	
 	
 	

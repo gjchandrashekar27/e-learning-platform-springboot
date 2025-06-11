@@ -13,4 +13,6 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
 	List<Course> findByPublishedTrue();
 
+	List<Course> findByTutorAndPublishedTrue(Tutor tutor);
+
 }

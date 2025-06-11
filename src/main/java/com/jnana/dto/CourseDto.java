@@ -6,25 +6,17 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Data
+
 @Getter
 @Setter
+@Data
 public class CourseDto {
-	
-	@Size(min = 5,max = 30,message = "* Title Should Be 5~30 Characters")
+	@Size(min = 5, max = 100, message = "* Title Should be 5~100 charecters")
 	private String title;
-	
-	@Size(min = 10,max = 100,message = "* Description Should Be 10~100 Characters")
+	@Size(min = 10, max = 500, message = "* Title Should be 10~500 charecters")
 	private String description;
-	
 	@NotNull(message = "* Select Any One")
-	private Boolean paid;
-	
-	private boolean published;
-	
+	private boolean paid;
 	@Size(min = 5, max = 500, message = "* Questions Should be 5~500 charecters")
 	private String questions;
-
-
-
 }
