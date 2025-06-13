@@ -29,7 +29,7 @@ public class Course {
 	
 	private String description;
 	
-	private Boolean paid;
+	private boolean paid;
 	
 	private Boolean published;
 	

@@ -37,11 +37,11 @@ public class LearnerController {
     }
     
     @GetMapping("/enroll/{id}")
-	public String enrollCourse(HttpSession session, @PathVariable Long id,Model model) {
-		return learnerService.enrollCourse(session, id,model);
+	public String enrollCourse(HttpSession session, @PathVariable Long id, Model model) {
+		return learnerService.enrollCourse(session, id, model);
 	}
-    
-    @GetMapping("/enrolled-courses")
+
+	@GetMapping("/enrolled-courses")
 	public String viewEnrolledCourses(HttpSession session, Model model) {
 		return learnerService.viewEnrolledCourses(session, model);
 	}
@@ -49,5 +49,15 @@ public class LearnerController {
 	@GetMapping("/view-enrolled-sections/{id}")
 	public String viewEnrolledSections(HttpSession session, @PathVariable Long id, Model model) {
 		return learnerService.viewEnrolledSections(session, id, model);
+	}
+	
+	@GetMapping("/view-video/{id}")
+	public String viewVideo(HttpSession session, @PathVariable Long id, Model model) {
+		return learnerService.viewVideo(session, id, model);
+	}
+
+	@GetMapping("/section/quiz/{id}")
+	public String loadSectionQuiz(@PathVariable Long id, HttpSession session, Model model) {
+		return learnerService.loadSectionQuiz(id, session, model);
 	}
 }

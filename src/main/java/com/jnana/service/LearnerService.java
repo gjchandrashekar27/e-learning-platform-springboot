@@ -16,9 +16,11 @@ import com.jnana.entity.Course;
 import com.jnana.entity.EnrolledCourse;
 import com.jnana.entity.EnrolledSection;
 import com.jnana.entity.Learner;
+import com.jnana.entity.QuizQuestion;
 import com.jnana.entity.Section;
 import com.jnana.repository.CourseRepository;
 import com.jnana.repository.EnrolledCourseRepository;
+import com.jnana.repository.EnrolledSectionRepository;
 import com.jnana.repository.LearnerRepository;
 import com.jnana.repository.SectionRepository;
 import com.razorpay.Order;
@@ -47,6 +49,9 @@ public class LearnerService {
     
     @Autowired
     LearnerRepository learnerRepository;
+    
+    @Autowired
+    EnrolledSectionRepository enrolledSectionRepository;
     
     
     
@@ -84,64 +89,81 @@ public class LearnerService {
 
 
 	public String enrollCourse(HttpSession session, Long id, Model model) {
-		if (session.getAttribute("learner") != null) {
-			Learner learner = (Learner) session.getAttribute("learner");
-			Course course = courseRepository.findById(id).get();
+	    if (session.getAttribute("learner") == null) {
+	        session.setAttribute("fail", "Invalid Session, Login First");
+	        return "redirect:/login";
+	    }
 
-			if (course.getPaid()) {
-				double amount = 199;
-				try {
-					RazorpayClient client = new RazorpayClient(key, secret);
+	    Learner learner = (Learner) session.getAttribute("learner");
 
-					JSONObject object = new JSONObject();
-					object.put("amount", amount * 100);
-					object.put("currency", "INR");
+	    Optional<Course> courseOpt = courseRepository.findById(id);
+	    if (!courseOpt.isPresent()) {
+	        session.setAttribute("fail", "Course not found");
+	        return "redirect:/learner/home";
+	    }
 
-					Order order = client.orders.create(object);
-					String orderId = order.get("id");
+	    Course course = courseOpt.get();
 
-					model.addAttribute("orderId", orderId);
-					model.addAttribute("amount", amount * 100);
-					model.addAttribute("currency", "INR");
-					model.addAttribute("leaner", learner);
-					model.addAttribute("key", key);
+	    // Check if already enrolled
+	    boolean alreadyEnrolled = learner.getEnrolledCourses().stream()
+	        .anyMatch(enrolledCourse -> enrolledCourse.getCourse().getId().equals(course.getId()));
+	    if (alreadyEnrolled) {
+	        session.setAttribute("fail", "You are already enrolled in this course");
+	        return "redirect:/learner/home";
+	    }
 
-					return "payment.html";
+	    if (course.isPaid()) {
+	        double amount = 199;
+	        try {
+	            RazorpayClient client = new RazorpayClient(key, secret);
 
-				} catch (RazorpayException e) {
-					e.printStackTrace();
-					session.setAttribute("fail", "Something Went Wrong");
-					return "redirect:/learner/home";
-				}
+	            JSONObject object = new JSONObject();
+	            object.put("amount", (int)(amount * 100)); // Razorpay expects integer amount in paise
+	            object.put("currency", "INR");
 
-			} else {
+	            Order order = client.orders.create(object);
+	            String orderId = order.get("id");
 
-				List<Section> sections = sectionRepository.findByCourse(course);
-				List<EnrolledSection> enrolledSections = new ArrayList<EnrolledSection>();
-				for (Section section : sections) {
-					EnrolledSection enrolledSection = new EnrolledSection();
-					enrolledSection.setSection(section);
-					enrolledSections.add(enrolledSection);
-				}
+	            model.addAttribute("orderId", orderId);
+	            model.addAttribute("amount", (int)(amount * 100));
+	            model.addAttribute("currency", "INR");
+	            model.addAttribute("learner", learner);
+	            model.addAttribute("key", key);
+	            model.addAttribute("courseId", id); // Needed to verify and enroll after payment
 
-				EnrolledCourse enrolledCourse = new EnrolledCourse();
-				enrolledCourse.setCourse(course);
-				enrolledCourse.setEnrolledSections(enrolledSections);
+	            return "payment.html";
 
-				learner.getEnrolledCourses().add(enrolledCourse);
+	        } catch (RazorpayException e) {
+	            e.printStackTrace();
+	            session.setAttribute("fail", "Something Went Wrong While Creating Payment");
+	            return "redirect:/learner/home";
+	        }
 
-				learnerRepository.save(learner);
+	    } else {
+	        // Free course - Enroll directly
+	        List<Section> sections = sectionRepository.findByCourse(course);
+	        List<EnrolledSection> enrolledSections = new ArrayList<>();
+	        for (Section section : sections) {
+	            EnrolledSection enrolledSection = new EnrolledSection();
+	            enrolledSection.setSection(section);
+	            enrolledSections.add(enrolledSection);
+	        }
 
-				session.setAttribute("pass", "Courses Enrolled Success, Thanks " + learner.getName());
-				session.setAttribute("learner", learnerRepository.findById(learner.getId()).get());
-				return "redirect:/learner/home";
-			}
+	        EnrolledCourse enrolledCourse = new EnrolledCourse();
+	        enrolledCourse.setCourse(course);
+	        enrolledCourse.setEnrolledSections(enrolledSections);
+	        enrolledCourse.setLearner(learner); // Add this if bidirectional
 
-		} else {
-			session.setAttribute("fail", "Invalid Session, Login First");
-			return "redirect:/login";
-		}
+	        learner.getEnrolledCourses().add(enrolledCourse);
+	        learnerRepository.save(learner);
+
+	        session.setAttribute("pass", "Course Enrolled Successfully, Thanks " + learner.getName());
+	        session.setAttribute("learner", learnerRepository.findById(learner.getId()).get());
+
+	        return "redirect:/learner/home";
+	    }
 	}
+
 
 	public String viewEnrolledCourses(HttpSession session, Model model) {
 		if (session.getAttribute("learner") != null) {
@@ -177,8 +199,48 @@ public class LearnerService {
 
 
 
+	public String viewVideo(HttpSession session, Long id, Model model) {
+		if (session.getAttribute("learner") != null) {
+
+			EnrolledSection section = (EnrolledSection) enrolledSectionRepository.findById(id).get();
+			section.setSectionCompleted(true);
+
+			enrolledSectionRepository.save(section);
+
+			String videoUrl = section.getSection().getVideoUrl();
+			model.addAttribute("link", videoUrl);
+			EnrolledCourse course = enrolledCourseRepository.findByEnrolledSections(section);
+			model.addAttribute("id", course.getId());
+			return "play-video.html";
+		} else {
+			session.setAttribute("fail", "Invalid Session, Login First");
+			return "redirect:/login";
+		}
+	}
 
 
+
+
+	public String loadSectionQuiz(Long id, HttpSession session, Model model) {
+		if (session.getAttribute("learner") != null) {
+
+			EnrolledSection section = (EnrolledSection) enrolledSectionRepository.findById(id).get();
+
+			if (!section.isSectionCompleted()) {
+				EnrolledCourse course = enrolledCourseRepository.findByEnrolledSections(section);
+				session.setAttribute("fail", "First Complete the Section to Take Quiz");
+				return "redirect:/learner/view-enrolled-sections/" + course.getId();
+			}
+			List<QuizQuestion> questions = section.getSection().getQuizQuestions();
+			model.addAttribute("questions", questions);
+			model.addAttribute("id", id);
+
+			return "section-quiz.html";
+		} else {
+			session.setAttribute("fail", "Invalid Session, Login First");
+			return "redirect:/login";
+		}
+	}
 
 	
 }
