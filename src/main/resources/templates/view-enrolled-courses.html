@@ -23,8 +23,14 @@
 					<a th:href="'/learner/view-enrolled-sections/'+${enrolledCourse.id}"> <button>View Sections</button> </a>
 				</td>
 				<td>
-					<button>Take Quiz</button>
-				</td>
+  <div th:if="${quizStatusMap[enrolledCourse.id]}">
+    ✅ Quiz Completed
+  </div>
+  <div th:unless="${quizStatusMap[enrolledCourse.id]}">
+    <a th:href="@{/learner/view-enrolled-sections/{id}(id=${enrolledCourse.id})}">Take Quiz</a>
+  </div>
+</td>
+				
 				<td>
 					<button>View Certificate</button>
 				</td>

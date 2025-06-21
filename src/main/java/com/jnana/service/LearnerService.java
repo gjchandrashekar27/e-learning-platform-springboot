@@ -173,22 +173,29 @@ public class LearnerService {
 
 
 	public String viewEnrolledCourses(HttpSession session, Model model) {
-		if (session.getAttribute("learner") != null) {
-			Learner learner = (Learner) session.getAttribute("learner");
+	    if (session.getAttribute("learner") != null) {
+	        Learner learner = (Learner) session.getAttribute("learner");
 
-			List<EnrolledCourse> enrolledCourses = learner.getEnrolledCourses();
-			if (enrolledCourses.isEmpty()) {
-				session.setAttribute("fail", "Not Enrolled for Any of the Courses");
-				return "redirect:/learner/home";
-			} else {
-				model.addAttribute("enrolledCourses", enrolledCourses);
-				return "view-enrolled-courses.html";
-			}
-		} else {
-			session.setAttribute("fail", "Invalid Session, Login First");
-			return "redirect:/login";
-		}
+	        List<EnrolledCourse> enrolledCourses = learner.getEnrolledCourses();
+	        if (enrolledCourses.isEmpty()) {
+	            session.setAttribute("fail", "Not Enrolled for Any of the Courses");
+	            return "redirect:/learner/home";
+	        } else {
+	            Map<Long, Boolean> quizStatusMap = new HashMap<>();
+	            for (EnrolledCourse course : enrolledCourses) {
+	                quizStatusMap.put(course.getId(), isCourseQuizCompleted(course));
+	            }
+
+	            model.addAttribute("enrolledCourses", enrolledCourses);
+	            model.addAttribute("quizStatusMap", quizStatusMap);
+	            return "view-enrolled-courses.html";
+	        }
+	    } else {
+	        session.setAttribute("fail", "Invalid Session, Login First");
+	        return "redirect:/login";
+	    }
 	}
+
 
 	public String viewEnrolledSections(HttpSession session, Long id, Model model) {
 		if (session.getAttribute("learner") != null) {
@@ -338,6 +345,17 @@ public class LearnerService {
 		EnrolledCourse course = enrolledCourseRepository.findByEnrolledSections(section);
 		return "redirect:/learner/view-enrolled-sections/" + course.getId();
 	}
+	
+	// Utility method to check if quiz is completed for all sections in a course
+	public boolean isCourseQuizCompleted(EnrolledCourse course) {
+	    for (EnrolledSection section : course.getEnrolledSections()) {
+	        if (!(section.isSectionCompleted() && section.isSectionQuizCompleted())) {
+	            return false; // Any section not completed or quiz not done
+	        }
+	    }
+	    return true;
+	}
+
 
 
 
