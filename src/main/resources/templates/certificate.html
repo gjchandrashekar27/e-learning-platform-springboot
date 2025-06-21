@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Certificate of Completion</title>
+</head>
+<body>
+    <div align="center">
+        <h1>🎓 Certificate of Completion</h1>
+        <p>This certifies that <strong th:text="${learner.name}">[Name]</strong></p>
+        <p>has successfully completed the course:</p>
+        <h2 th:text="${course.title}">[Course Title]</h2>
+        <br>
+        <p>Issued by: <strong>Jnana E-Learning Platform</strong></p>
+    </div>
+</body>
+</html>

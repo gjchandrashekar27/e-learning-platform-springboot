@@ -1,5 +1,6 @@
 package com.jnana;
 
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +17,11 @@ public class JnanaApplication {
 	@Bean
 	PasswordEncoder encoder() {
 		return new BCryptPasswordEncoder();
+	}
+	
+	@Bean
+	ChatClient chatClient(ChatClient.Builder builder) {
+		return builder.build();
 	}
 
 }

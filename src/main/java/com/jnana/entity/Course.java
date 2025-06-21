@@ -1,3 +1,4 @@
+
 package com.jnana.entity;
 
 import java.util.ArrayList;

@@ -8,7 +8,7 @@
 	<div align="center">
 		<h1>Quiz</h1>
 
-		<form th:action="'/learner/section/quiz/'+${id}" method="post">
+		<form th:action="@{'/learner/submit-quiz/' + ${id}}" method="post">
 			<div th:each="question:${questions}">
 				<h3 th:text="${question.question}"></h3>
 				<textarea th:name="${question.id}" rows="5" cols="30" placeholder="Type Answer Here"></textarea>

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.json.JSONObject;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import com.jnana.repository.CourseRepository;
 import com.jnana.repository.EnrolledCourseRepository;
 import com.jnana.repository.EnrolledSectionRepository;
 import com.jnana.repository.LearnerRepository;
+import com.jnana.repository.QuizQuestionRepository;
 import com.jnana.repository.SectionRepository;
 import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
@@ -53,6 +55,12 @@ public class LearnerService {
     @Autowired
     EnrolledSectionRepository enrolledSectionRepository;
     
+    @Autowired
+    QuizQuestionRepository quizQuestionRepository;
+    
+    @Autowired
+	ChatClient chatClient;
+    
     
     
     public String loadLearnerHome(HttpSession session) {
@@ -67,25 +75,24 @@ public class LearnerService {
     
 
 	
-	public String availableCourses(Model model, HttpSession session) {
-			if (session.getAttribute("learner") == null) {
-	            session.setAttribute("fail", "Please login first.");
-	            return "redirect:/login";
-	        }
+    public String availableCourses(Model model, HttpSession session) {
+        if (session.getAttribute("learner") == null) {
+            session.setAttribute("fail", "Please login first.");
+            return "redirect:/login";
+        }
 
-	        List<Course> courses = courseRepository.findByPublishedTrue(); // Only published courses
-	        Map<Long, List<Section>> sectionMap = new HashMap<>();
+        List<Course> courses = courseRepository.findByPublishedTrue();
+        Map<Long, List<Section>> sectionMap = new HashMap<>();
 
-	        for (Course course : courses) {
-	            List<Section> sections = sectionRepository.findByCourse(course);
-	            sectionMap.put(course.getId(), sections);
-	        }
+        for (Course course : courses) {
+            List<Section> sections = sectionRepository.findByCourse(course);
+            sectionMap.put(course.getId(), sections);
+        }
 
-	        model.addAttribute("courses", courses);
-	        model.addAttribute("sectionMap", sectionMap);
-	        return "available-courses";
-		}
-
+        model.addAttribute("courses", courses);
+        model.addAttribute("sectionMap", sectionMap); // ✅ THIS must be added to the model
+        return "available-courses";
+    }
 
 
 	public String enrollCourse(HttpSession session, Long id, Model model) {
@@ -242,7 +249,102 @@ public class LearnerService {
 		}
 	}
 
+
+	public String enrollPaidCourse(HttpSession session, Long id, Model model) {
+		if (session.getAttribute("learner") != null) {
+			Learner learner = (Learner) session.getAttribute("learner");
+			Course course = courseRepository.findById(id).get();
+			List<Section> sections = sectionRepository.findByCourse(course);
+			List<EnrolledSection> enrolledSections = new ArrayList<EnrolledSection>();
+			for (Section section : sections) {
+				EnrolledSection enrolledSection = new EnrolledSection();
+				enrolledSection.setSection(section);
+				enrolledSections.add(enrolledSection);
+			}
+
+			EnrolledCourse enrolledCourse = new EnrolledCourse();
+			enrolledCourse.setCourse(course);
+			enrolledCourse.setEnrolledSections(enrolledSections);
+
+			learner.getEnrolledCourses().add(enrolledCourse);
+
+			learnerRepository.save(learner);
+
+			session.setAttribute("pass", "Courses Enrolled Success, Thanks " + learner.getName());
+			session.setAttribute("learner", learnerRepository.findById(learner.getId()).get());
+			return "redirect:/learner/home";
+
+		} else {
+			session.setAttribute("fail", "Invalid Session, Login First");
+			return "redirect:/login";
+		}
+	}
+
+
+
+
+	public String submitQuiz(Long id, HttpSession session, Map<String, String> quiz) {
+		if (session.getAttribute("learner") == null) {
+			session.setAttribute("fail", "Invalid Session, Login First");
+			return "redirect:/login";
+		}
+
+		Optional<EnrolledSection> sectionOpt = enrolledSectionRepository.findById(id);
+		if (sectionOpt.isEmpty()) {
+			session.setAttribute("fail", "Invalid Section");
+			return "redirect:/learner/home";
+		}
+		EnrolledSection section = sectionOpt.get();
+
+		// Step 1: Build prompt for ChatGPT
+		StringBuilder promptBuilder = new StringBuilder("Evaluate the following quiz. For each question, consider the given answer. Return ONLY the total score out of 100 (just a number).\n\n");
+
+		for (String questionIdStr : quiz.keySet()) {
+			try {
+				Long questionId = Long.parseLong(questionIdStr);
+				Optional<QuizQuestion> quizQuestionOpt = quizQuestionRepository.findById(questionId);
+				if (quizQuestionOpt.isPresent()) {
+					String question = quizQuestionOpt.get().getQuestion();
+					String answer = quiz.get(questionIdStr);
+					promptBuilder.append("Question: ").append(question).append("\nAnswer: ").append(answer).append("\n\n");
+				}
+			} catch (NumberFormatException e) {
+				continue; // skip invalid IDs
+			}
+		}
+
+		String prompt = promptBuilder.toString();
+
+		// Step 2: Call ChatGPT and extract score
+		int score = 0;
+		try {
+			String response = chatClient.prompt(prompt).call().content().trim();
+			score = Integer.parseInt(response.replaceAll("[^0-9]", "")); // remove any extra text if present
+		} catch (Exception e) {
+			session.setAttribute("fail", "Unable to evaluate quiz. Please try again.");
+			return "redirect:/learner/view-enrolled-sections/" + enrolledCourseRepository.findByEnrolledSections(section).getId();
+		}
+
+		// Step 3: Evaluate result
+		if (score >= 75) {
+			section.setSectionQuizCompleted(true);
+			enrolledSectionRepository.save(section);
+			session.setAttribute("pass", "Quiz Passed! 🎉 Score: " + score);
+		} else {
+			session.setAttribute("fail", "Quiz Failed. Your Score: " + score + ". Try again.");
+		}
+
+		// Step 4: Redirect back to enrolled sections page
+		EnrolledCourse course = enrolledCourseRepository.findByEnrolledSections(section);
+		return "redirect:/learner/view-enrolled-sections/" + course.getId();
+	}
+
+
+
+
+
+	
+
 	
 }
 	
-

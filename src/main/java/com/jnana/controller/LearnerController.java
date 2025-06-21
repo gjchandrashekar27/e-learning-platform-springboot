@@ -9,8 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jnana.service.LearnerService;
 
@@ -60,4 +61,15 @@ public class LearnerController {
 	public String loadSectionQuiz(@PathVariable Long id, HttpSession session, Model model) {
 		return learnerService.loadSectionQuiz(id, session, model);
 	}
+	
+	@PostMapping("/submit-quiz/{id}")
+	public String submitQuiz(@PathVariable Long id,
+	                         @RequestParam Map<String, String> quizAnswers,
+	                         HttpSession session, Model model) {
+	    return learnerService.submitQuiz(id, session, quizAnswers);
+	}
+
+
+
+	
 }

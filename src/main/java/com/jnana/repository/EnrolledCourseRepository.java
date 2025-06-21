@@ -1,5 +1,7 @@
 package com.jnana.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.jnana.entity.Course;
@@ -12,5 +14,7 @@ public interface EnrolledCourseRepository  extends JpaRepository<EnrolledCourse,
 	boolean existsByCourseAndLearner(Course course, Learner learner);
 
 	EnrolledCourse findByEnrolledSections(EnrolledSection section);
+
+	List<Long> findCourseIdsByLearnerId(Long id);
 
 }
