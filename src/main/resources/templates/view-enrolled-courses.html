@@ -1,46 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Enrolled Courses</title>
+    <meta charset="UTF-8">
+    <title>Enrolled Courses</title>
 </head>
 <body>
-	<div align="center">
-		<h1>View Courses</h1>
+    <div align="center">
+        <h1>View Courses</h1>
 
-		<table border="1">
-			<tr>
-				<th>Course Title</th>
-				<th>Course Description</th>
-				<th>View Content</th>
-				<th>Quiz</th>
-				<th>Certificate</th>
-			</tr>
-			<tr th:each="enrolledCourse:${enrolledCourses}">
-				<td th:text="${enrolledCourse.course.title}"></td>
-				<td th:text="${enrolledCourse.course.description}"></td>
-				<td>
-					<a th:href="'/learner/view-enrolled-sections/'+${enrolledCourse.id}"> <button>View Sections</button> </a>
-				</td>
-				<td>
-  <div th:if="${quizStatusMap[enrolledCourse.id]}">
-    ✅ Quiz Completed
-  </div>
-  <div th:unless="${quizStatusMap[enrolledCourse.id]}">
-    <a th:href="@{/learner/view-enrolled-sections/{id}(id=${enrolledCourse.id})}">Take Quiz</a>
-  </div>
-</td>
-				
-				<td>
-					<button>View Certificate</button>
-				</td>
-			</tr>
-		</table>
+        <table border="1">
+            <tr>
+                <th>Course Title</th>
+                <th>Course Description</th>
+                <th>View Content</th>
+                <th>Quiz</th>
+                <th>Certificate</th>
+            </tr>
+            <tr th:each="enrolledCourse : ${enrolledCourses}">
+                <td th:text="${enrolledCourse.course.title}"></td>
+                <td th:text="${enrolledCourse.course.description}"></td>
+                <td>
+                    <a th:href="'/learner/view-enrolled-sections/'+${enrolledCourse.id}">
+                        <button>View Sections</button>
+                    </a>
+                </td>
+                <td>
+                    <div th:if="${quizStatusMap != null and quizStatusMap[enrolledCourse.id]}">
+                        ✅ Quiz Completed
+                    </div>
+                    <div th:unless="${quizStatusMap != null and quizStatusMap[enrolledCourse.id]}">
+                        <a th:href="@{/learner/view-enrolled-sections/{id}(id=${enrolledCourse.id})}">
+                            Take Quiz
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <th:block th:if="${certificateStatusMap != null and certificateStatusMap[enrolledCourse.course.id]}">
+                        <a th:href="@{'/learner/certificate/' + ${enrolledCourse.course.id}}">
+                            <button>View Certificate</button>
+                        </a>
+                    </th:block>
+                </td>
+            </tr>
+        </table>
 
-		<br>
-		<br> <a href="/learner/home">
-			<button>Back</button>
-		</a>
-	</div>
+        <br><br>
+        <a href="/learner/home">
+            <button>Back</button>
+        </a>
+    </div>
 </body>
 </html>

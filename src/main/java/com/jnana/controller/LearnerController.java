@@ -68,6 +68,11 @@ public class LearnerController {
 	                         HttpSession session, Model model) {
 	    return learnerService.submitQuiz(id, session, quizAnswers);
 	}
+	
+	@GetMapping("/certificate/{id}")
+	public String viewCertificate(@PathVariable Long id, HttpSession session, Model model) {
+	    return learnerService.generateCertificate(id, session, model);
+	}
 
 
 

@@ -175,26 +175,31 @@ public class LearnerService {
 	public String viewEnrolledCourses(HttpSession session, Model model) {
 	    if (session.getAttribute("learner") != null) {
 	        Learner learner = (Learner) session.getAttribute("learner");
-
 	        List<EnrolledCourse> enrolledCourses = learner.getEnrolledCourses();
+
 	        if (enrolledCourses.isEmpty()) {
 	            session.setAttribute("fail", "Not Enrolled for Any of the Courses");
 	            return "redirect:/learner/home";
-	        } else {
-	            Map<Long, Boolean> quizStatusMap = new HashMap<>();
-	            for (EnrolledCourse course : enrolledCourses) {
-	                quizStatusMap.put(course.getId(), isCourseQuizCompleted(course));
-	            }
-
-	            model.addAttribute("enrolledCourses", enrolledCourses);
-	            model.addAttribute("quizStatusMap", quizStatusMap);
-	            return "view-enrolled-courses.html";
 	        }
+
+	        // 🔴 Add this logic
+	        Map<Long, Boolean> certificateStatusMap = new HashMap<>();
+	        for (EnrolledCourse ec : enrolledCourses) {
+	            boolean allQuizCompleted = ec.getEnrolledSections().stream()
+	                .allMatch(section -> section.isSectionQuizCompleted());
+	            certificateStatusMap.put(ec.getCourse().getId(), allQuizCompleted);
+	        }
+
+	        model.addAttribute("enrolledCourses", enrolledCourses);
+	        model.addAttribute("certificateStatusMap", certificateStatusMap); // ✅ Add to model
+
+	        return "view-enrolled-courses.html";
 	    } else {
 	        session.setAttribute("fail", "Invalid Session, Login First");
 	        return "redirect:/login";
 	    }
 	}
+
 
 
 	public String viewEnrolledSections(HttpSession session, Long id, Model model) {
@@ -355,6 +360,45 @@ public class LearnerService {
 	    }
 	    return true;
 	}
+
+
+	public String generateCertificate(Long id, HttpSession session, Model model) {
+		 if (session.getAttribute("learner") == null) {
+		        session.setAttribute("fail", "Invalid Session, Login First");
+		        return "redirect:/login";
+		    }
+
+		    Learner learner = (Learner) session.getAttribute("learner");
+
+		    Optional<EnrolledCourse> enrolledCourseOpt = learner.getEnrolledCourses()
+		        .stream()
+		        .filter(c -> c.getCourse().getId().equals(id))
+		        .findFirst();
+
+		    if (enrolledCourseOpt.isEmpty()) {
+		        session.setAttribute("fail", "Course Not Found");
+		        return "redirect:/learner/home";
+		    }
+
+		    EnrolledCourse enrolledCourse = enrolledCourseOpt.get();
+
+		    boolean completed = isCourseQuizCompleted(enrolledCourse);
+
+		    if (!completed) {
+		        session.setAttribute("fail", "Complete all sections and quizzes to view the certificate.");
+		        return "redirect:/learner/view-enrolled-sections/" + enrolledCourse.getId();
+		    }
+
+		    // Put details in model for certificate view
+		    model.addAttribute("learner", learner);
+		    model.addAttribute("course", enrolledCourse.getCourse());
+		    model.addAttribute("date", java.time.LocalDate.now());
+
+		    return "certificate.html"; // Your certificate view
+	}
+
+	
+	
 
 
 
