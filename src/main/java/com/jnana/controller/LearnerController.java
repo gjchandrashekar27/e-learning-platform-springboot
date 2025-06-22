@@ -74,6 +74,12 @@ public class LearnerController {
 	    return learnerService.generateCertificate(id, session, model);
 	}
 
+	@GetMapping("/completed-courses")
+	public String viewCompletedCourses(HttpSession session, Model model) {
+	    return learnerService.viewCompletedCourses(session, model);
+	}
+
+	
 
 
 	

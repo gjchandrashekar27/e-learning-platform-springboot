@@ -1,5 +1,12 @@
 package com.jnana.service;
 
+
+import jakarta.mail.internet.MimeMessage;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +38,10 @@ import com.razorpay.RazorpayException;
 
 import jakarta.servlet.http.HttpSession;
 
+
+
+import java.time.LocalDate;
+
 @Service
 public class LearnerService {
 
@@ -60,6 +71,9 @@ public class LearnerService {
     
     @Autowired
 	ChatClient chatClient;
+    
+    @Autowired
+    MailSender mailSender;
     
     
     
@@ -397,15 +411,48 @@ public class LearnerService {
 		    return "certificate.html"; // Your certificate view
 	}
 
-	
-	
 
 
 
+	public String viewCompletedCourses(HttpSession session, Model model) {
+	    // ✅ Session check
+	    if (session.getAttribute("learner") == null) {
+	        session.setAttribute("fail", "Invalid Session, Login First");
+	        return "redirect:/login";
+	    }
 
+	    Learner learner = (Learner) session.getAttribute("learner");
+	    List<EnrolledCourse> enrolledCourses = learner.getEnrolledCourses();
 
+	    List<Map<String, Object>> completedCourses = new ArrayList<>();
 
-	
+	    for (EnrolledCourse enrolledCourse : enrolledCourses) {
+	        boolean allSectionsCompleted = true;
+	        boolean allQuizzesCompleted = true;
+
+	        for (EnrolledSection section : enrolledCourse.getEnrolledSections()) {
+	            if (!section.isSectionCompleted()) {
+	                allSectionsCompleted = false;
+	            }
+	            if (!section.isSectionQuizCompleted()) {
+	                allQuizzesCompleted = false;
+	            }
+	        }
+
+	        if (allSectionsCompleted && allQuizzesCompleted) {
+	            Map<String, Object> courseData = new HashMap<>();
+	            courseData.put("name", enrolledCourse.getCourse().getTitle());
+	            courseData.put("duration", enrolledCourse.getCourse().getDescription());
+	            courseData.put("date", LocalDate.now()); // Optional: replace with actual date if stored
+	            completedCourses.add(courseData);
+	        }
+	    }
+
+	    model.addAttribute("completedCourses", completedCourses);
+
+	    return "completed-courses.html"; // 🔁 create this HTML template
+	}
+
 
 	
 }

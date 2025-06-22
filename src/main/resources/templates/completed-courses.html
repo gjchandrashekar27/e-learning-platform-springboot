@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Completed Courses</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px auto;
+            width: 90%;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>✅ Completed Courses</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Course Name</th>
+                <th>Duration</th>
+                <th>Completion Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="course : ${completedCourses}">
+                <td th:text="${course.name}">Course Name</td>
+                <td th:text="${course.duration}">Duration</td>
+                <td th:text="${#temporals.format(course.date, 'dd-MM-yyyy')}">Date</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
