@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         body {
-            background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
-            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(120deg, #f0f4fd 0%, #f7d9e3 100%);
+            font-family: 'Montserrat', 'Roboto', Arial, sans-serif;
             margin: 0;
             padding: 0;
             min-height: 100vh;
@@ -17,25 +17,36 @@
             margin: 48px auto 0 auto;
             background: #fff;
             border-radius: 18px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
+            box-shadow: 0 8px 32px rgba(233, 30, 99, 0.13);
             padding: 36px 32px 32px 32px;
             text-align: center;
             position: relative;
         }
         h1 {
-            color: #2563eb;
+            color: #e91e63;
             font-size: 2rem;
             font-weight: 700;
             margin-bottom: 8px;
+            background: linear-gradient(90deg, #e91e63 40%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         .instructions {
-            background: #e0eafc;
-            color: #2563eb;
+            background: #fce4ec;
+            color: #e91e63;
             border-radius: 8px;
             padding: 10px 14px;
             font-size: 1.05rem;
             margin-bottom: 22px;
             text-align: left;
+            border-left: 4px solid #e91e63;
+            box-shadow: 0 2px 8px rgba(233,30,99,0.07);
+        }
+        .instructions ul {
+            margin: 6px 0 0 18px;
+            padding: 0;
+            font-size: 0.98rem;
         }
         form {
             display: flex;
@@ -65,8 +76,8 @@
             transition: border 0.2s;
         }
         input[type="text"]:focus, textarea:focus {
-            border: 1.5px solid #4f8cff;
-            background: #e0eafc;
+            border: 1.5px solid #e91e63;
+            background: #fce4ec;
             outline: none;
         }
         textarea {
@@ -87,18 +98,18 @@
         }
         .radio-group label {
             font-weight: 500;
-            color: #2563eb;
+            color: #e91e63;
             margin-left: 4px;
             margin-right: 12px;
             cursor: pointer;
             font-size: 1rem;
         }
         .radio-group input[type="radio"] {
-            accent-color: #4f8cff;
+            accent-color: #e91e63;
             margin-right: 4px;
         }
         button[type="submit"] {
-            background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
+            background: linear-gradient(90deg, #e91e63 60%, #7c3aed 100%);
             color: #fff;
             border: none;
             border-radius: 8px;
@@ -107,18 +118,18 @@
             font-weight: 600;
             cursor: pointer;
             transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
+            box-shadow: 0 2px 8px rgba(233, 30, 99, 0.13);
             margin-top: 8px;
         }
         button[type="submit"]:hover {
-            background: linear-gradient(90deg, #2563eb 60%, #4f8cff 100%);
+            background: linear-gradient(90deg, #7c3aed 60%, #e91e63 100%);
             transform: translateY(-2px) scale(1.04);
-            box-shadow: 0 4px 16px rgba(79, 140, 255, 0.18);
+            box-shadow: 0 4px 16px rgba(233, 30, 99, 0.18);
         }
         .back-btn {
             margin-top: 18px;
-            background: #e0eafc;
-            color: #2563eb;
+            background: #fce4ec;
+            color: #e91e63;
             border: none;
             border-radius: 8px;
             padding: 10px 32px;
@@ -128,7 +139,7 @@
             transition: background 0.2s, color 0.2s;
         }
         .back-btn:hover {
-            background: #2563eb;
+            background: #e91e63;
             color: #fff;
         }
         .copyright {
@@ -150,7 +161,7 @@
         <h1><i class="fa fa-plus-circle"></i> Add New Course</h1>
         <div class="instructions">
             <strong>Instructions:</strong>
-            <ul style="margin:6px 0 0 18px;padding:0;font-size:0.98rem;">
+            <ul>
                 <li>Fill in the <b>Title</b> and <b>Description</b> with clear, concise information.</li>
                 <li>Select whether your course is <b>Paid</b> or <b>Free</b>.</li>
                 <li>Make your description engaging and highlight what learners will achieve.</li>
@@ -188,7 +199,7 @@
                 <label for="questions"><i class="fa fa-question-circle"></i> Quiz Questions</label>
                 <textarea th:field="*{questions}" id="questions" placeholder="Eg: What is Java? What is OOP?"></textarea>
                 <span class="error-message" th:errors="*{questions}"></span>
-                <small style="color:#2563eb;margin-top:2px;">Separate each question with a <b>?</b></small>
+                <small style="color:#e91e63;margin-top:2px;">Separate each question with a <b>?</b></small>
             </div>
             <button type="submit"><i class="fa fa-plus"></i> Add Course</button>
         </form>

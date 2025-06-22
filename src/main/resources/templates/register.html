@@ -2,12 +2,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Register</title>
+<title>Register | Jnana</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
     body {
-        background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
-        font-family: 'Segoe UI', Arial, sans-serif;
+        background: linear-gradient(135deg, #e0eafc 0%, #c3cfe2 100%);
+        font-family: 'Montserrat', 'Roboto', Arial, sans-serif;
         margin: 0;
         padding: 0;
         min-height: 100vh;
@@ -18,81 +19,97 @@
     }
     .ad-banner {
         width: 100%;
-        max-width: 420px;
-        margin: 32px auto 0 auto;
-        background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
+        max-width: 480px;
+        margin: 36px auto 0 auto;
+        background: linear-gradient(90deg, #4f8cff 60%, #6ee7b7 100%);
         color: #fff;
-        border-radius: 12px;
-        padding: 16px 20px;
-        font-size: 1.08rem;
+        border-radius: 14px;
+        padding: 18px 24px;
+        font-size: 1.15rem;
         font-weight: 600;
-        box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
+        box-shadow: 0 2px 12px rgba(79, 140, 255, 0.13);
         display: flex;
         align-items: center;
-        gap: 14px;
+        gap: 16px;
         justify-content: center;
+        animation: popIn 0.7s;
     }
     .ad-banner i {
-        font-size: 1.4rem;
+        font-size: 1.7rem;
+        color: #2563eb;
+        animation: bounce 1.2s infinite alternate;
     }
-    .container {
+    @keyframes popIn {
+        from { opacity: 0; transform: scale(0.95);}
+        to { opacity: 1; transform: scale(1);}
+    }
+    @keyframes bounce {
+        0% { transform: translateY(0);}
+        100% { transform: translateY(-8px);}
+    }
+    .register-container {
         width: 100%;
-        max-width: 420px;
+        max-width: 440px;
         background: rgba(255,255,255,0.98);
-        border-radius: 20px;
-        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
-        padding: 40px 32px 32px 32px;
+        border-radius: 22px;
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.13);
+        padding: 44px 36px 36px 36px;
         text-align: center;
         position: relative;
         overflow: hidden;
-        animation: fadeIn 0.7s;
-        margin: 32px auto 0 auto;
+        margin: 36px auto 0 auto;
+        z-index: 1;
+        animation: fadeIn 0.8s;
     }
     @keyframes fadeIn {
         from { opacity: 0; transform: translateY(30px);}
         to { opacity: 1; transform: translateY(0);}
     }
-    .container::before {
+    .register-container::before {
         content: "";
         position: absolute;
         top: -60px; left: -60px;
         width: 160px; height: 160px;
-        background: linear-gradient(135deg, #4f8cff 0%, #e0eafc 100%);
-        opacity: 0.12;
+        background: linear-gradient(135deg, #4f8cff 0%, #6ee7b7 100%);
+        opacity: 0.13;
         border-radius: 50%;
         z-index: 0;
     }
     .app-icon {
-        font-size: 2.5rem;
+        font-size: 2.7rem;
         color: #4f8cff;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
         margin-top: 10px;
+        z-index: 1;
+        position: relative;
+        animation: bounce 1.2s infinite alternate;
     }
     h1 {
-        color: #2d3a4b;
+        color: #2563eb;
         margin-bottom: 10px;
         letter-spacing: 1px;
-        font-size: 2rem;
+        font-size: 2.1rem;
         font-weight: 700;
         z-index: 1;
         position: relative;
     }
     .instructions {
-        background: #e0eafc;
+        background: #e0f7fa;
         color: #2563eb;
         border-radius: 8px;
-        padding: 10px 14px;
-        font-size: 1rem;
-        margin-bottom: 18px;
+        padding: 12px 16px;
+        font-size: 1.05rem;
+        margin-bottom: 20px;
         text-align: left;
         z-index: 1;
         position: relative;
+        border-left: 4px solid #4f8cff;
+        box-shadow: 0 2px 8px rgba(79, 140, 255, 0.07);
     }
-    h3 {
-        margin: 10px 0;
-        font-weight: 500;
-        z-index: 1;
-        position: relative;
+    .instructions ul {
+        margin: 6px 0 0 18px;
+        padding: 0;
+        font-size: 0.98rem;
     }
     .message {
         min-height: 24px;
@@ -120,7 +137,7 @@
     }
     .input-group:focus-within {
         border: 1.5px solid #4f8cff;
-        background: #e0eafc;
+        background: #e0f7fa;
     }
     .input-group i {
         color: #4f8cff;
@@ -145,7 +162,7 @@
     }
     .radio-group label {
         font-weight: 500;
-        color: #2d3a4b;
+        color: #2563eb;
         margin-left: 4px;
         margin-right: 12px;
         cursor: pointer;
@@ -166,13 +183,13 @@
         padding-left: 4px;
     }
     button {
-        background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
+        background: linear-gradient(90deg, #4f8cff 60%, #6ee7b7 100%);
         color: #fff;
         border: none;
         border-radius: 8px;
         padding: 13px 0;
         font-size: 1.08rem;
-        font-weight: 600;
+        font-weight: 700;
         cursor: pointer;
         transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
         box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
@@ -180,110 +197,94 @@
         letter-spacing: 0.5px;
     }
     button:hover {
-        background: linear-gradient(90deg, #2563eb 60%, #4f8cff 100%);
+        background: linear-gradient(90deg, #6ee7b7 60%, #4f8cff 100%);
         transform: translateY(-2px) scale(1.04);
         box-shadow: 0 4px 16px rgba(79, 140, 255, 0.18);
     }
-    /* About Section */
-    .about-section {
-        max-width: 420px;
-        margin: 32px auto 0 auto;
-        background: #f5f8ff;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(31,38,135,0.07);
-        padding: 20px 24px;
-        text-align: left;
-        font-size: 1rem;
-        color: #2d3a4b;
-    }
-    .about-title {
-        font-size: 1.15rem;
-        font-weight: 700;
-        color: #2563eb;
-        margin-bottom: 8px;
-    }
-    .about-logo {
-        width: 38px;
-        height: 38px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-right: 10px;
-        vertical-align: middle;
-        border: 2px solid #4f8cff;
-    }
-    .about-company {
-        display: flex;
-        align-items: center;
-        margin-bottom: 8px;
-    }
-    .about-links a {
-        color: #2563eb;
-        text-decoration: none;
-        margin-right: 12px;
-        font-weight: 500;
-        transition: color 0.2s;
-    }
-    .about-links a:hover {
-        color: #4f8cff;
-        text-decoration: underline;
-    }
     /* Features Section */
     .features-section {
-        max-width:420px;
-        margin:32px auto 0 auto;
-        padding:0 12px;
+        max-width: 440px;
+        margin: 38px auto 0 auto;
+        padding: 0 12px;
     }
     .features-title {
-        color:#2563eb;
-        font-size:1.15rem;
-        margin-bottom:12px;
-        text-align:center;
-        font-weight:700;
+        color: #4f8cff;
+        font-size: 1.18rem;
+        margin-bottom: 14px;
+        text-align: center;
+        font-weight: 700;
+        letter-spacing: 0.5px;
     }
     .features-list {
-        display:flex;
-        flex-wrap:wrap;
-        gap:18px;
-        justify-content:center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        justify-content: center;
     }
     .feature-card {
-        flex:1 1 160px;
-        min-width:160px;
-        max-width:220px;
-        background:#f5f8ff;
-        border-radius:12px;
-        padding:14px 12px;
-        box-shadow:0 2px 8px rgba(31,38,135,0.07);
-        margin-bottom:8px;
-        text-align:center;
+        flex: 1 1 160px;
+        min-width: 160px;
+        max-width: 220px;
+        background: #e0f7fa;
+        border-radius: 12px;
+        padding: 14px 12px;
+        box-shadow: 0 2px 8px rgba(79, 140, 255, 0.07);
+        margin-bottom: 8px;
+        text-align: center;
+        border-left: 4px solid #4f8cff;
     }
-    .feature-card:nth-child(2) { background: #e0ffe7; }
-    .feature-card:nth-child(3) { background: #fffbe0; }
-    .feature-card:nth-child(4) { background: #e0eaff; }
     .feature-card i {
-        font-size:1.3rem;
-        margin-bottom:6px;
-        display:block;
+        font-size: 1.3rem;
+        margin-bottom: 6px;
+        display: block;
+        color: #4f8cff;
     }
     .feature-title {
-        font-weight:600;
-        margin-bottom:4px;
+        font-weight: 600;
+        margin-bottom: 4px;
     }
     .feature-desc {
-        font-size:0.97rem;
-        color:#444;
+        font-size: 0.97rem;
+        color: #444;
+    }
+    /* New: Extra Features */
+    .extra-features {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        justify-content: center;
+        margin-top: 10px;
+    }
+    .extra-feature-card {
+        flex: 1 1 160px;
+        min-width: 160px;
+        max-width: 220px;
+        background: #f0f7ff;
+        border-radius: 12px;
+        padding: 14px 12px;
+        box-shadow: 0 2px 8px rgba(79, 140, 255, 0.07);
+        margin-bottom: 8px;
+        text-align: center;
+        border-left: 4px solid #6ee7b7;
+    }
+    .extra-feature-card i {
+        font-size: 1.3rem;
+        margin-bottom: 6px;
+        display: block;
+        color: #10b981;
     }
     /* Reviews Section */
     .reviews-section {
-        margin: 32px auto 0 auto;
-        max-width: 420px;
+        margin: 38px auto 0 auto;
+        max-width: 440px;
         text-align: center;
     }
     .reviews-title {
         font-size: 1.08rem;
-        font-weight: 600;
-        color: #2d3a4b;
-        margin-bottom: 10px;
+        font-weight: 700;
+        color: #4f8cff;
+        margin-bottom: 12px;
+        letter-spacing: 0.5px;
     }
     .carousel {
         display: flex;
@@ -293,80 +294,134 @@
     }
     .review-card {
         background: #fff;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(31,38,135,0.09);
-        padding: 14px 12px 10px 12px;
+        border-radius: 14px;
+        box-shadow: 0 2px 8px rgba(79, 140, 255, 0.09);
+        padding: 18px 14px 12px 14px;
         min-width: 180px;
-        max-width: 220px;
+        max-width: 240px;
         text-align: left;
         position: relative;
-        font-size: 0.97rem;
+        font-size: 1.01rem;
         color: #444;
         transition: box-shadow 0.2s, background 0.3s;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        border-left: 4px solid #4f8cff;
     }
     .review-card .fa-quote-left {
         color: #4f8cff;
-        font-size: 1rem;
+        font-size: 1.1rem;
         margin-right: 6px;
     }
     .review-avatar {
-        width: 32px;
-        height: 32px;
+        width: 38px;
+        height: 38px;
         border-radius: 50%;
         object-fit: cover;
-        margin-bottom: 6px;
-        border: 2px solid #2563eb;
+        margin-bottom: 8px;
+        border: 2px solid #4f8cff;
         background: #fff;
         align-self: center;
     }
     .review-author {
-        margin-top: 8px;
-        font-weight: 600;
-        color: #2563eb;
-        font-size: 0.95rem;
+        margin-top: 10px;
+        font-weight: 700;
+        color: #4f8cff;
+        font-size: 1rem;
         align-self: flex-end;
     }
     .carousel-btn {
-        background: #e0eafc;
+        background: #e0f7fa;
         border: none;
         border-radius: 50%;
-        width: 28px;
-        height: 28px;
-        font-size: 1rem;
+        width: 32px;
+        height: 32px;
+        font-size: 1.1rem;
         color: #4f8cff;
         cursor: pointer;
         transition: background 0.2s, color 0.2s;
+        box-shadow: 0 2px 8px rgba(79, 140, 255, 0.07);
     }
     .carousel-btn:hover {
         background: #4f8cff;
         color: #fff;
     }
-    @media (max-width: 500px) {
-        .container, .ad-banner, .about-section, .features-section, .reviews-section {
+    /* About Section */
+    .about-section {
+        max-width: 440px;
+        margin: 38px auto 0 auto;
+        background: #f5f8ff;
+        border-radius: 14px;
+        box-shadow: 0 2px 8px rgba(31,38,135,0.07);
+        padding: 22px 26px;
+        text-align: left;
+        font-size: 1.05rem;
+        color: #2d3a4b;
+    }
+    .about-title {
+        font-size: 1.18rem;
+        font-weight: 700;
+        color: #4f8cff;
+        margin-bottom: 10px;
+    }
+    .about-company {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .about-logo {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 12px;
+        vertical-align: middle;
+        border: 2px solid #4f8cff;
+    }
+    .about-links a {
+        color: #4f8cff;
+        text-decoration: none;
+        margin-right: 14px;
+        font-weight: 600;
+        transition: color 0.2s;
+    }
+    .about-links a:hover {
+        color: #10b981;
+        text-decoration: underline;
+    }
+    .copyright {
+        width: 100%;
+        text-align: center;
+        color: #888;
+        font-size: 1rem;
+        margin: 2.5rem 0 1rem 0;
+        letter-spacing: 0.5px;
+    }
+    @media (max-width: 540px) {
+        .register-container, .ad-banner, .about-section, .features-section, .reviews-section {
             padding: 18px 4vw 18px 4vw;
         }
         h1 {
             font-size: 1.3rem;
         }
+        .about-logo { width: 32px; height: 32px;}
     }
 </style>
 </head>
 <body>
 
 <div class="ad-banner">
-    <i class="fa-solid fa-gift"></i>
-    <span>🎉 New User Offer: Get 30% OFF your first course! <a href="/login" style="color:#fff;text-decoration:underline;">Login Now</a></span>
+    <i class="fa-solid fa-bullhorn"></i>
+    <span>🚀 Register now & unlock <b>FREE Premium Resources</b>! <a href="/login" style="color:#fff;text-decoration:underline;">Login Now</a></span>
 </div>
 
-<div class="container">
+<div class="register-container">
     <div class="app-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-    <h1>Account Registration</h1>
+    <h1>Join Jnana Today</h1>
     <div class="instructions">
-        <strong>Instructions:</strong>
-        <ul style="margin:6px 0 0 18px;padding:0;font-size:0.98rem;">
+        <strong>How to Register:</strong>
+        <ul>
             <li>Fill in all fields with accurate information.</li>
             <li>Use a valid email address and mobile number.</li>
             <li>Password must be at least 6 characters.</li>
@@ -421,33 +476,55 @@
 </div>
 
 <div class="features-section">
-    <h2 class="features-title">Why Join Jnana?</h2>
+    <h2 class="features-title">Why Choose Jnana?</h2>
     <div class="features-list">
         <div class="feature-card">
-            <i class="fa-solid fa-video" style="color:#4f8cff;"></i>
+            <i class="fa-solid fa-video"></i>
             <div class="feature-title">Live & Recorded Classes</div>
             <div class="feature-desc">Interactive live sessions and on-demand content for flexible learning.</div>
         </div>
         <div class="feature-card">
-            <i class="fa-solid fa-user-group" style="color:#2563eb;"></i>
+            <i class="fa-solid fa-user-group"></i>
             <div class="feature-title">Expert Tutors</div>
             <div class="feature-desc">Learn from certified and experienced educators worldwide.</div>
         </div>
         <div class="feature-card">
-            <i class="fa-solid fa-trophy" style="color:#eab308;"></i>
+            <i class="fa-solid fa-trophy"></i>
             <div class="feature-title">Achievements & Badges</div>
             <div class="feature-desc">Earn badges and certificates as you progress and complete courses.</div>
         </div>
         <div class="feature-card">
-            <i class="fa-solid fa-mobile-screen" style="color:#4f8cff;"></i>
+            <i class="fa-solid fa-mobile-screen"></i>
             <div class="feature-title">Mobile Friendly</div>
             <div class="feature-desc">Access your courses anytime, anywhere, on any device.</div>
+        </div>
+    </div>
+    <div class="extra-features">
+        <div class="extra-feature-card">
+            <i class="fa-solid fa-comments"></i>
+            <div class="feature-title">Community Forums</div>
+            <div class="feature-desc">Discuss, ask questions, and connect with peers and mentors.</div>
+        </div>
+        <div class="extra-feature-card">
+            <i class="fa-solid fa-certificate"></i>
+            <div class="feature-title">Verified Certificates</div>
+            <div class="feature-desc">Get industry-recognized certificates after course completion.</div>
+        </div>
+        <div class="extra-feature-card">
+            <i class="fa-solid fa-headset"></i>
+            <div class="feature-title">24/7 Support</div>
+            <div class="feature-desc">Our support team is always available to help you succeed.</div>
+        </div>
+        <div class="extra-feature-card">
+            <i class="fa-solid fa-shield-halved"></i>
+            <div class="feature-title">Secure & Private</div>
+            <div class="feature-desc">Your data and progress are safe with us.</div>
         </div>
     </div>
 </div>
 
 <div class="reviews-section">
-    <div class="reviews-title">What Our Students Say</div>
+    <div class="reviews-title">What Real Learners Say</div>
     <div class="carousel" id="review-carousel">
         <button class="carousel-btn" onclick="prevReview()"><i class="fa fa-chevron-left"></i></button>
         <div class="review-card" id="review-card">
@@ -464,19 +541,24 @@
     <div class="about-title">About Jnana</div>
     <div class="about-company">
         <img class="about-logo" src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=80&q=80" alt="Jnana Logo">
-        <span><strong>Jnana E-Learning Platform</strong> <span style="color:#2563eb;">| Est. 2020</span></span>
+        <span><strong>Jnana E-Learning Platform</strong> <span style="color:#4f8cff;">| Est. 2020</span></span>
     </div>
     <div>
-        Jnana is a leading e-learning platform dedicated to empowering learners and educators worldwide. We offer interactive courses, live classes, expert tutors, and a vibrant learning community.
+        Jnana is a leading e-learning platform dedicated to empowering learners and educators worldwide. We offer interactive courses, live classes, expert tutors, a vibrant learning community, and verified certificates.
     </div>
     <div class="about-links" style="margin-top:10px;">
         <a href="#">About</a>
         <a href="#">Contact</a>
         <a href="#">Privacy Policy</a>
+        <a href="#">Help Center</a>
     </div>
     <div style="margin-top:8px;font-size:0.95rem;color:#888;">
         &copy; 2020-2025 Jnana E-Learning Platform. All rights reserved.
     </div>
+</div>
+
+<div class="copyright">
+    &copy; 2020-2025 Jnana E-Learning Platform. All rights reserved.
 </div>
 
 <script>
@@ -491,7 +573,7 @@
         {
             text: '"The interactive courses and quizzes made learning fun and effective. Highly recommend!"',
             author: '- Rahul M.',
-            color: '#ffe4e1',
+            color: '#e0f7fa',
             avatar: 'https://randomuser.me/api/portraits/men/43.jpg'
         },
         {
@@ -503,13 +585,13 @@
         {
             text: '"Great support and a wonderful community of learners and teachers."',
             author: '- Suresh K.',
-            color: '#fffbe0',
+            color: '#e0f7fa',
             avatar: 'https://randomuser.me/api/portraits/men/77.jpg'
         },
         {
             text: '"May the course be with you. Jnana is my Yoda!"',
             author: '- Star Learner',
-            color: '#e0eaff',
+            color: '#f0f7ff',
             avatar: 'https://randomuser.me/api/portraits/men/23.jpg'
         },
         {

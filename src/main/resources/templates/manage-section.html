@@ -4,57 +4,50 @@
 <meta charset="UTF-8">
 <title>Manage Sections | Tutor | Jnana</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
     body {
-        background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
-        font-family: 'Segoe UI', Arial, sans-serif;
+        background: linear-gradient(120deg, #f0f4fd 0%, #f7d9e3 100%);
+        font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
         margin: 0;
         padding: 0;
         min-height: 100vh;
     }
-    .ad-banner {
-        width: 100%;
-        max-width: 700px;
-        margin: 32px auto 0 auto;
-        background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
-        color: #fff;
-        border-radius: 12px;
-        padding: 14px 20px;
-        font-size: 1.08rem;
-        font-weight: 600;
-        box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        justify-content: center;
-    }
-    .ad-banner i {
-        font-size: 1.4rem;
-    }
     .container {
-        max-width: 600px;
-        margin: 36px auto 0 auto;
+        max-width: 700px;
+        margin: 48px auto 0 auto;
         background: #fff;
         border-radius: 18px;
-        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
+        box-shadow: 0 8px 32px rgba(233, 30, 99, 0.13);
         padding: 36px 32px 32px 32px;
         text-align: center;
         position: relative;
     }
     h1 {
-        color: #2563eb;
+        color: #e91e63;
         font-size: 2rem;
         font-weight: 700;
         margin-bottom: 10px;
+        background: linear-gradient(90deg, #e91e63 40%, #7c3aed 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
     .instructions {
-        background: #e0eafc;
-        color: #2563eb;
+        background: #fce4ec;
+        color: #e91e63;
         border-radius: 8px;
-        padding: 10px 14px;
+        padding: 1rem 1.5rem;
         font-size: 1.05rem;
         margin-bottom: 22px;
         text-align: left;
+        border-left: 4px solid #e91e63;
+        box-shadow: 0 2px 8px rgba(233,30,99,0.07);
+    }
+    .instructions ul {
+        margin: 6px 0 0 18px;
+        padding: 0;
+        font-size: 0.98rem;
     }
     .actions-section {
         display: flex;
@@ -64,9 +57,9 @@
         margin: 32px 0 18px 0;
     }
     .action-card {
-        background: #f5f8ff;
+        background: #f8eafd;
         border-radius: 14px;
-        box-shadow: 0 2px 8px rgba(31,38,135,0.09);
+        box-shadow: 0 2px 8px rgba(124,58,237,0.09);
         padding: 24px 18px 18px 18px;
         min-width: 180px;
         max-width: 220px;
@@ -77,8 +70,8 @@
         position: relative;
     }
     .action-card:hover {
-        box-shadow: 0 6px 20px rgba(79, 140, 255, 0.18);
-        border: 2px solid #4f8cff;
+        box-shadow: 0 6px 20px rgba(233, 30, 99, 0.18);
+        border: 2px solid #e91e63;
         transform: translateY(-4px) scale(1.03);
     }
     .action-logo {
@@ -87,13 +80,13 @@
         border-radius: 12px;
         object-fit: cover;
         margin-bottom: 10px;
-        border: 2px solid #e0eafc;
+        border: 2px solid #fce4ec;
         background: #fff;
     }
     .action-title {
         font-size: 1.08rem;
         font-weight: 600;
-        color: #2563eb;
+        color: #e91e63;
         margin-bottom: 6px;
     }
     .action-desc {
@@ -102,7 +95,7 @@
         margin-bottom: 10px;
     }
     .action-btn {
-        background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
+        background: linear-gradient(90deg, #e91e63 60%, #7c3aed 100%);
         color: #fff;
         border: none;
         border-radius: 8px;
@@ -111,111 +104,81 @@
         font-weight: 600;
         cursor: pointer;
         transition: background 0.2s, transform 0.2s;
-        box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
+        box-shadow: 0 2px 8px rgba(233, 30, 99, 0.13);
     }
     .action-btn:hover {
-        background: linear-gradient(90deg, #2563eb 60%, #4f8cff 100%);
+        background: linear-gradient(90deg, #7c3aed 60%, #e91e63 100%);
         transform: translateY(-2px) scale(1.04);
     }
-    .reviews-section {
+    .about-section {
         margin: 32px auto 0 auto;
-        max-width: 600px;
-        text-align: center;
-    }
-    .reviews-title {
-        font-size: 1.08rem;
-        font-weight: 600;
-        color: #2d3a4b;
-        margin-bottom: 10px;
-    }
-    .carousel {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-    }
-    .review-card {
-        background: #fff;
+        background: #f8eafd;
         border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(31,38,135,0.09);
-        padding: 14px 12px 10px 12px;
-        min-width: 220px;
-        max-width: 260px;
+        box-shadow: 0 2px 8px rgba(124,58,237,0.07);
+        padding: 20px 24px;
         text-align: left;
-        position: relative;
-        font-size: 0.97rem;
-        color: #444;
-        transition: box-shadow 0.2s, background 0.3s;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .review-card .fa-quote-left {
-        color: #4f8cff;
         font-size: 1rem;
-        margin-right: 6px;
+        color: #2d3a4b;
+        max-width: 700px;
     }
-    .review-avatar {
-        width: 32px;
-        height: 32px;
+    .about-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #e91e63;
+        margin-bottom: 8px;
+    }
+    .about-logo {
+        width: 38px;
+        height: 38px;
         border-radius: 50%;
         object-fit: cover;
-        margin-bottom: 6px;
-        border: 2px solid #2563eb;
-        background: #fff;
-        align-self: center;
+        margin-right: 10px;
+        vertical-align: middle;
+        border: 2px solid #e91e63;
     }
-    .review-author {
-        margin-top: 8px;
-        font-weight: 600;
-        color: #2563eb;
-        font-size: 0.95rem;
-        align-self: flex-end;
+    .about-company {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
     }
-    .carousel-btn {
-        background: #e0eafc;
-        border: none;
-        border-radius: 50%;
-        width: 28px;
-        height: 28px;
-        font-size: 1rem;
-        color: #4f8cff;
-        cursor: pointer;
-        transition: background 0.2s, color 0.2s;
+    .about-links a {
+        color: #e91e63;
+        text-decoration: none;
+        margin-right: 12px;
+        font-weight: 500;
+        transition: color 0.2s;
     }
-    .carousel-btn:hover {
-        background: #4f8cff;
-        color: #fff;
+    .about-links a:hover {
+        color: #7c3aed;
+        text-decoration: underline;
     }
-    footer {
+    .copyright {
         width: 100%;
         text-align: center;
-        padding: 18px 0 8px 0;
-        color: #2563eb;
+        color: #888;
         font-size: 0.98rem;
-        opacity: 0.85;
-        margin-top: 32px;
+        margin: 2rem 0 1rem 0;
+        letter-spacing: 0.5px;
     }
     @media (max-width: 800px) {
-        .container, .ad-banner, .reviews-section { max-width: 98vw; padding: 18px 4vw 18px 4vw; }
+        .container, .about-section { max-width: 98vw; padding: 18px 4vw 18px 4vw; }
         .actions-section { flex-direction: column; }
-        .action-card, .review-card { min-width: 0; width: 100%; }
+        .action-card { min-width: 0; width: 100%; }
     }
 </style>
 </head>
 <body>
-<div class="ad-banner">
-    <i class="fa-solid fa-lightbulb"></i>
-    <span>✨ Pro Tip: Add videos and notes to make your sections more engaging for learners!</span>
-</div>
 <div class="container">
     <h1><i class="fa fa-layer-group"></i> Manage Sections</h1>
     <div class="instructions">
         <strong>Instructions:</strong>
-        <ul style="margin:6px 0 0 18px;padding:0;font-size:0.98rem;">
+        <ul>
             <li>Click <b>Add Section</b> to create a new section for your course. You can add a <b>Title</b>, <b>Video</b> (YouTube or upload), and <b>Notes</b> (PDF or text).</li>
             <li>Use <b>View All Sections</b> to see, edit, or remove your existing sections.</li>
             <li>Organize your sections to provide a smooth learning experience for your students.</li>
+            <li>Keep section titles clear and concise for easy navigation.</li>
+            <li>Upload high-quality videos and notes to enhance understanding.</li>
+            <li>Update your sections regularly based on student feedback and course updates.</li>
         </ul>
     </div>
     <div class="actions-section">
@@ -239,58 +202,26 @@
         </div>
     </div>
 </div>
-
-<div class="reviews-section">
-    <div class="reviews-title">How Tutors Use Sections</div>
-    <div class="carousel" id="review-carousel">
-        <button class="carousel-btn" onclick="prevReview()"><i class="fa fa-chevron-left"></i></button>
-        <div class="review-card" id="review-card">
-            <img class="review-avatar" id="review-avatar" src="https://randomuser.me/api/portraits/men/65.jpg" alt="Tutor">
-            <i class="fa fa-quote-left"></i>
-            <span id="review-text">"Adding videos and notes to each section helped my students understand concepts much better!"</span>
-            <div class="review-author" id="review-author">- Ravi K.</div>
-        </div>
-        <button class="carousel-btn" onclick="nextReview()"><i class="fa fa-chevron-right"></i></button>
+<div class="about-section">
+    <div class="about-title">About Sections on Jnana</div>
+    <div class="about-company">
+        <img class="about-logo" src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=80&q=80" alt="Jnana Logo">
+        <span><strong>Jnana E-Learning Platform</strong> <span style="color:#e91e63;">| Empowering Tutors</span></span>
+    </div>
+    <div>
+        Sections help you organize your course content into manageable parts. Add videos, notes, and quizzes to each section for a richer learning experience. Well-structured sections make your course easier to follow and more engaging for students.
+    </div>
+    <div class="about-links" style="margin-top:10px;">
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Help</a>
+    </div>
+    <div style="margin-top:8px;font-size:0.95rem;color:#888;">
+        &copy; 2025 Jnana E-Learning Platform. All rights reserved.
     </div>
 </div>
-
-<script>
-    // Simple reviews carousel
-    const reviews = [
-        {
-            text: '"Adding videos and notes to each section helped my students understand concepts much better!"',
-            author: '- Ravi K.',
-            avatar: 'https://randomuser.me/api/portraits/men/65.jpg'
-        },
-        {
-            text: '"Sections with clear titles and resources make my course look professional and easy to follow."',
-            author: '- Priya S.',
-            avatar: 'https://randomuser.me/api/portraits/women/43.jpg'
-        },
-        {
-            text: '"I love how easy it is to organize my course into sections and keep everything updated."',
-            author: '- Ananya D.',
-            avatar: 'https://randomuser.me/api/portraits/women/68.jpg'
-        }
-    ];
-    let currentReview = 0;
-    function showReview(idx) {
-        document.getElementById('review-text').innerText = reviews[idx].text;
-        document.getElementById('review-author').innerText = reviews[idx].author;
-        document.getElementById('review-avatar').src = reviews[idx].avatar;
-    }
-    function prevReview() {
-        currentReview = (currentReview - 1 + reviews.length) % reviews.length;
-        showReview(currentReview);
-    }
-    function nextReview() {
-        currentReview = (currentReview + 1) % reviews.length;
-        showReview(currentReview);
-    }
-    window.onload = function() { showReview(0); };
-</script>
-<footer>
+<div class="copyright">
     &copy; 2025 Jnana E-Learning Platform. All rights reserved.
-</footer>
+</div>
 </body>
 </html>

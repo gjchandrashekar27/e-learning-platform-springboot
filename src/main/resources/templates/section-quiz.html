@@ -1,21 +1,122 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Quiz</title>
+    <meta charset="UTF-8">
+    <title>Quiz | Jnana</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(120deg, #e3f2fd 0%, #fffde7 100%);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+        .quiz-container {
+            max-width: 650px;
+            margin: 48px auto 0 auto;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(33,150,243,0.13);
+            padding: 36px 32px 32px 32px;
+            text-align: center;
+            position: relative;
+        }
+        h1 {
+            color: #2196f3;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            letter-spacing: 1px;
+        }
+        .instructions {
+            background: #fffde7;
+            color: #ff9800;
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin: 0 auto 1.5rem auto;
+            max-width: 500px;
+            font-size: 1rem;
+            box-shadow: 0 2px 8px rgba(255,152,0,0.07);
+            text-align: left;
+            border-left: 4px solid #ff9800;
+        }
+        form {
+            margin-top: 24px;
+        }
+        h3 {
+            color: #2196f3;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+        textarea {
+            width: 98%;
+            border-radius: 8px;
+            border: 1.5px solid #b3e5fc;
+            padding: 10px;
+            font-size: 1rem;
+            margin-bottom: 18px;
+            resize: vertical;
+            font-family: 'Montserrat', Arial, sans-serif;
+            transition: border 0.2s;
+        }
+        textarea:focus {
+            border: 2px solid #2196f3;
+            outline: none;
+        }
+        button {
+            padding: 0.8rem 2.2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(45deg, #2196f3, #ff9800);
+            transition: background 0.2s, transform 0.2s;
+            margin-top: 12px;
+        }
+        button:hover {
+            background: linear-gradient(45deg, #ff9800, #2196f3);
+            transform: translateY(-2px) scale(1.04);
+        }
+        .copyright {
+            width: 100%;
+            text-align: center;
+            color: #888;
+            font-size: 0.98rem;
+            margin: 2rem 0 1rem 0;
+            letter-spacing: 0.5px;
+        }
+    </style>
 </head>
 <body>
-	<div align="center">
-		<h1>Quiz</h1>
+    <div class="quiz-container">
+        <h1><i class="fa fa-question-circle"></i> Quiz</h1>
 
-		<form th:action="@{'/learner/submit-quiz/' + ${id}}" method="post">
-			<div th:each="question:${questions}">
-				<h3 th:text="${question.question}"></h3>
-				<textarea th:name="${question.id}" rows="5" cols="30" placeholder="Type Answer Here"></textarea>
-			</div>
+        <div class="instructions">
+            <strong>Instructions:</strong>
+            <ul>
+                <li>Answer all questions in your own words. Each answer should be clear and concise.</li>
+                <li>Use the text area below each question to type your answer. You can write in points or paragraphs.</li>
+                <li>Review your answers before submitting. Once submitted, you cannot change your answers.</li>
+                <li>If you score more than <b>80%</b>, a certificate will be generated for you automatically.</li>
+                <li>Try to answer all questions to the best of your knowledge for a better score.</li>
+            </ul>
+        </div>
 
-			<button>Submit</button>
-		</form>
-	</div>
+        <form th:action="@{'/learner/submit-quiz/' + ${id}}" method="post">
+            <div th:each="question:${questions}">
+                <h3 th:text="${question.question}"></h3>
+                <textarea th:name="${question.id}" rows="5" cols="30" placeholder="Type your answer here..."></textarea>
+            </div>
+            <button type="submit"><i class="fa fa-paper-plane"></i> Submit</button>
+        </form>
+
+        <div class="copyright">
+            &copy; 2025 Jnana E-Learning Platform. All rights reserved.
+        </div>
+    </div>
 </body>
 </html>

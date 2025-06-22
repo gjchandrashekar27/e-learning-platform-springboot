@@ -1,44 +1,215 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Payment Page</title>
+    <title>Payment - Jnana</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="https://yogastudies.org/wp-content/uploads/jnana.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2196F3;
+            --text-color: #2c3e50;
+            --shadow-color: rgba(0,0,0,0.1);
+            --bg-light: #f5f7fa;
+            --accent-color: #ff9800;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background: var(--bg-light);
+            min-height: 100vh;
+            padding-top: 100px;
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.2rem 5%;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        .container {
+            width: 90%;
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px var(--shadow-color);
+            text-align: center;
+            animation: slideUp 0.5s ease-out;
+        }
+        .instructions {
+            background: #fffde7;
+            color: var(--accent-color);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin: 0 auto 1.5rem auto;
+            max-width: 420px;
+            font-size: 1rem;
+            box-shadow: 0 2px 8px rgba(255,152,0,0.07);
+            text-align: left;
+            border-left: 4px solid var(--accent-color);
+        }
+        .payment-info {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--bg-light);
+            border-radius: 15px;
+        }
+        .amount {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin: 1rem 0;
+        }
+        #rzp-button1 {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: white;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        #rzp-button1:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .btn-back {
+            margin-top: 1.5rem;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: 500;
+            color: white;
+            background: var(--secondary-color);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .btn-back:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        .footer {
+            background: linear-gradient(to right, var(--text-color), #1a2634);
+            color: white;
+            text-align: center;
+            padding: 2.5rem;
+            margin-top: auto;
+        }
+        .copyright {
+            text-align: center;
+            color: #888;
+            font-size: 0.98rem;
+            margin: 2rem 0 1rem 0;
+            letter-spacing: 0.5px;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
-    <button id="rzp-button1">Pay with Razorpay</button>
+    <nav class="navbar">
+        <a href="/learner/home" class="logo">Jnana</a>
+    </nav>
 
-    <!-- Razorpay checkout script -->
+    <div class="container">
+        <h1>Course Payment</h1>
+
+        <div class="instructions">
+            <strong>Instructions:</strong>
+            <ul>
+                <li>Review the course fee and click <b>Pay Securely</b> to proceed.</li>
+                <li>All payments are processed securely via Razorpay.</li>
+                <li>After successful payment, you will get instant access to your course.</li>
+                <li>Do not refresh or close the page during payment processing.</li>
+                <li>For any payment issues, contact <a href="mailto:support@jnana.com" style="color:#ff9800;text-decoration:underline;">support@jnana.com</a>.</li>
+            </ul>
+        </div>
+
+        <div class="payment-info">
+            <div class="amount">₹ [[${amount/100}]]</div>
+            <p>Complete your payment to access the course</p>
+        </div>
+
+        <button id="rzp-button1">
+            <i class="fas fa-lock"></i>
+            Pay Securely
+        </button>
+
+        <a href="/learner/available-courses" class="btn-back">
+            <i class="fas fa-arrow-left"></i>
+            Back
+        </a>
+    </div>
+
+    <div class="copyright">
+        &copy; 2025 Jnana E-Learning Platform. All rights reserved.
+    </div>
+
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-    <!-- Inline Thymeleaf JavaScript -->
     <script th:inline="javascript">
+    /*<![CDATA[*/
         var options = {
-            "key": '[[${key}]]', // Razorpay API key
-            "amount": parseInt('[[${amount}]]'), // Amount in paise
-            "currency": '[[${currency}]]',
-            "name": "Jnana Elearning App",
-            "description": "Enrollment of Course",
-            "image": "https://example.com/your_logo", // Optional logo
-            "order_id": '[[${orderId}]]', // Order ID generated by Razorpay backend
-            "callback_url": "/payment", // Your Spring controller callback
+            "key": /*[['${key}']]*/ "rzp_test_key",
+            "amount": [[199]],  // Must be number: 19900 for ₹199.00
+            "currency": /*[[INR]]*/ "INR",
+            "name": "Jnana E-Learning",
+            "description": "Course Enrollment",
+            "image": "https://yogastudies.org/wp-content/uploads/jnana.jpg",
+            "order_id": /*[['${orderId}']]*/ "order_xyz123",
+            "callback_url": /*[['${path}']]*/ "/payment/success?courseId=[[${courseId}]]",
             "prefill": {
-                "name": "Gaurav Kumar",
-                "email": "gaurav.kumar@example.com",
-                "contact": "9000090000"
-            },
-            "notes": {
-                "address": "Razorpay Corporate Office"
+                "name": /*[['${session.learner.name}']]*/ "John Doe",
+                "email": /*[['${session.learner.email}']]*/ "john@example.com",
+                "contact": /*[['${session.learner.mobile}']]*/ "9876543210"
             },
             "theme": {
-                "color": "#3399cc"
+                "color": "#4CAF50"
             }
         };
 
         var rzp1 = new Razorpay(options);
-        document.getElementById('rzp-button1').onclick = function(e) {
+        document.getElementById('rzp-button1').onclick = function(e){
             rzp1.open();
             e.preventDefault();
-        }
+        };
+    /*]]>*/
     </script>
 </body>
 </html>

@@ -3,15 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <title>Certificate of Completion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(120deg, #e3f2fd 0%, #fffde7 100%);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+        .certificate-container {
+            max-width: 800px;
+            margin: 48px auto 0 auto;
+            background: #fff;
+            border-radius: 32px;
+            box-shadow: 0 8px 32px rgba(33,150,243,0.13);
+            padding: 56px 48px 40px 48px;
+            border: 10px solid #2196f3;
+            position: relative;
+        }
+        .certificate-seal {
+            position: absolute;
+            top: 36px;
+            right: 36px;
+            width: 80px;
+            height: 80px;
+        }
+        .certificate-header {
+            text-align: center;
+            margin-bottom: 18px;
+        }
+        .certificate-title {
+            font-size: 2.7rem;
+            font-weight: 700;
+            color: #2196f3;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        .institution {
+            font-size: 1.15rem;
+            color: #2196f3;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        .divider {
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(90deg, #2196f3 0%, #ff9800 100%);
+            margin: 24px auto 32px auto;
+            border-radius: 2px;
+            opacity: 0.5;
+        }
+        .main-content {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .desc {
+            color: #444;
+            font-size: 1.13rem;
+            margin-bottom: 18px;
+        }
+        .learner-name {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #ff9800;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .learner-email {
+            color: #555;
+            font-size: 1.08rem;
+            margin-bottom: 10px;
+        }
+        .course-title {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: #2196f3;
+            margin: 18px 0 10px 0;
+        }
+        .course-desc {
+            color: #444;
+            font-size: 1.05rem;
+            margin-bottom: 18px;
+        }
+        .date-row {
+            margin-top: 18px;
+            font-size: 1.08rem;
+            color: #888;
+            text-align: right;
+            margin-right: 12px;
+        }
+        .signature-row {
+            margin-top: 38px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .signature-block {
+            text-align: left;
+        }
+        .signature-label {
+            font-size: 1rem;
+            color: #2196f3;
+            font-weight: 600;
+        }
+        .signature {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 1.5rem;
+            color: #ff9800;
+            margin-top: 8px;
+        }
+        .logo-block img {
+            width: 70px;
+            height: 70px;
+            border-radius: 14px;
+            margin-left: 8px;
+        }
+        .copyright {
+            width: 100%;
+            text-align: center;
+            color: #888;
+            font-size: 0.98rem;
+            margin: 2rem 0 1rem 0;
+            letter-spacing: 0.5px;
+        }
+        @media (max-width: 900px) {
+            .certificate-container { padding: 24px 4vw 24px 4vw; }
+            .certificate-seal { width: 60px; height: 60px; top: 16px; right: 16px; }
+            .signature-row { flex-direction: column; align-items: flex-start; gap: 18px; }
+            .date-row { text-align: left; margin-right: 0; }
+        }
+    </style>
 </head>
 <body>
-    <div align="center">
-        <h1>🎓 Certificate of Completion</h1>
-        <p>This certifies that <strong th:text="${learner.name}">[Name]</strong></p>
-        <p>has successfully completed the course:</p>
-        <h2 th:text="${course.title}">[Course Title]</h2>
-        <br>
-        <p>Issued by: <strong>Jnana E-Learning Platform</strong></p>
+    <div class="certificate-container">
+        <img class="certificate-seal" src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Seal">
+        <div class="certificate-header">
+            <div class="certificate-title">Certificate of Completion</div>
+            <div class="institution">Jnana E-Learning Platform</div>
+            <div style="color:#888;font-size:1.08rem;">Empowering Learners Since 2020</div>
+        </div>
+        <div class="divider"></div>
+        <div class="main-content">
+            <div class="desc">
+                This is to certify that
+            </div>
+            <div class="learner-name" th:text="${learner.name}">[Learner Name]</div>
+            <div class="learner-email" th:text="${learner.email}">[Learner Email]</div>
+            <!-- Dummy learner for illustration if no real data -->
+            <div th:if="${learner == null}">
+                <div class="learner-name">Priya Sharma</div>
+                <div class="learner-email">priya.sharma@email.com</div>
+            </div>
+            <div class="desc">
+                has successfully completed the course:
+            </div>
+            <div class="course-title" th:text="${course.title}">[Course Title]</div>
+            <div class="course-desc" th:text="${course.description}">[Course Description]</div>
+        </div>
+        <div class="date-row">
+            Date of Completion: <span th:text="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">[Date]</span>
+        </div>
+        <div class="signature-row">
+            <div class="signature-block">
+                <div class="signature-label">Authorized Signature</div>
+                <div class="signature">Jnana Team</div>
+            </div>
+            <div class="logo-block">
+                <img src="https://yogastudies.org/wp-content/uploads/jnana.jpg" alt="Jnana Logo">
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 Jnana E-Learning Platform. All rights reserved.
+        </div>
     </div>
 </body>
 </html>

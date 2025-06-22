@@ -4,20 +4,21 @@
     <meta charset="UTF-8">
     <title>Tutor Home | Jnana</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
-            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(120deg, #f0f4fd 0%, #f7d9e3 100%);
+            font-family: 'Montserrat', 'Roboto', Arial, sans-serif;
             margin: 0;
             padding: 0;
             min-height: 100vh;
         }
         .container {
-            max-width: 900px;
+            max-width: 960px;
             margin: 48px auto 0 auto;
             background: #fff;
-            border-radius: 18px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
+            border-radius: 22px;
+            box-shadow: 0 8px 32px rgba(233, 30, 99, 0.13);
             padding: 36px 32px 32px 32px;
             text-align: center;
             position: relative;
@@ -25,32 +26,53 @@
         .tutor-header {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 18px;
+            justify-content: flex-start;
+            gap: 28px;
             margin-bottom: 18px;
         }
         .tutor-avatar {
-            width: 70px;
-            height: 70px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #4f8cff;
+            border: 4px solid #e91e63;
             background: #fff;
+            box-shadow: 0 2px 12px rgba(233,30,99,0.13);
         }
-        h1 {
-            color: #2563eb;
-            font-size: 2.3rem;
+        .tutor-info {
+            text-align: left;
+        }
+        .tutor-name {
+            color: #e91e63;
+            font-size: 2.1rem;
             font-weight: 700;
-            margin: 0;
+            margin: 0 0 6px 0;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #e91e63 40%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .tutor-bio {
+            color: #444;
+            font-size: 1.07rem;
+            margin-bottom: 0;
         }
         .instructions {
-            background: #e0eafc;
-            color: #2563eb;
-            border-radius: 8px;
-            padding: 16px 22px;
+            background: #fce4ec;
+            color: #e91e63;
+            border-radius: 10px;
+            padding: 18px 26px;
             font-size: 1.13rem;
-            margin: 22px 0 34px 0;
+            margin: 28px 0 34px 0;
             text-align: left;
+            border-left: 5px solid #e91e63;
+            box-shadow: 0 2px 8px rgba(233,30,99,0.07);
+        }
+        .instructions ul {
+            margin: 8px 0 0 18px;
+            padding: 0;
+            font-size: 1.01rem;
         }
         .actions-section {
             display: flex;
@@ -60,9 +82,9 @@
             margin: 38px 0 24px 0;
         }
         .action-card {
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 2px 12px rgba(31,38,135,0.11);
+            background: #f8eafd;
+            border-radius: 18px;
+            box-shadow: 0 2px 12px rgba(124,58,237,0.11);
             padding: 32px 22px 22px 22px;
             min-width: 220px;
             max-width: 260px;
@@ -73,23 +95,24 @@
             position: relative;
         }
         .action-card:hover {
-            box-shadow: 0 8px 28px rgba(79, 140, 255, 0.18);
-            border: 2px solid #4f8cff;
+            box-shadow: 0 8px 28px rgba(233,30,99,0.18);
+            border: 2px solid #e91e63;
             transform: translateY(-6px) scale(1.04);
         }
         .action-logo {
-            width: 56px;
-            height: 56px;
+            width: 60px;
+            height: 60px;
             border-radius: 14px;
             object-fit: cover;
             margin-bottom: 14px;
-            border: 2px solid #e0eafc;
+            border: 2px solid #fce4ec;
             background: #fff;
+            box-shadow: 0 2px 8px rgba(233,30,99,0.07);
         }
         .action-title {
             font-size: 1.18rem;
             font-weight: 600;
-            color: #2563eb;
+            color: #e91e63;
             margin-bottom: 8px;
         }
         .action-desc {
@@ -98,7 +121,7 @@
             margin-bottom: 14px;
         }
         .action-btn {
-            background: linear-gradient(90deg, #4f8cff 60%, #2563eb 100%);
+            background: linear-gradient(90deg, #e91e63 60%, #7c3aed 100%);
             color: #fff;
             border: none;
             border-radius: 8px;
@@ -107,16 +130,15 @@
             font-weight: 600;
             cursor: pointer;
             transition: background 0.2s, transform 0.2s;
-            box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
+            box-shadow: 0 2px 8px rgba(233,30,99,0.13);
         }
         .action-btn:hover {
-            background: linear-gradient(90deg, #2563eb 60%, #4f8cff 100%);
+            background: linear-gradient(90deg, #7c3aed 60%, #e91e63 100%);
             transform: translateY(-2px) scale(1.04);
         }
         .logout-btn {
             margin-top: 28px;
-            background: #e74c3c;
-            background: linear-gradient(90deg, #e74c3c 60%, #ff7675 100%);
+            background: linear-gradient(90deg, #e91e63 60%, #ff7675 100%);
             color: #fff;
             border: none;
             border-radius: 8px;
@@ -128,15 +150,15 @@
             box-shadow: 0 2px 8px rgba(231, 76, 60, 0.13);
         }
         .logout-btn:hover {
-            background: linear-gradient(90deg, #ff7675 60%, #e74c3c 100%);
+            background: linear-gradient(90deg, #ff7675 60%, #e91e63 100%);
             transform: translateY(-2px) scale(1.04);
         }
         .features-section {
             margin: 0 auto 32px auto;
-            max-width: 800px;
+            max-width: 900px;
         }
         .features-title {
-            color: #2563eb;
+            color: #e91e63;
             font-size: 1.18rem;
             margin-bottom: 14px;
             font-weight: 700;
@@ -152,18 +174,19 @@
             flex: 1 1 220px;
             min-width: 200px;
             max-width: 270px;
-            background: #f5f8ff;
+            background: #fce4ec;
             border-radius: 14px;
             padding: 18px 14px;
-            box-shadow: 0 2px 8px rgba(31,38,135,0.07);
+            box-shadow: 0 2px 8px rgba(233,30,99,0.07);
             margin-bottom: 8px;
             text-align: center;
+            border-left: 5px solid #e91e63;
         }
         .feature-card i {
             font-size: 1.5rem;
             margin-bottom: 8px;
             display: block;
-            color: #4f8cff;
+            color: #e91e63;
         }
         .feature-title {
             font-weight: 600;
@@ -174,19 +197,62 @@
             font-size: 1rem;
             color: #444;
         }
-        footer {
+        .about-section {
+            max-width: 900px;
+            margin: 38px auto 0 auto;
+            background: #f8eafd;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(124,58,237,0.07);
+            padding: 22px 26px;
+            text-align: left;
+            font-size: 1.05rem;
+            color: #2d3a4b;
+        }
+        .about-title {
+            font-size: 1.18rem;
+            font-weight: 700;
+            color: #e91e63;
+            margin-bottom: 10px;
+        }
+        .about-company {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .about-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 12px;
+            vertical-align: middle;
+            border: 2px solid #e91e63;
+        }
+        .about-links a {
+            color: #e91e63;
+            text-decoration: none;
+            margin-right: 14px;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .about-links a:hover {
+            color: #7c3aed;
+            text-decoration: underline;
+        }
+        .copyright {
             width: 100%;
             text-align: center;
-            padding: 18px 0 8px 0;
-            color: #2563eb;
-            font-size: 0.98rem;
-            opacity: 0.85;
-            margin-top: 32px;
+            color: #888;
+            font-size: 1rem;
+            margin: 2.5rem 0 1rem 0;
+            letter-spacing: 0.5px;
         }
         @media (max-width: 1000px) {
             .container { max-width: 98vw; }
             .features-section, .actions-section { flex-direction: column; }
             .feature-card, .action-card { min-width: 0; width: 100%; }
+            .tutor-header { flex-direction: column; align-items: center; }
+            .tutor-info { text-align: center; }
         }
     </style>
 </head>
@@ -195,7 +261,12 @@
 <div class="container">
     <div class="tutor-header">
         <img class="tutor-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Tutor">
-        <h1>Tutor Dashboard</h1>
+        <div class="tutor-info">
+            <div class="tutor-name" th:text="${session.tutorName}">Mr. Rakesh Sharma</div>
+            <div class="tutor-bio">
+                Passionate about making science simple. 10+ years of experience, 5000+ students mentored, and a love for interactive teaching!
+            </div>
+        </div>
     </div>
     <h3 style="color: green" th:text="${session.pass}"></h3>
     <h3 style="color: red" th:text="${session.fail}"></h3>
@@ -203,23 +274,23 @@
 
     <div class="instructions">
         <strong>Welcome to your Tutor Dashboard!</strong><br>
-        Use the options below to manage your courses, sections, and view your learners.<br>
-        <ul style="margin:8px 0 0 18px;padding:0;font-size:1.01rem;">
-            <li>Keep your course content updated and engaging.</li>
-            <li>Monitor learner progress and respond to queries.</li>
-            <li>Use the features below to enhance your teaching experience.</li>
+        <ul>
+            <li>Manage your courses and sections with ease.</li>
+            <li>Track learner progress and respond to their queries.</li>
+            <li>Access analytics and improve your teaching impact.</li>
+            <li>Connect with the community and share resources.</li>
         </ul>
     </div>
 
     <div class="actions-section">
         <div class="action-card" onclick="location.href='/tutor/courses'">
-            <img class="action-logo" src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=80&q=80" alt="Courses">
+            <img class="action-logo" src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=400&q=80" alt="Courses">
             <div class="action-title">Manage Courses</div>
             <div class="action-desc">Create, update, and organize your courses for learners.</div>
             <a th:href="@{/tutor/courses}"><button class="action-btn"><i class="fa fa-book"></i> Courses</button></a>
         </div>
         <div class="action-card" onclick="location.href='/tutor/sections'">
-            <img class="action-logo" src="https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&w=80&h=80&fit=crop" alt="Sections">
+            <img class="action-logo" src="https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&w=400&h=400&fit=crop" alt="Sections">
             <div class="action-title">Manage Sections</div>
             <div class="action-desc">Add or edit course sections and structure your content.</div>
             <a th:href="@{/tutor/sections}"><button class="action-btn"><i class="fa fa-layer-group"></i> Sections</button></a>
@@ -255,13 +326,43 @@
                 <div class="feature-title">Achievements & Badges</div>
                 <div class="feature-desc">Reward learners and motivate them to complete courses.</div>
             </div>
+            <div class="feature-card">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <div class="feature-title">Resource Sharing</div>
+                <div class="feature-desc">Upload notes, assignments, and additional resources for your classes.</div>
+            </div>
+            <div class="feature-card">
+                <i class="fa-solid fa-headset"></i>
+                <div class="feature-title">24/7 Support</div>
+                <div class="feature-desc">Get instant help from our support team whenever you need it.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="about-section">
+        <div class="about-title">About Jnana for Tutors</div>
+        <div class="about-company">
+            <img class="about-logo" src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=80&q=80" alt="Jnana Logo">
+            <span><strong>Jnana E-Learning Platform</strong> <span style="color:#e91e63;">| Est. 2020</span></span>
+        </div>
+        <div>
+            Jnana empowers educators to deliver high-quality, interactive, and impactful learning experiences. Our platform is designed for tutors to easily manage courses, engage with learners, and grow their teaching career.
+        </div>
+        <div class="about-links" style="margin-top:10px;">
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Help Center</a>
+        </div>
+        <div style="margin-top:8px;font-size:0.95rem;color:#888;">
+            &copy; 2020-2025 Jnana E-Learning Platform. All rights reserved.
         </div>
     </div>
 
     <a href="/logout"><button type="submit" class="logout-btn"><i class="fa fa-sign-out-alt"></i> Logout</button></a>
 </div>
-<footer>
-    &copy; 2025 Jnana E-Learning Platform. All rights reserved.
-</footer>
+<div class="copyright">
+    &copy; 2020-2025 Jnana E-Learning Platform. All rights reserved.
+</div>
 </body>
 </html>

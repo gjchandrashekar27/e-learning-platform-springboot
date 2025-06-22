@@ -8,7 +8,7 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+            background: linear-gradient(120deg, #f0f4fd 0%, #f7d9e3 100%);
             margin: 0;
             padding: 0;
             min-height: 100vh;
@@ -18,117 +18,93 @@
             margin: 48px auto 0 auto;
             background: #fff;
             border-radius: 18px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.13);
+            box-shadow: 0 8px 32px rgba(233, 30, 99, 0.13);
             padding: 36px 32px 32px 32px;
             text-align: center;
             position: relative;
         }
         h2 {
-            color: #2563eb;
+            color: #e91e63;
             margin-top: 0;
             margin-bottom: 18px;
             font-size: 2rem;
             font-weight: 700;
             letter-spacing: 1px;
+            background: linear-gradient(90deg, #e91e63 40%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         .instructions {
-            background: #e0eafc;
-            color: #2563eb;
+            background: #fce4ec;
+            color: #e91e63;
             border-radius: 8px;
             padding: 1rem 1.5rem;
             margin: 0 auto 1.5rem auto;
             max-width: 700px;
             font-size: 1rem;
-            box-shadow: 0 2px 8px rgba(31,38,135,0.07);
+            box-shadow: 0 2px 8px rgba(233,30,99,0.07);
             text-align: left;
+            border-left: 4px solid #e91e63;
         }
         table {
             border-collapse: collapse;
             width: 100%;
             margin: 40px auto 0 auto;
-            background-color: #f5f8ff;
-            box-shadow: 0 2px 8px rgba(31,38,135,0.07);
+            background-color: #f8eafd;
+            box-shadow: 0 2px 8px rgba(124,58,237,0.07);
             border-radius: 12px;
             overflow: hidden;
         }
         th, td {
             padding: 1rem 0.7rem;
             text-align: center;
-            border-bottom: 1px solid #e0eafc;
+            border-bottom: 1px solid #fce4ec;
             font-size: 1rem;
         }
         th {
-            background-color: #2563eb;
+            background-color: #e91e63;
             color: white;
             font-weight: 600;
         }
         tr:last-child td {
             border-bottom: none;
         }
-        .enlarge-link {
-            color: #2563eb;
-            text-decoration: underline;
+        .iframe-preview {
+            width: 220px;
+            height: 140px;
+            border-radius: 8px;
+            background: #f5f8ff;
+            border: 2px solid #e91e63;
+            margin-bottom: 6px;
             cursor: pointer;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        .enlarge-link:hover {
-            color: #4f8cff;
-        }
-        .modal-bg {
-            display: none;
-            position: fixed;
-            z-index: 10000;
-            left: 0; top: 0; right: 0; bottom: 0;
-            background: rgba(30,40,80,0.55);
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-bg.active {
-            display: flex;
-        }
-        .modal-content {
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(31,38,135,0.18);
-            padding: 24px 24px 16px 24px;
-            max-width: 90vw;
-            max-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            transition: width 0.3s, height 0.3s, z-index 0.3s, left 0.3s, top 0.3s, box-shadow 0.3s;
             position: relative;
         }
-        .modal-title {
-            color: #2563eb;
-            font-weight: 600;
-            font-size: 1.2rem;
-            margin-bottom: 12px;
+        .iframe-preview.expanded {
+            width: 700px !important;
+            height: 700px !important;
+            z-index: 9999;
+            position: fixed !important;
+            left: 50% !important;
+            top: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            background: #fff;
+            box-shadow: 0 8px 32px rgba(233,30,99,0.18);
         }
-        .modal-iframe {
-            width: 70vw;
-            max-width: 900px;
-            height: 60vh;
-            border-radius: 10px;
-            background: #f5f8ff;
-            border: 2px solid #2563eb;
-            margin-bottom: 10px;
-        }
-        .close-modal-btn {
-            background: #e0eafc;
-            color: #2563eb;
-            border: none;
-            border-radius: 8px;
-            padding: 8px 28px;
+        .iframe-preview.expanded::after {
+            content: "Click to minimize";
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #e91e63;
             font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s;
-            margin-top: 8px;
-        }
-        .close-modal-btn:hover {
-            background: #2563eb;
-            color: #fff;
+            background: #fff;
+            padding: 2px 10px;
+            border-radius: 6px;
+            opacity: 0.85;
+            pointer-events: none;
         }
         ul {
             list-style-type: disc;
@@ -138,7 +114,7 @@
         }
         .questions-label {
             font-weight: 600;
-            color: #2563eb;
+            color: #e91e63;
             margin-bottom: 4px;
             display: block;
         }
@@ -149,8 +125,8 @@
             display: inline-block;
             margin: 28px auto 0 auto;
             padding: 10px 32px;
-            background: #e0eafc;
-            color: #2563eb;
+            background: #fce4ec;
+            color: #e91e63;
             border: none;
             border-radius: 8px;
             font-weight: 600;
@@ -160,7 +136,7 @@
             text-decoration: none;
         }
         .back-btn:hover {
-            background: #2563eb;
+            background: #e91e63;
             color: #fff;
         }
         .copyright {
@@ -181,19 +157,19 @@
             tr { margin-bottom: 18px; }
             td {
                 padding: 10px 8px;
-                border-bottom: 1px solid #e0eafc;
+                border-bottom: 1px solid #fce4ec;
                 position: relative;
             }
             td:before {
                 content: attr(data-label);
                 font-weight: 600;
-                color: #2563eb;
+                color: #e91e63;
                 display: block;
                 margin-bottom: 4px;
             }
-            .modal-iframe {
-                width: 95vw;
-                height: 35vh;
+            .iframe-preview.expanded {
+                width: 95vw !important;
+                height: 35vh !important;
             }
         }
     </style>
@@ -205,8 +181,8 @@
             <strong>Instructions:</strong>
             <ul style="margin:6px 0 0 18px;padding:0;font-size:0.98rem;">
                 <li>All your course sections are listed below.</li>
-                <li>Click <b>Enlarge Video</b> or <b>Enlarge Notes</b> to view them in a larger window.</li>
-                <li>Click the close button to hide the enlarged view.</li>
+                <li>Videos and notes are shown directly in the table using <b>iframes</b> for easy preview.</li>
+                <li>Click on the video or notes to enlarge them. Click again to minimize.</li>
                 <li>Quiz questions for each section are shown in the Questions column.</li>
                 <li>If there are no questions, "No Questions" will be shown.</li>
             </ul>
@@ -226,22 +202,12 @@
                     <td th:text="${section.title}"></td>
                     <td th:text="${section.course.title}"></td>
                     <td>
-                        <iframe th:src="${section.videoUrl}" frameborder="0" allowfullscreen style="width:220px;height:140px;border-radius:8px;"></iframe>
-                        <br>
-                        <span class="enlarge-link"
-                              data-url="[[${section.videoUrl}]]"
-                              onclick="showModalIframe(this, 'video')">
-                            <i class="fa fa-expand"></i> Enlarge Video
-                        </span>
+                        <iframe th:src="${section.videoUrl}" class="iframe-preview" frameborder="0" allowfullscreen
+                            onclick="expandIframe(this)"></iframe>
                     </td>
                     <td>
-                        <iframe th:src="${section.notesUrl}" frameborder="0" style="width:220px;height:140px;border-radius:8px;"></iframe>
-                        <br>
-                        <span class="enlarge-link"
-                              data-url="[[${section.notesUrl}]]"
-                              onclick="showModalIframe(this, 'notes')">
-                            <i class="fa fa-expand"></i> Enlarge Notes
-                        </span>
+                        <iframe th:src="${section.notesUrl}" class="iframe-preview" frameborder="0"
+                            onclick="expandIframe(this)"></iframe>
                     </td>
                     <td>
                         <span class="questions-label" th:if="${section.quizQuestions != null and #lists.size(section.quizQuestions) > 0}">Quiz Questions:</span>
@@ -258,29 +224,18 @@
             &copy; 2025 Jnana E-Learning Platform. All rights reserved.
         </div>
     </div>
-    <!-- Modal for Enlarged Iframe -->
-    <div id="modal-bg" class="modal-bg" onclick="closeModal(event)">
-        <div class="modal-content" id="modal-content" onclick="event.stopPropagation()">
-            <div class="modal-title" id="modal-title"></div>
-            <iframe id="modal-iframe" class="modal-iframe" frameborder="0" allowfullscreen></iframe>
-            <button class="close-modal-btn" onclick="closeModal(event)">Close</button>
-        </div>
-    </div>
     <script>
-        function showModalIframe(el, type) {
-            document.getElementById('modal-bg').classList.add('active');
-            var iframe = document.getElementById('modal-iframe');
-            var url = el.getAttribute('data-url');
-            iframe.src = url;
-            if(type === 'video') {
-                document.getElementById('modal-title').innerHTML = '<i class="fa fa-play-circle"></i> Video Preview';
+        function expandIframe(iframe) {
+            // Collapse any previously expanded iframe except the one clicked
+            document.querySelectorAll('.iframe-preview.expanded').forEach(function(el) {
+                if (el !== iframe) el.classList.remove('expanded');
+            });
+            // Toggle expand/collapse for the clicked iframe
+            if (!iframe.classList.contains('expanded')) {
+                iframe.classList.add('expanded');
             } else {
-                document.getElementById('modal-title').innerHTML = '<i class="fa fa-file-pdf"></i> Notes Preview';
+                iframe.classList.remove('expanded');
             }
-        }
-        function closeModal(e) {
-            document.getElementById('modal-bg').classList.remove('active');
-            document.getElementById('modal-iframe').src = '';
         }
     </script>
 </body>

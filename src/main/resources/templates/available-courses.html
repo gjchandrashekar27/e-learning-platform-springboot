@@ -3,35 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Available Courses - Jnana</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="https://yogastudies.org/wp-content/uploads/jnana.jpg" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #4CAF50;
-            --secondary-color: #2196F3;
-            --text-color: #2c3e50;
-            --shadow-color: rgba(0,0,0,0.1);
-            --error-color: #f44336;
-            --bg-light: #f5f7fa;
-            --accent-color: #ff5722;
+            --primary: #2196f3;
+            --secondary: #ff9800;
+            --text: #2d3a4b;
+            --shadow: 0 8px 32px rgba(33,150,243,0.10);
+            --bg: #f7faff;
+            --card-bg: #fff;
+            --border: #b3e5fc;
+            --accent: #ff5722;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
         body {
-            background: var(--bg-light);
+            background: linear-gradient(120deg, #e3f2fd 0%, #fffde7 100%);
             min-height: 100vh;
-            padding-top: 100px;
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
             display: flex;
             flex-direction: column;
         }
-
         .navbar {
             position: fixed;
             top: 0;
@@ -45,74 +38,81 @@
             justify-content: space-between;
             align-items: center;
         }
-
         .logo {
             font-size: 2rem;
             font-weight: 700;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-decoration: none;
             letter-spacing: 1px;
         }
-
         .container {
             margin: 2rem auto;
             padding: 2.5rem;
             width: 90%;
             max-width: 1200px;
+            background: var(--card-bg);
+            border-radius: 22px;
+            box-shadow: var(--shadow);
         }
-
         h1 {
             text-align: center;
-            color: var(--text-color);
+            color: var(--primary);
             margin-bottom: 2rem;
             font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
         }
-
+        .instructions {
+            background: #fffde7;
+            color: #ff9800;
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin: 0 auto 1.5rem auto;
+            max-width: 700px;
+            font-size: 1rem;
+            box-shadow: 0 2px 8px rgba(255,152,0,0.07);
+            text-align: left;
+            border-left: 4px solid #ff9800;
+        }
         .course-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin: 2rem 0;
         }
-
         .course-card {
-            background: white;
+            background: var(--card-bg);
             border-radius: 20px;
             padding: 1.5rem;
-            box-shadow: 0 8px 30px var(--shadow-color);
+            box-shadow: 0 8px 30px var(--shadow);
             transition: transform 0.3s ease;
             animation: slideUp 0.5s ease-out;
             display: flex;
             flex-direction: column;
         }
-
         .course-card:hover {
             transform: translateY(-5px);
         }
-
         .course-title {
-            color: var(--text-color);
+            color: var(--primary);
             font-size: 1.25rem;
             font-weight: 600;
             margin-bottom: 1rem;
         }
-
         .course-description {
             color: #666;
             margin-bottom: 1rem;
             line-height: 1.6;
         }
-
         .course-sections {
-            background: var(--bg-light);
+            background: #e3f2fd;
             padding: 1rem;
             border-radius: 10px;
             margin: 1rem 0;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
-
         .price-tag {
             display: inline-block;
             padding: 0.5rem 1rem;
@@ -121,15 +121,12 @@
             color: white;
             margin: 1rem 0;
         }
-
         .price-free {
-            background: var(--secondary-color);
+            background: var(--secondary);
         }
-
         .price-paid {
-            background: var(--primary-color);
+            background: var(--primary);
         }
-
         .btn {
             padding: 0.8rem 1.5rem;
             border: none;
@@ -145,31 +142,76 @@
             gap: 0.5rem;
             margin-top: auto;
         }
-
         .btn-enroll {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
         }
-
         .btn-enrolled {
-            background: var(--accent-color);
+            background: var(--accent);
             cursor: default;
         }
-
         .btn-back {
-            background: var(--text-color);
+            background: var(--text);
         }
-
+        .reviews-section {
+            margin: 32px 0 0 0;
+            background: #e3f2fd;
+            border-radius: 14px;
+            padding: 24px 18px;
+            box-shadow: 0 2px 8px rgba(33,150,243,0.07);
+        }
+        .reviews-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 18px;
+            text-align: center;
+        }
+        .review-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            justify-content: center;
+        }
+        .review-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(33,150,243,0.07);
+            padding: 18px 18px 14px 18px;
+            min-width: 220px;
+            max-width: 320px;
+            text-align: left;
+            border-left: 4px solid var(--secondary);
+            position: relative;
+        }
+        .review-user {
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 4px;
+        }
+        .review-date {
+            color: #888;
+            font-size: 0.92rem;
+            margin-bottom: 6px;
+        }
+        .review-text {
+            color: #333;
+            font-size: 1rem;
+        }
         .footer {
-            background: linear-gradient(to right, var(--text-color), #1a2634);
+            background: linear-gradient(to right, var(--text), #1a2634);
             color: white;
             text-align: center;
             padding: 2.5rem;
-            margin-top: auto;
+            margin-top: 2rem;
+            border-radius: 0 0 22px 22px;
         }
-
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 900px) {
+            .container { max-width: 98vw; padding: 18px 4vw 18px 4vw; }
+            .course-grid, .review-list { grid-template-columns: 1fr; flex-direction: column; }
         }
     </style>
 </head>
@@ -181,11 +223,22 @@
     <div class="container">
         <h1>Available Courses</h1>
 
+        <div class="instructions">
+            <strong>Instructions:</strong>
+            <ul>
+                <li>Browse all available courses below and read their descriptions.</li>
+                <li>Click <b>Enroll Now</b> to join a course. If you are already enrolled, it will show <b>Already Enrolled</b>.</li>
+                <li>Check the number of sections and their titles for each course.</li>
+                <li>Paid courses are marked with a price tag; free courses are marked as Free.</li>
+                <li>After enrolling, access your courses from your dashboard.</li>
+                <li>For help, contact <a href="mailto:support@jnana.com" style="color:#ff9800;text-decoration:underline;">support@jnana.com</a>.</li>
+            </ul>
+        </div>
+
         <div class="course-grid">
             <div class="course-card" th:each="course:${courses}">
                 <h2 class="course-title" th:text="${course.title}"></h2>
                 <p class="course-description" th:text="${course.description}"></p>
-                
                 <div class="course-sections">
                     <strong>Total Sections: </strong>
                     <span th:text="${@sectionRepository.findByCourse(course).size()}"></span>
@@ -196,12 +249,10 @@
                         </span>
                     </div>
                 </div>
-
                 <span class="price-tag" 
                       th:classappend="${!course.paid ? 'price-free' : 'price-paid'}"
                       th:text="${!course.paid ? 'Free' : '199 ₹'}">
                 </span>
-
                 <a th:if="${!session.learner.checkCourse(course.id)}" 
                    th:href="'/learner/enroll/'+${course.id}" 
                    class="btn btn-enroll">
@@ -216,7 +267,28 @@
             </div>
         </div>
 
-        <div style="text-align: center;">
+        <div class="reviews-section">
+            <div class="reviews-title"><i class="fa fa-star"></i> What Learners Say</div>
+            <div class="review-list">
+                <div class="review-card">
+                    <div class="review-user">Priya Sharma</div>
+                    <div class="review-date">2025-06-20</div>
+                    <div class="review-text">"Jnana's courses are well-structured and easy to follow. I loved the interactive content!"</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-user">Rahul Verma</div>
+                    <div class="review-date">2025-06-18</div>
+                    <div class="review-text">"The tutors are very helpful and the platform is user-friendly. Highly recommended!"</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-user">Ayesha Khan</div>
+                    <div class="review-date">2025-06-15</div>
+                    <div class="review-text">"I could track my progress easily and the quizzes made learning fun."</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem;">
             <a href="/learner/home" class="btn btn-back">
                 <i class="fas fa-arrow-left"></i>
                 Back
@@ -225,7 +297,7 @@
     </div>
 
     <footer class="footer">
-        <p>&copy; 2025 Jnana. All rights reserved.</p>
+        <p>&copy; 2025 Jnana E-Learning Platform. All rights reserved.</p>
     </footer>
 </body>
 </html>

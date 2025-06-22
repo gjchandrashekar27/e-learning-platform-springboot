@@ -1,125 +1,289 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Learner Dashboard - Jnana</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #4CAF50;
-            --secondary-color: #2196F3;
-            --text-color: #2c3e50;
-            --shadow-color: rgba(0, 0, 0, 0.1);
-            --error-color: #f44336;
+            --primary: #2196f3;
+            --secondary: #ff9800;
+            --bg: #f7faff;
+            --card-bg: #fff;
+            --text: #2d3a4b;
+            --shadow: 0 8px 32px rgba(33,150,243,0.10);
+            --border: #b3e5fc;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(120deg, #e3f2fd 0%, #fffde7 100%);
             min-height: 100vh;
-            padding: 20px;
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
         }
-
         .container {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 15px 30px var(--shadow-color);
-            width: 90%;
-            max-width: 1200px;
-            margin: 20px auto;
-            animation: fadeIn 0.5s ease-out;
+            background: var(--card-bg);
+            padding: 2.5rem 2rem 2rem 2rem;
+            border-radius: 22px;
+            box-shadow: var(--shadow);
+            width: 95%;
+            max-width: 1100px;
+            margin: 36px auto 0 auto;
+            position: relative;
         }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            margin-bottom: 30px;
+            background: #e3f2fd;
+            border-radius: 14px;
+            padding: 18px 24px;
+            box-shadow: 0 2px 8px rgba(33,150,243,0.07);
         }
-
-        h1 {
-            color: var(--text-color);
-            font-size: 2.5rem;
+        .profile-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--secondary);
+            background: #fff;
+        }
+        .profile-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .profile-name {
+            font-size: 1.4rem;
             font-weight: 600;
-            margin-bottom: 2rem;
-            text-align: center;
+            color: var(--primary);
         }
-
+        .profile-email {
+            color: #444;
+            font-size: 1.05rem;
+        }
+        h1 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            text-align: center;
+            letter-spacing: 1px;
+        }
         .btn {
-            padding: 12px 25px;
+            padding: 12px 28px;
             border: none;
             border-radius: 30px;
             font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-weight: 500;
+            font-weight: 600;
             text-decoration: none;
             letter-spacing: 0.5px;
-            color: white;
-            background: var(--secondary-color);
+            color: #fff;
+            background: linear-gradient(90deg, var(--primary) 60%, var(--secondary) 100%);
             display: inline-block;
-            margin: 0.5rem;
+            margin: 0.5rem 0.7rem 0.5rem 0;
+            box-shadow: 0 2px 8px rgba(33,150,243,0.09);
         }
-
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(90deg, var(--secondary) 60%, var(--primary) 100%);
+            transform: translateY(-2px) scale(1.04);
         }
-
-        .toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 1rem 2rem;
+        .ad-section {
+            margin: 32px 0 24px 0;
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .ad-card {
+            background: #fffde7;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(255, 152, 0, 0.09);
+            padding: 18px 22px;
+            min-width: 220px;
+            max-width: 320px;
+            text-align: center;
+            border: 2px solid #ffe0b2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .ad-card img {
+            width: 80px;
+            height: 80px;
             border-radius: 12px;
-            color: white;
-            opacity: 0;
-            transition: all 0.3s ease;
-            transform: translateX(100%);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
+            margin-bottom: 10px;
+            object-fit: cover;
         }
-
-        .toast.success {
-            background: var(--primary-color);
+        .ad-title {
+            font-size: 1.08rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 6px;
         }
-
-        .toast.error {
-            background: var(--error-color);
+        .ad-desc {
+            font-size: 0.97rem;
+            color: #444;
+            margin-bottom: 10px;
         }
-
-        .toast.show {
-            opacity: 1;
-            transform: translateX(0);
+        .reviews-section {
+            margin: 32px 0 0 0;
+            background: #e3f2fd;
+            border-radius: 14px;
+            padding: 24px 18px;
+            box-shadow: 0 2px 8px rgba(33,150,243,0.07);
+        }
+        .reviews-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 18px;
+            text-align: center;
+        }
+        .review-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            justify-content: center;
+        }
+        .review-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(33,150,243,0.07);
+            padding: 18px 18px 14px 18px;
+            min-width: 220px;
+            max-width: 320px;
+            text-align: left;
+            border-left: 4px solid var(--secondary);
+            position: relative;
+        }
+        .review-user {
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 4px;
+        }
+        .review-date {
+            color: #888;
+            font-size: 0.92rem;
+            margin-bottom: 6px;
+        }
+        .review-text {
+            color: #333;
+            font-size: 1rem;
+        }
+        .copyright {
+            width: 100%;
+            text-align: center;
+            color: #888;
+            font-size: 0.98rem;
+            margin: 2rem 0 1rem 0;
+            letter-spacing: 0.5px;
+        }
+        .instructions {
+            background: #fffde7;
+            color: #ff9800;
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin: 0 auto 1.5rem auto;
+            max-width: 700px;
+            font-size: 1rem;
+            box-shadow: 0 2px 8px rgba(255,152,0,0.07);
+            text-align: left;
+            border-left: 4px solid #ff9800;
+        }
+        @media (max-width: 900px) {
+            .container { max-width: 98vw; padding: 18px 4vw 18px 4vw; }
+            .profile-section { flex-direction: column; align-items: flex-start; }
+            .ad-section, .review-list { flex-direction: column; align-items: center; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Learner Dashboard</h1>
+        <!-- Learner Profile Section -->
+        <div class="profile-section">
+            <img class="profile-photo"
+                 th:src="${session.learnerPhotoUrl != null ? session.learnerPhotoUrl : 'https://randomuser.me/api/portraits/men/31.jpg'}"
+                 alt="Learner Photo"
+                 onerror="this.src='https://randomuser.me/api/portraits/men/31.jpg'">
+            <div class="profile-details">
+                <span class="profile-name" th:text="${session.learnerName != null ? session.learnerName : 'John Doe'}">John Doe</span>
+                <span class="profile-email" th:text="${session.learnerEmail != null ? session.learnerEmail : 'john.doe@email.com'}">john.doe@email.com</span>
+            </div>
+        </div>
+
+        <h1>Welcome to Your Learner Dashboard</h1>
 
         <!-- Toast messages -->
         <div id="successToast" class="toast success" th:if="${session.pass}" th:text="${session.pass}"></div>
         <div id="errorToast" class="toast error" th:if="${session.fail}" th:text="${session.fail}"></div>
         <th:block th:text="${@generalService.removeMessage()}"></th:block>
 
-       
-<a href="/learner/available-courses" class="btn">See Available Courses</a>
-<a href="/learner/enrolled-courses" class="btn">View Enrolled Courses</a>
-<a href="/learner/completed-courses" class="btn">View Completed Courses</a>
-<a href="/logout" class="btn">Logout</a>
-       
+        <div style="text-align:center;">
+            <a href="/learner/available-courses" class="btn"><i class="fa fa-book-open"></i> See Available Courses</a>
+            <a href="/learner/enrolled-courses" class="btn"><i class="fa fa-list"></i> View Enrolled Courses</a>
+            <a href="/learner/completed-courses" class="btn"><i class="fa fa-check-circle"></i> View Completed Courses</a>
+            <a href="/logout" class="btn"><i class="fa fa-sign-out-alt"></i> Logout</a>
+        </div>
+
+        <!-- Advertisement Section -->
+        <div class="ad-section">
+            <div class="ad-card">
+                <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=200&q=80" alt="Ad 1">
+                <div class="ad-title">Upgrade to Premium</div>
+                <div class="ad-desc">Unlock exclusive courses and features with Jnana Premium!</div>
+            </div>
+            <div class="ad-card">
+                <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=200&q=80" alt="Ad 2">
+                <div class="ad-title">Refer & Earn</div>
+                <div class="ad-desc">Invite friends and earn rewards for every successful referral.</div>
+            </div>
+            <div class="ad-card">
+                <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=200&q=80" alt="Ad 3">
+                <div class="ad-title">Live Webinars</div>
+                <div class="ad-desc">Join our upcoming webinars and interact with top instructors.</div>
+            </div>
+        </div>
+
+        <!-- Real-Time Reviews Section -->
+        <div class="reviews-section">
+            <div class="reviews-title"><i class="fa fa-star"></i> What Learners Say</div>
+            <div class="review-list">
+                <div class="review-card">
+                    <div class="review-user">Priya Sharma</div>
+                    <div class="review-date">2025-06-20</div>
+                    <div class="review-text">"Jnana helped me master Java in just a few weeks. The courses are interactive and easy to follow!"</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-user">Rahul Verma</div>
+                    <div class="review-date">2025-06-18</div>
+                    <div class="review-text">"The tutors are very supportive and the content is always up-to-date. Highly recommended!"</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-user">Ayesha Khan</div>
+                    <div class="review-date">2025-06-15</div>
+                    <div class="review-text">"I love the quizzes and notes provided in each section. It makes learning so much easier."</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions" style="margin-top:32px;">
+            <strong>Instructions:</strong>
+            <ul>
+                <li>Use the dashboard to access available, enrolled, and completed courses.</li>
+                <li>Your profile photo and email are shown as per your login. Please keep them updated.</li>
+                <li>Check out the latest advertisements and offers for learners.</li>
+                <li>Read real reviews from fellow learners to stay motivated.</li>
+                <li>For any help, contact <a href="mailto:support@jnana.com" style="color:#ff9800;text-decoration:underline;">support@jnana.com</a>.</li>
+            </ul>
+        </div>
+
+        <div class="copyright">
+            &copy; 2025 Jnana E-Learning Platform. All rights reserved.
+        </div>
     </div>
 
     <script>
