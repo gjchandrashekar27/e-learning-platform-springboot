@@ -15,11 +15,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.jnana.dto.CourseDto;
 import com.jnana.dto.SectionDto;
 import com.jnana.entity.Course;
+import com.jnana.entity.Learner;
 import com.jnana.entity.QuizQuestion;
 import com.jnana.entity.Section;
 import com.jnana.entity.Tutor;
 import com.jnana.helper.CloudinaryService;
 import com.jnana.repository.CourseRepository;
+import com.jnana.repository.LearnerRepository;
 import com.jnana.repository.QuizQuestionRepository;
 import com.jnana.repository.SectionRepository;
 
@@ -37,6 +39,10 @@ public class TutorService {
 
     @Autowired
     QuizQuestionRepository quizQuestionRepository;
+    
+    @Autowired
+    LearnerRepository learnerRepository;
+    
 
     private CloudinaryService cloudinaryService = null;
 
@@ -71,6 +77,8 @@ public class TutorService {
             return "redirect:/login";
         }
     }
+    
+    
 
     public String loadQuestions(HttpSession session) {
         if (session.getAttribute("tutor") != null) {
@@ -82,12 +90,31 @@ public class TutorService {
     }
 
     public String loadLearners(HttpSession session) {
-        if (session.getAttribute("tutor") != null) {
-            return "manage-learners.html";
-        } else {
-            session.setAttribute("fail", "Invalid Session, Login First");
+        if (session.getAttribute("tutor") == null) {
+            session.setAttribute("fail", "Invalid Session. Login First");
             return "redirect:/login";
         }
+
+        List<Map<String, Object>> learnerCourseList = new ArrayList<>();
+
+        List<Learner> learners = learnerRepository.findAll();
+
+        for (Learner learner : learners) {
+            Map<String, Object> learnerData = new HashMap<>();
+            learnerData.put("name", learner.getName());
+            learnerData.put("email", learner.getEmail());
+
+            List<String> courseTitles = learner.getEnrolledCourses()
+                    .stream()
+                    .map(ec -> ec.getCourse().getTitle())
+                    .collect(Collectors.toList());
+
+            learnerData.put("courses", courseTitles);
+            learnerCourseList.add(learnerData);
+        }
+
+        session.setAttribute("learnerCourseList", learnerCourseList);
+        return "manage-learners.html"; // ✅ Your actual HTML file
     }
 
     public String loadAddCourse(HttpSession session, Model model, CourseDto courseDto) {

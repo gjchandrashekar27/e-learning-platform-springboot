@@ -1,10 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <title>Manage Learners</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 90%;
+            margin: 30px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #aaa;
+            text-align: left;
+        }
+        ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
 </head>
 <body>
-<h1>This is Learners page in Turtor</h1>
+    <h2>👩‍🎓 Learners & Their Enrolled Courses</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Learner Name</th>
+                <th>Email</th>
+                <th>Enrolled Courses</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="learner : ${session.learnerCourseList}">
+                <td th:text="${learner.name}">Name</td>
+                <td th:text="${learner.email}">Email</td>
+                <td>
+                    <ul>
+                        <li th:each="course : ${learner.courses}" th:text="${course}">Course</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>

@@ -47,8 +47,9 @@ public class TutorController {
 	
 	@GetMapping("/learners")
 	public String loadLearners(HttpSession session) {
-		return tutorService.loadLearners(session);
+	    return tutorService.loadLearners(session);
 	}
+
 	
 	@GetMapping("/add-course")
 	public String loadAddCourse(HttpSession session, Model model,CourseDto courseDto) {
@@ -85,6 +86,8 @@ public class TutorController {
 	public String loadViewSections(HttpSession session, Model model) {
 	    return tutorService.viewSections(session, model);
 	}
+	
+	
 	
 	
 
