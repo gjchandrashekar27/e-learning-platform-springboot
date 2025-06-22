@@ -121,12 +121,11 @@ A heartfelt thank you to everyone who made this project possible:
 
 ## 📬 Contact Me
 
-Feel free to connect or reach out for collaboration, feedback, or opportunities:
+Feel free to connect or reach out for collaboration, feedback, or job opportunities:
 
-- 🔗 [LinkedIn – Chandrashekar GJ](https://www.linkedin.com/in/chandrashekar-gj)  
-- 📧 Email: [chandrashekar.gj19@gmail.com](mailto:chandrashekar.gj19@gmail.com)
+- 🔗 [LinkedIn – Chandrashekar GJ](https://www.linkedin.com/in/chandrashekargj/)
+- 📧 Email: [chandrashekargj27@gmail.com](mailto:chandrashekargj27@gmail.com)
 
----
 
 ## 🙏 Thank You
 
